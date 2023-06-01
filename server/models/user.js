@@ -17,6 +17,11 @@ const UserSchema = mongoose.Schema({
       type: String,
       required: true,
    },
+   isVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
+   },
 });
 
 // pre Middleware for hashing Password
