@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const User = require("../models/user");
 const EmailToken = require("../models/emailToken");
 const { isValidObjectId } = require("mongoose");
+const { generateOTP, generateMailTransporter } = require("../utils/mail");
 
 //Create USER @POST
 const createUser = async (req, res) => {
@@ -22,11 +23,7 @@ const createUser = async (req, res) => {
       // saving user to DB
       const savedUser = await newUser.save();
       // generate OTP (6 digits)
-      let OTP = "";
-      for (let i = 0; i <= 5; i++) {
-         const randomNumber = Math.ceil(Math.random() * 9);
-         OTP = OTP + randomNumber;
-      }
+      const OTP = generateOTP(6); // 6 digit OTP
       // Store OTP inside DB
       const newEmailToken = EmailToken({
          owner: savedUser._id,
@@ -34,14 +31,7 @@ const createUser = async (req, res) => {
       });
       const savedEmailToken = await newEmailToken.save();
       // send OTP to user Email
-      var transport = nodemailer.createTransport({
-         host: "sandbox.smtp.mailtrap.io",
-         port: 2525,
-         auth: {
-            user: process.env.NODEMAILER_USER,
-            pass: process.env.NODEMAILER_PASSWORD,
-         },
-      });
+      var transport = generateMailTransporter(); // nodemailer.transport
 
       const info = await transport.sendMail({
          from: "emailVerification@movieRRReview.com", // sender address
@@ -88,14 +78,7 @@ const verifyEmail = async (req, res) => {
 
    // after successful verification , delete the OTP/token from Database
    await EmailToken.findByIdAndDelete(token._id);
-   var transport = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-         user: process.env.NODEMAILER_USER,
-         pass: process.env.NODEMAILER_PASSWORD,
-      },
-   });
+   var transport = generateMailTransporter(); // nodemailer.transport
 
    const info = await transport.sendMail({
       from: "emailVerification@movieRRReview.com", // sender address
@@ -120,11 +103,7 @@ const resendOTP = async (req, res) => {
       return res.status(409).json({ msg: "next Token request available after 1 hour" });
 
    // if token not found
-   let OTP = "";
-   for (let i = 0; i <= 5; i++) {
-      const randomNumber = Math.ceil(Math.random() * 9);
-      OTP = OTP + randomNumber;
-   }
+   let OTP = generateOTP(6); // 6 digit OTP
    // Store OTP inside DB
    const newEmailToken = EmailToken({
       owner: currentUser._id,
@@ -132,14 +111,7 @@ const resendOTP = async (req, res) => {
    });
    const savedEmailToken = await newEmailToken.save();
    // send OTP to user Email
-   var transport = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-         user: process.env.NODEMAILER_USER,
-         pass: process.env.NODEMAILER_PASSWORD,
-      },
-   });
+   var transport = generateMailTransporter(); // nodemailer.transporter
 
    const info = await transport.sendMail({
       from: "emailVerification@movieRRReview.com", // sender address
