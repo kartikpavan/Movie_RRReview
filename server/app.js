@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("express-async-errors");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const express = require("express");
@@ -15,6 +16,13 @@ app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
    res.send("Hello world from Index page ");
+});
+
+// global async-error handler
+app.use((err, req, res, next) => {
+   console.log("err : ", err);
+   res.status(500).json({ error: err.message || err });
+   next();
 });
 
 const PORT = process.env.PORT || 3001;
