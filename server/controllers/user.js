@@ -1,8 +1,11 @@
-const nodemailer = require("nodemailer");
 const User = require("../models/user");
 const EmailToken = require("../models/emailToken");
+const ResetPassword = require("../models/resetPassword");
 const { isValidObjectId } = require("mongoose");
 const { generateOTP, generateMailTransporter } = require("../utils/mail");
+const { generateRandomBytes } = require("../utils/helper");
+
+const crypto = require("crypto");
 
 //Create USER @POST
 const createUser = async (req, res) => {
@@ -29,11 +32,11 @@ const createUser = async (req, res) => {
          owner: savedUser._id,
          token: OTP,
       });
-      const savedEmailToken = await newEmailToken.save();
+      await newEmailToken.save();
       // send OTP to user Email
       var transport = generateMailTransporter(); // nodemailer.transport
 
-      const info = await transport.sendMail({
+      await transport.sendMail({
          from: "emailVerification@movieRRReview.com", // sender address
          to: newUser.email, // list of receivers
          subject: "Email Verification ✔", // Subject line
@@ -50,7 +53,7 @@ const createUser = async (req, res) => {
    }
 };
 
-// verify Email
+//Verify USER EMAIL @POST
 const verifyEmail = async (req, res) => {
    const { userId, OTP } = req.body;
 
@@ -89,6 +92,7 @@ const verifyEmail = async (req, res) => {
    return res.status(200).json({ msg: "Email Verification Successful" });
 };
 
+//RESEND USER EMAIL_OTP @POST
 const resendOTP = async (req, res) => {
    const { userId } = req.body;
    // find the user details from our
@@ -126,4 +130,47 @@ const resendOTP = async (req, res) => {
    });
 };
 
-module.exports = { createUser, verifyEmail, resendOTP };
+// RESET USER PASSWORD / FORGET PASSWORD @POST
+const resetPassword = async (req, res) => {
+   const { email } = req.body;
+   if (!email) return res.status(403).json({ msg: "Email not Provided" });
+
+   // checking if user exists in DB
+   const user = await User.findOne({ email: email });
+   if (!user) return res.status(404).json({ msg: "User Email not found" });
+
+   // checking if reset password token is already present in DB
+   const existingToken = await ResetPassword.findOne({ owner: user._id });
+   if (existingToken)
+      return res.status(409).json({ msg: "next Token request available after 1 hour" });
+
+   // reset pass token needs to be unique for each user hence, generate random bytes
+   // generating Token (Generates cryptographically strong pseudorandom data.)
+   const token = await generateRandomBytes();
+
+   // creating new instance of this token inside our DB
+   const newPasswordResetToken = await ResetPassword({ owner: user._id, token: token });
+   await newPasswordResetToken.save();
+
+   // password reset URL
+   //! change later
+   const resetPasswordURL = `http://localhost:5173/reset-password?token=${token}&id=${user._ud}`;
+
+   // send URL to user Email
+   var transport = generateMailTransporter(); // nodemailer.transporter
+   const info = await transport.sendMail({
+      from: "security@movieRRReview.com", // sender address
+      to: user.email, // list of receivers
+      subject: "Password Reset Link ✔", // Subject line
+      html: `<p>Your Password Link is : </p>
+            <a href=${resetPasswordURL}>Click Here</a>
+            <p> Valid only for next 1 hour</p>
+      `, // html body
+   });
+
+   return res.status(201).json({
+      msg: "Rest Password Link has been sent to your registered Email Address. ",
+   });
+};
+
+module.exports = { createUser, verifyEmail, resendOTP, resetPassword };
