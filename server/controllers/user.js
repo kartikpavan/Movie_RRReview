@@ -154,7 +154,7 @@ const resetPassword = async (req, res) => {
 
    // password reset URL
    //! change later
-   const resetPasswordURL = `http://localhost:5173/reset-password?token=${token}&id=${user._ud}`;
+   const resetPasswordURL = `http://localhost:5173/reset-password?token=${token}&id=${user._id}`;
 
    // send URL to user Email
    var transport = generateMailTransporter(); // nodemailer.transporter
@@ -172,5 +172,10 @@ const resetPassword = async (req, res) => {
       msg: "Rest Password Link has been sent to your registered Email Address. ",
    });
 };
+
+// // VERIFYING RESET PASSWORD TOKEN @POST
+// const verifyResetPasswordToken = async(req,res)=>{
+
+// }
 
 module.exports = { createUser, verifyEmail, resendOTP, resetPassword };
