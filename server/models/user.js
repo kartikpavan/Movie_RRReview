@@ -25,10 +25,19 @@ const UserSchema = mongoose.Schema({
 });
 
 // pre Middleware for hashing Password
-UserSchema.pre("save", async function () {
-   const salt = await bcrypt.genSalt(10);
-   this.password = await bcrypt.hash(this.password, salt);
+UserSchema.pre("save", async function (next) {
+   // const salt = await bcrypt.genSalt(10);
+   // this.password = await bcrypt.hash(this.password, salt);
+   if (this.isModified("password")) {
+      this.password = await bcrypt.hash(this.password, 10);
+   }
+   next();
 });
+
+UserSchema.methods.comparePassword = async function (newPassword) {
+   const result = await bcrypt.compare(newPassword, this.password);
+   return result;
+};
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

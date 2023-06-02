@@ -11,6 +11,15 @@ exports.userValidator = [
       .withMessage("Password length must be between 6 & 12 characters long"),
 ];
 
+exports.validateNewPassword = [
+   check("newPassword")
+      .trim()
+      .notEmpty()
+      .withMessage("Password is Missing")
+      .isLength({ min: 6, max: 12 })
+      .withMessage("Password length must be between 6 & 12 characters long"),
+];
+
 // middleware
 exports.validate = (req, res, next) => {
    const result = validationResult(req).array();

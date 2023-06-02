@@ -130,8 +130,8 @@ const resendOTP = async (req, res) => {
    });
 };
 
-// RESET USER PASSWORD / FORGET PASSWORD @POST
-const resetPassword = async (req, res) => {
+// FORGET PASSWORD @POST
+const forgotPassword = async (req, res) => {
    const { email } = req.body;
    if (!email) return res.status(403).json({ msg: "Email not Provided" });
 
@@ -173,9 +173,51 @@ const resetPassword = async (req, res) => {
    });
 };
 
-// // VERIFYING RESET PASSWORD TOKEN @POST
-// const verifyResetPasswordToken = async(req,res)=>{
+// VERIFYING RESET PASSWORD TOKEN @POST
+const resetPasswordTokenStatus = async (req, res) => {
+   return res.status(200).json({ msg: { valid: true } });
+};
 
-// }
+// CHANGE PASSWORD @POST
+const resetPassword = async (req, res) => {
+   const { newPassword, userId } = req.body;
 
-module.exports = { createUser, verifyEmail, resendOTP, resetPassword };
+   const user = await User.findById(userId);
+
+   // checking if oldPass !== newPass
+   const isMatched = await user.comparePassword(newPassword);
+   if (isMatched) {
+      return res
+         .status(409)
+         .json({ msg: "New Password cannot be same as Old one. Try something else" });
+   }
+
+   // assigning new password
+   user.password = newPassword;
+   await user.save();
+
+   //remove reset-password-token from DB
+   await ResetPassword.findByIdAndDelete(req.resetToken._id);
+
+   // send password change success message to user Email
+   var transport = generateMailTransporter(); // nodemailer.transporter
+
+   await transport.sendMail({
+      from: "security@movieRRReview.com", // sender address
+      to: user.email, // list of receivers
+      subject: "Password Changed successfully ✔", // Subject line
+      html: `<p>Now you can sign in with new password ✔</p>
+     `, // html body
+   });
+
+   return res.status(200).status({ msg: "Password changed successfully" });
+};
+
+module.exports = {
+   createUser,
+   verifyEmail,
+   resendOTP,
+   forgotPassword,
+   resetPasswordTokenStatus,
+   resetPassword,
+};
