@@ -8,11 +8,18 @@ const {
    forgotPassword,
    resetPasswordTokenStatus,
    resetPassword,
+   signIn,
 } = require("../controllers/user");
-const { userValidator, validate, validateNewPassword } = require("../middlewares/Validators");
+const {
+   userValidator,
+   validate,
+   validateNewPassword,
+   signInValidator,
+} = require("../middlewares/Validators");
 const { isValidResetPasswordToken } = require("../middlewares/user");
 
-router.post("/createUser", userValidator, validate, createUser);
+router.post("/create-user", userValidator, validate, createUser);
+router.post("/sign-in", signInValidator, validate, signIn);
 router.post("/verify-email", verifyEmail);
 router.post("/resend-email-verification-OTP", resendOTP);
 router.post("/forgot-password", forgotPassword);

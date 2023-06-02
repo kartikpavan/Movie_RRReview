@@ -6,6 +6,7 @@ const { generateOTP, generateMailTransporter } = require("../utils/mail");
 const { generateRandomBytes } = require("../utils/helper");
 
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
 //Create USER @POST
 const createUser = async (req, res) => {
@@ -213,6 +214,29 @@ const resetPassword = async (req, res) => {
    return res.status(200).status({ msg: "Password changed successfully" });
 };
 
+// SIGN IN
+const signIn = async (req, res) => {
+   const { email, password } = req.body;
+   try {
+      // checking if user email exists
+      const user = await User.findOne({ email: email });
+      if (!user) res.status(404).json({ msg: `User with email: ${email} not found` });
+
+      // check if password is correct
+      const isMatched = await user.comparePassword(password);
+      if (!isMatched) res.status(404).json({ msg: `Incorrect Password` });
+
+      // generating JWT token
+      const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+
+      return res.status(200).json({
+         data: { id: user._id, name: user.name, email: user.email, token: jwtToken },
+      });
+   } catch (error) {
+      return res.status(500).status({ msg: error });
+   }
+};
+
 module.exports = {
    createUser,
    verifyEmail,
@@ -220,4 +244,5 @@ module.exports = {
    forgotPassword,
    resetPasswordTokenStatus,
    resetPassword,
+   signIn,
 };

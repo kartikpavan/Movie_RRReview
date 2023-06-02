@@ -20,6 +20,11 @@ exports.validateNewPassword = [
       .withMessage("Password length must be between 6 & 12 characters long"),
 ];
 
+exports.signInValidator = [
+   check("email").normalizeEmail().isEmail().withMessage("Email is Invalid"),
+   check("password").trim().notEmpty().withMessage("Password is Missing"),
+];
+
 // middleware
 exports.validate = (req, res, next) => {
    const result = validationResult(req).array();
