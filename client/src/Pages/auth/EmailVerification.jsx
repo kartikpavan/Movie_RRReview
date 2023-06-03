@@ -8,14 +8,28 @@ const EmailVerification = () => {
    // creating ref to track current Input field and auto jump to next field
    const inputRef = useRef();
 
+   const focusNextInputField = (index) => {
+      setCurrentIndex(index + 1); // changing current Index to move focus from current input to the next input
+   };
+
+   const focusPreviousInputField = (index) => {
+      let nextIndex;
+      const diff = index - 1;
+      nextIndex = diff !== 0 ? diff : 0; // if diff !=0 then use diff value else use 0
+      setCurrentIndex(nextIndex); // changing current Index to move focus from current input to the previous input
+   };
+
    // observing OTP numbers
    const handleOTPChange = ({ target }, index) => {
       const { value } = target;
       const newOtp = [...oneTimePassword];
-      newOtp[index] = value.substring(value.length - 1, value.length);
-      setOneTimePassword([...newOtp]);
+      newOtp[index] = value.substring(value.length - 1, value.length); // avoid typing more than 1 digit as input
+      console.log(value);
+      // change focus of input field
+      if (!value) focusPreviousInputField(index);
+      else focusNextInputField(index);
 
-      setCurrentIndex(index + 1); // changing current Index to move focus from current input to the next input
+      setOneTimePassword([...newOtp]);
    };
 
    useEffect(() => {
