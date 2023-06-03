@@ -1,12 +1,13 @@
 import React from "react";
 import Navbar from "./components/Navbar";
+import SignIn from "./components/SignIn";
 
 const App = () => {
    return (
-      <div>
+      <main className="w-full">
          <Navbar />
-         <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      </div>
+         <SignIn />
+      </main>
    );
 };
 

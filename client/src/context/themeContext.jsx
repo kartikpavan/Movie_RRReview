@@ -17,7 +17,7 @@ export const ThemeContextProvider = ({ children }) => {
       document.querySelector("html").setAttribute("data-theme", localTheme);
    }, [theme]);
 
-   return <ThemeContext.Provider value={{ toggleTheme }}>{children}</ThemeContext.Provider>;
+   return <ThemeContext.Provider value={{ toggleTheme, theme }}>{children}</ThemeContext.Provider>;
 };
 
 export const useThemeContext = () => {
