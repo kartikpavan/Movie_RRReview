@@ -29,7 +29,7 @@ exports.signInValidator = [
 exports.validate = (req, res, next) => {
    const result = validationResult(req).array();
    if (result.length) {
-      return res.status(403).json({ msg: result[0].msg });
+      return res.status(403).json({ error: result[0].msg });
    }
    next();
 };

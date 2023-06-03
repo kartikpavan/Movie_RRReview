@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateSignUpUserInfo } from "../../utils/validator";
+import { createUser } from "../../api/auth";
 
 const initialState = { name: "", email: "", password: "" };
 
 const SignUp = () => {
+   const navigate = useNavigate();
+
    const [userInfo, setUserInfo] = useState(initialState);
+   const [errState, setErrState] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
 
    const handleInputChange = (e) => {
@@ -14,11 +18,16 @@ const SignUp = () => {
       setUserInfo({ ...userInfo, [name]: value });
    };
 
-   const handleSignUp = (e) => {
+   const handleSignUp = async (e) => {
       e.preventDefault();
       const { ok, error } = validateSignUpUserInfo(userInfo);
-      if (!ok) console.log(error);
-      console.log(userInfo);
+      if (!ok) setErrState(true);
+      else setErrState(false);
+
+      // API request to backend to register new user
+      const response = await createUser(userInfo);
+      if (response.error) return console.log("response from serer : ", response);
+      navigate("/auth/email-verification");
    };
 
    return (
@@ -37,8 +46,9 @@ const SignUp = () => {
                      name="name"
                      type="text"
                      placeholder="John Doe"
-                     className="input input-bordered w-full max-w-xs"
-                     required
+                     className={`input input-bordered ${
+                        errState ? "input-error" : null
+                     } w-full max-w-xs`}
                   />
                </div>
                {/* Email Input */}
@@ -52,8 +62,9 @@ const SignUp = () => {
                      name="email"
                      type="text"
                      placeholder="abc@gmail.com"
-                     className="input input-bordered w-full max-w-xs"
-                     required
+                     className={`input input-bordered ${
+                        errState ? "input-error" : null
+                     } w-full max-w-xs`}
                   />
                </div>
                {/* Password input */}
@@ -67,8 +78,9 @@ const SignUp = () => {
                      name="password"
                      type="password"
                      placeholder="********"
-                     className="input input-bordered w-full max-w-xs"
-                     required
+                     className={`input input-bordered ${
+                        errState ? "input-error" : null
+                     } w-full max-w-xs`}
                   />
                   <AiOutlineEyeInvisible className="absolute bottom-3 right-3 h-6 w-6" />
                </div>
