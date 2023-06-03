@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { validateSignUpUserInfo } from "../../utils/validator";
+
+const initialState = { name: "", email: "", password: "" };
 
 const SignUp = () => {
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [username, setUsername] = useState("");
+   const [userInfo, setUserInfo] = useState(initialState);
    const [showPassword, setShowPassword] = useState(false);
+
+   const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setUserInfo({ ...userInfo, [name]: value });
+   };
 
    const handleSignUp = (e) => {
       e.preventDefault();
-      alert("form Submitted");
+      const { ok, error } = validateSignUpUserInfo(userInfo);
+      if (!ok) console.log(error);
+      console.log(userInfo);
    };
 
    return (
@@ -24,6 +32,9 @@ const SignUp = () => {
                      <span className="label-text">Name</span>
                   </label>
                   <input
+                     value={userInfo.name}
+                     onChange={handleInputChange}
+                     name="name"
                      type="text"
                      placeholder="John Doe"
                      className="input input-bordered w-full max-w-xs"
@@ -36,6 +47,9 @@ const SignUp = () => {
                      <span className="label-text">Email</span>
                   </label>
                   <input
+                     value={userInfo.email}
+                     onChange={handleInputChange}
+                     name="email"
                      type="text"
                      placeholder="abc@gmail.com"
                      className="input input-bordered w-full max-w-xs"
@@ -48,6 +62,9 @@ const SignUp = () => {
                      <span className="label-text">Password</span>
                   </label>
                   <input
+                     value={userInfo.password}
+                     onChange={handleInputChange}
+                     name="password"
                      type="password"
                      placeholder="********"
                      className="input input-bordered w-full max-w-xs"

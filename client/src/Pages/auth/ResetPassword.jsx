@@ -18,7 +18,6 @@ const ResetPassword = () => {
          <form onSubmit={handleResetPassword} className="card w-96 bg-base-100 shadow-xl">
             <div className="card-body">
                <h2 className="text-center text-lg font-semibold">Change Password</h2>
-
                {/* Email Input */}
                <div className="form-contaol w-full max-w-xs">
                   <label className="label">
