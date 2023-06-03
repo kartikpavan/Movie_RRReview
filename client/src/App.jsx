@@ -1,12 +1,23 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import SignIn from "./components/SignIn";
+import { Home, SignIn, SignUp, EmailVerification, ForgotPassword, ResetPassword } from "./Pages";
+
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
    return (
-      <main className="w-full">
+      // width is full and height is set to fit screen
+      <main className="w-full h-screen">
          <Navbar />
-         <SignIn />
+         <Routes>
+            <Route path="/" element={<Home />} />
+            {/* Auth Routes */}
+            <Route path="/auth/signIn" element={<SignIn />} />
+            <Route path="/auth/signUp" element={<SignUp />} />
+            <Route path="/auth/email-verification" element={<EmailVerification />} />
+            <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+            <Route path="/auth/reset-password" element={<ResetPassword />} />
+         </Routes>
       </main>
    );
 };

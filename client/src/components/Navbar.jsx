@@ -37,7 +37,9 @@ const Navbar = () => {
                      placeholder="Search here..."
                      className="input input-bordered w-full max-w-xs"
                   />
-                  <button className="btn btn-ghost md:text-lg">Login</button>
+                  <NavLink to="/auth/signIn" className="btn btn-ghost md:text-lg">
+                     Login
+                  </NavLink>
                </div>
             </div>
          </div>
