@@ -18,14 +18,15 @@ const SignIn = () => {
             <div className="card-body">
                <h2 className="text-center text-lg font-semibold">Sign In</h2>
                {/* Email Input */}
-               <div className="form-control w-full max-w-xs">
+               <div className="form-contaol w-full max-w-xs">
                   <label className="label">
                      <span className="label-text">Email</span>
                   </label>
                   <input
-                     type="text"
+                     type="email"
                      placeholder="abc@gmail.com"
                      className="input input-bordered w-full max-w-xs"
+                     required
                   />
                </div>
 
@@ -38,6 +39,7 @@ const SignIn = () => {
                      type="password"
                      placeholder="********"
                      className="input input-bordered w-full max-w-xs"
+                     required
                   />
                   <AiOutlineEyeInvisible className="absolute bottom-3 right-3 h-6 w-6" />
                </div>

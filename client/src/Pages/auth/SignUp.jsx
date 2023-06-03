@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [username, setUsername] = useState("");
    const [showPassword, setShowPassword] = useState(false);
 
    const handleSignUp = (e) => {
@@ -26,6 +27,7 @@ const SignUp = () => {
                      type="text"
                      placeholder="John Doe"
                      className="input input-bordered w-full max-w-xs"
+                     required
                   />
                </div>
                {/* Email Input */}
@@ -37,6 +39,7 @@ const SignUp = () => {
                      type="text"
                      placeholder="abc@gmail.com"
                      className="input input-bordered w-full max-w-xs"
+                     required
                   />
                </div>
                {/* Password input */}
@@ -48,6 +51,7 @@ const SignUp = () => {
                      type="password"
                      placeholder="********"
                      className="input input-bordered w-full max-w-xs"
+                     required
                   />
                   <AiOutlineEyeInvisible className="absolute bottom-3 right-3 h-6 w-6" />
                </div>
