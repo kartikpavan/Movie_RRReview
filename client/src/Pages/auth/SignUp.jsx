@@ -11,6 +11,7 @@ const SignUp = () => {
 
    const [userInfo, setUserInfo] = useState(initialState);
    const [errState, setErrState] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
 
    const handleInputChange = (e) => {
@@ -27,6 +28,7 @@ const SignUp = () => {
       // API request to backend to register new user
       const response = await createUser(userInfo);
       if (response.error) return console.log("serer error: ", response);
+      //! remove later
       console.log(response.data);
       navigate("/auth/email-verification", { state: { user: response.data }, replace: true }); // passing data from one component to another
    };

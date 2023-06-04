@@ -23,3 +23,32 @@ export function validateSignUpUserInfo(userInfo) {
 
    return { ok: true };
 }
+
+export function validOneTimePassword(OTP) {
+   // Check if the input is an array
+   if (!Array.isArray(OTP)) {
+      return false;
+   }
+
+   // Check if the input has exactly 6 digits
+   if (OTP.length !== 6) {
+      return false;
+   }
+
+   // Check if each string represents a valid number (between "0" and "9")
+   for (let i = 0; i < OTP.length; i++) {
+      const num = OTP[i];
+      if (
+         typeof num !== "string" ||
+         num.length !== 1 ||
+         isNaN(num) ||
+         parseInt(num) < 0 ||
+         parseInt(num) > 9
+      ) {
+         return false;
+      }
+   }
+
+   // If all checks pass, the OTP is valid
+   return true;
+}

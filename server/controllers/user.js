@@ -85,7 +85,7 @@ const verifyEmail = async (req, res) => {
    await EmailToken.findByIdAndDelete(token._id);
    var transport = generateMailTransporter(); // nodemailer.transport
 
-   const info = await transport.sendMail({
+   await transport.sendMail({
       from: "emailVerification@movieRRReview.com", // sender address
       to: currentUser.email, // list of receivers
       subject: "Welcome Email ✔", // Subject line

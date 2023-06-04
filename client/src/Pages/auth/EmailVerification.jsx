@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { validOneTimePassword } from "../../utils/validator";
+import { verifyUserEmail } from "../../api/auth";
 
 const EmailVerification = () => {
    const location = useLocation(); // returns current location object , represents Browser URL
@@ -41,16 +43,24 @@ const EmailVerification = () => {
       inputRef.current?.focus(); // when currentIndex value changes , change the focus to next input field
    }, [currentIndex]);
 
-   const submitHandler = (e) => {
+   const submitHandler = async (e) => {
       e.preventDefault();
-      console.log(oneTimePassword.join(""));
-      alert("OTP is : ", oneTimePassword);
+      const isValidOTP = validOneTimePassword(oneTimePassword);
+      if (!isValidOTP) return console.log("Invalid OTP");
+
+      // API request to backend to Verify email of new user
+      const response = await verifyUserEmail({ OTP: oneTimePassword.join(""), userId: user.id });
+      if (response.error) return console.log("server error : ", response.error);
+      //! remove later
+      console.log(response);
+      navigate("/", { replace: true });
    };
 
    // if no user found, redirect to 404 not found page
-   useEffect(() => {
-      if (!user) navigate("/not-found");
-   }, [user]);
+   //! uncomment
+   // useEffect(() => {
+   //    if (!user) navigate("/not-found");
+   // }, [user]);
 
    return (
       <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
