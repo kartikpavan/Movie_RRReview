@@ -26,8 +26,9 @@ const SignUp = () => {
 
       // API request to backend to register new user
       const response = await createUser(userInfo);
-      if (response.error) return console.log("response from serer : ", response);
-      navigate("/auth/email-verification");
+      if (response.error) return console.log("serer error: ", response);
+      console.log(response.data);
+      navigate("/auth/email-verification", { state: { user: response.data }, replace: true }); // passing data from one component to another
    };
 
    return (

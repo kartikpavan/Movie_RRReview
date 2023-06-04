@@ -11,11 +11,15 @@ const userRouter = require("./routes/user");
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+   res.send("Hello world from Index page ");
+});
 // Route Middleware
 app.use("/api/users", userRouter);
 
-app.get("/", (req, res) => {
-   res.send("Hello world from Index page ");
+// 404 route
+app.use("/*", (req, res) => {
+   return res.status(404).json({ msg: "Page Not Found" });
 });
 
 // global async-error handler

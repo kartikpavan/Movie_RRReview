@@ -1,6 +1,14 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import { Home, SignIn, SignUp, EmailVerification, ForgotPassword, ResetPassword } from "./Pages";
+import {
+   Home,
+   SignIn,
+   SignUp,
+   EmailVerification,
+   ForgotPassword,
+   ResetPassword,
+   Notfound,
+} from "./Pages";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -17,6 +25,7 @@ const App = () => {
             <Route path="/auth/email-verification" element={<EmailVerification />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
+            <Route path="*" element={<Notfound />} />
          </Routes>
       </main>
    );
