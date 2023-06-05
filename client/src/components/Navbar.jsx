@@ -4,9 +4,11 @@ import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
 import { HiMoon, HiSun } from "react-icons/hi2";
+import { useAuthContext } from "../context/authContext";
 
 const Navbar = () => {
    const { toggleTheme, theme } = useThemeContext();
+   const { authInfo } = useAuthContext();
 
    return (
       <nav className="navbar bg-neutral text-neutral-content">
@@ -35,11 +37,15 @@ const Navbar = () => {
                   <input
                      type="text"
                      placeholder="Search here..."
-                     className="input input-bordered w-full max-w-xs"
+                     className="input input-sm md:input-md input-bordered w-full max-w-xs"
                   />
-                  <NavLink to="/auth/signIn" className="btn btn-ghost md:text-lg">
-                     Login
-                  </NavLink>
+                  {authInfo?.isLoggedIn ? (
+                     <button className="btn btn-sm md:btn-md btn-error btn-outline">Logout</button>
+                  ) : (
+                     <NavLink to="/auth/signIn" className="btn btn-ghost md:text-lg">
+                        Login
+                     </NavLink>
+                  )}
                </div>
             </div>
          </div>

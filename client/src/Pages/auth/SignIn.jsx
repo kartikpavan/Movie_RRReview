@@ -7,10 +7,11 @@ import { useAuthContext } from "../../context/authContext";
 import Loader from "../../components/Loader";
 
 const SignIn = () => {
-   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-
    const { updateNotification } = useNotificationContext();
    const { handleSignIn, authInfo } = useAuthContext();
+
+   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+
    const handleInputChange = (e) => {
       const { name, value } = e.target;
       setUserInfo({ ...userInfo, [name]: value });
@@ -20,9 +21,7 @@ const SignIn = () => {
       e.preventDefault();
       const { ok, error } = validateSignInInfo(userInfo);
       if (!ok) updateNotification("error", error);
-
       await handleSignIn(userInfo.email, userInfo.password);
-      console.log(authInfo);
    };
 
    return (

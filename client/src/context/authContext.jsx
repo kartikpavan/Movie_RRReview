@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { userSignIn } from "../api/auth";
+import { getIsAuth, userSignIn } from "../api/auth";
 
 const AuthContext = createContext();
 
@@ -13,6 +13,7 @@ const initialAuthState = {
 export const AuthContextProvider = ({ children }) => {
    const [authInfo, setAuthInfo] = useState({ ...initialAuthState });
 
+   // Sign in
    const handleSignIn = async (email, password) => {
       setAuthInfo({ ...authInfo, isLoading: true });
       const response = await userSignIn({ email, password });
@@ -23,16 +24,28 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("auth-token", response.data.token);
    };
 
-   // checking if user is authenticated
-   const isUserAuth = () => {
+   // checking if user is authenticated and skip Sign In part
+   const isUserAuth = async () => {
       const token = localStorage.getItem("auth-token");
       if (!token) return;
+
+      setAuthInfo({ ...authInfo, isLoading: true });
+      const response = await getIsAuth(token);
+      if (response.error) {
+         return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });
+      }
+      setAuthInfo({ profile: { ...response.data }, isLoggedIn: true, isLoading: false, error: "" });
    };
 
    // handle Logout
+   useEffect(() => {
+      isUserAuth();
+   }, []);
 
    return (
-      <AuthContext.Provider value={{ authInfo, handleSignIn }}>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={{ authInfo, handleSignIn, isUserAuth }}>
+         {children}
+      </AuthContext.Provider>
    );
 };
 
