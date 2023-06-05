@@ -27,7 +27,7 @@ export const NotificationContextProvider = ({ children }) => {
       // after 3 seconds reset the notification
       setTimeout(() => {
          setNotification("");
-      }, 3000);
+      }, 5000);
    };
 
    return (
@@ -35,7 +35,7 @@ export const NotificationContextProvider = ({ children }) => {
          {children}
          {notification && (
             <div
-               className={`fixed left-1/2 -translate-x-1/2 top-24 alert ${alertType} w-auto translate-y-5 transition-all duration-200 ease-in-out`}
+               className={`fixed left-1/2 -translate-x-1/2 top-24 alert ${alertType} w-auto translate-y-5 transition-all duration-300 ease-in-out`}
             >
                <span className="text-lg font-semibold">{notification}</span>
             </div>

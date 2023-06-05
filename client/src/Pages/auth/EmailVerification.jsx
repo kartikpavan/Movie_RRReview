@@ -64,7 +64,7 @@ const EmailVerification = () => {
       console.log(response);
       updateNotification("success", response.msg);
       // navigate("/", { replace: true });
-      setIsLoading(true);
+      setIsLoading(false);
    };
 
    // if no user found, redirect to 404 not found page

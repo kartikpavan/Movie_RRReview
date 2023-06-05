@@ -52,3 +52,24 @@ export function validOneTimePassword(OTP) {
    // If all checks pass, the OTP is valid
    return true;
 }
+
+export function validateSignInInfo(userInfo) {
+   const { email, password } = userInfo;
+
+   const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+   // if there is no email
+   if (!email.trim()) return { ok: false, error: "Email field is missing" };
+   // copied from W3 school
+   if (!isValidEmail.test(email)) {
+      return { ok: false, error: "Invlaid Email" };
+   }
+
+   // if there is no password
+   if (!password.trim()) return { ok: false, error: "Password field is missing" };
+   // password min length = 6 and max length = 8
+   if (password.length < 6 && password.length > 13)
+      return { ok: false, error: "Password should be 6 to 12 characters long" };
+
+   return { ok: true };
+}

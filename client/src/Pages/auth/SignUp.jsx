@@ -14,16 +14,16 @@ const SignUp = () => {
    const { updateNotification } = useNotificationContext();
 
    const [userInfo, setUserInfo] = useState(initialState);
+   //! refactor errState and Isloading into Auth Context
    const [errState, setErrState] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
-   const [showPassword, setShowPassword] = useState(false);
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
       setUserInfo({ ...userInfo, [name]: value });
    };
 
-   const handleSignUp = async (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
       const { ok, error } = validateSignUpUserInfo(userInfo);
       if (!ok) {
@@ -46,7 +46,7 @@ const SignUp = () => {
       <>
          {isLoading && <Loader />}
          <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
-            <form onSubmit={handleSignUp} className="card w-96 bg-base-100 shadow-xl">
+            <form onSubmit={handleSubmit} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Create a new Account</h2>
                   {/* Name Input */}
