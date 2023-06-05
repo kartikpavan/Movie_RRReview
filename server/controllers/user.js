@@ -95,7 +95,7 @@ const verifyEmail = async (req, res) => {
       expiresIn: "7d",
    });
    return res.status(200).json({
-      user: {
+      data: {
          id: currentUser._id,
          name: currentUser.name,
          email: currentUser.email,
@@ -127,7 +127,7 @@ const resendOTP = async (req, res) => {
       owner: currentUser._id,
       token: OTP,
    });
-   const savedEmailToken = await newEmailToken.save();
+   await newEmailToken.save();
    // send OTP to user Email
    var transport = generateMailTransporter(); // nodemailer.transporter
 

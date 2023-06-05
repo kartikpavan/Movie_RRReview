@@ -4,12 +4,14 @@ import { validOneTimePassword } from "../../utils/validator";
 import { verifyUserEmail } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
 import Loader from "../../components/Loader";
+import { useAuthContext } from "../../context/authContext";
 
 const EmailVerification = () => {
    const location = useLocation(); // returns current location object , represents Browser URL
    const navigate = useNavigate();
 
    const { updateNotification } = useNotificationContext();
+   const { isUserAuth } = useAuthContext();
 
    const [oneTimePassword, setOneTimePassword] = useState(Array.from({ length: 6 }).fill(""));
    const [currentIndex, setCurrentIndex] = useState(0);
@@ -60,15 +62,15 @@ const EmailVerification = () => {
          setIsLoading(false);
          return updateNotification("error", response.error);
       }
-      //! remove later
-      console.log(response);
       updateNotification("success", response.msg);
-      // navigate("/", { replace: true });
+      // updating local storage token if
+      localStorage.setItem("auth-token", response.data.token);
+      isUserAuth();
       setIsLoading(false);
    };
 
    // if no user found, redirect to 404 not found page
-   //! uncomment
+
    useEffect(() => {
       if (!user) navigate("/not-found");
    }, [user]);
