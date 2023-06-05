@@ -21,6 +21,7 @@ const createUser = async (req, res) => {
       name,
       email,
       password,
+      isVerified: false,
    });
 
    try {

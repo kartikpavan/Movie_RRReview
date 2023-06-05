@@ -87,7 +87,7 @@ const EmailVerification = () => {
    //! uncomment later
    useEffect(() => {
       if (!user) navigate("/not-found");
-      if (isLoggedIn && isVerified) navigate("/", { replace: true });
+      if (isLoggedIn && isVerified) navigate("/");
    }, [user, isLoggedIn, isVerified]);
 
    return (

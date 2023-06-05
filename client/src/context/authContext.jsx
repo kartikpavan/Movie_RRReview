@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
       setAuthInfo({ ...authInfo, isLoading: true });
       const response = await getIsAuth(token);
       if (response.error) {
+         updateNotification("error", response.error);
          return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });
       }
       setAuthInfo({ profile: { ...response.data }, isLoggedIn: true, isLoading: false, error: "" });

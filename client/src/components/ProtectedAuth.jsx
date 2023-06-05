@@ -3,15 +3,15 @@ import { useAuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 const ProtectedAuth = ({ children }) => {
-   const navigate = useNavigate();
-   const { authInfo } = useAuthContext();
+  const navigate = useNavigate();
+  const { authInfo } = useAuthContext();
 
-   useEffect(() => {
-      // if user is logged in, block access to auth routes
-      if (authInfo.isLoggedIn) navigate("/", { replace: true });
-   }, [authInfo.isLoggedIn]);
+  useEffect(() => {
+    // if user is logged in, block access to auth routes
+    if (authInfo.isLoggedIn) navigate("/", { replace: true });
+  }, [authInfo.isLoggedIn]);
 
-   return <>{children}</>;
+  return <>{children}</>;
 };
 
 export default ProtectedAuth;
