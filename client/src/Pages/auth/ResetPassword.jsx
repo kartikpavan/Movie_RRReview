@@ -1,21 +1,66 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { verifyPassResetToken } from "../../api/auth";
+import { useNotificationContext } from "../../context/NotificationContext";
 
+//http://localhost:5173/auth/reset-password?token=e72a10f8effc9e4c2dc7ba817f529fae5b50e711bf2082fb5df79c0b0619&id=647db2bd892e4522da3ed649
 const ResetPassword = () => {
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [confirmPassword, setConfirmPassword] = useState("");
-   const [showPassword, setShowPassword] = useState(false);
+   const navigate = useNavigate();
+   let [searchParams, setSearchParams] = useSearchParams();
+   const { updateNotification } = useNotificationContext();
+   // States for veryfing and validating password reset token in URL search Params
+   const [isVeryfing, setIsVeryfing] = useState(true);
+   const [isValid, setIsValid] = useState(false);
 
-   const handleResetPassword = (e) => {
-      e.preventDefault();
-      alert("form Submitted");
+   const userId = searchParams.get("id");
+   const token = searchParams.get("token");
+
+   // const handleResetPassword = (e) => {
+   //    e.preventDefault();
+   //    alert("form Submitted");
+   // };
+
+   useEffect(() => {
+      checkValidPasswordResetToken();
+   }, []);
+
+   // check if the reset-pass token is valid or not
+   const checkValidPasswordResetToken = async () => {
+      const { error, valid } = await verifyPassResetToken(userId, token);
+      setIsVeryfing(false);
+      if (error) return updateNotification("error", error);
+      if (!valid) {
+         setIsValid(false);
+         return navigate("/auth/reset-password/", { replace: true });
+      }
+      setIsValid(true);
    };
+
+   if (isVeryfing) {
+      return (
+         <section className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center">
+            <h1 className="text-xl   md:text-4xl text-secondary font-semibold">
+               Plase Wait while we verify your token
+            </h1>
+            <div className="loading loading-spinner loading-md md:loading-lg text-secondary"></div>
+         </section>
+      );
+   }
+
+   if (!isValid) {
+      return (
+         <section className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center">
+            <h1 className="text-xl   md:text-4xl text-secondary font-semibold">
+               Sorry, Token is Invalid
+            </h1>
+         </section>
+      );
+   }
 
    return (
       <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
-         <form onSubmit={handleResetPassword} className="card w-96 bg-base-100 shadow-xl">
+         <form className="card w-96 bg-base-100 shadow-xl">
             <div className="card-body">
                <h2 className="text-center text-lg font-semibold">Change Password</h2>
                {/* Email Input */}

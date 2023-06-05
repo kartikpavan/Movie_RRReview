@@ -49,3 +49,27 @@ export async function getIsAuth(token) {
       return { error: error.message || error };
    }
 }
+
+//send Forgot Password Link to User Email
+export async function sendForgotPasswordLink(email) {
+   try {
+      const { data } = await client.post("/users/forgot-password", { email });
+      return data;
+   } catch (error) {
+      const { response } = error;
+      if (response?.data) return response.data;
+      return { error: error.message || error };
+   }
+}
+
+// verify reset-password token
+export async function verifyPassResetToken(userId, token) {
+   try {
+      const { data } = await client.post("/users/verify-reset-password-token", { userId, token });
+      return data;
+   } catch (error) {
+      const { response } = error;
+      if (response?.data) return response.data;
+      return { error: error.message || error };
+   }
+}

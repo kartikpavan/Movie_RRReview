@@ -7,9 +7,10 @@ const ProtectedAuth = ({ children }) => {
    const { authInfo } = useAuthContext();
 
    useEffect(() => {
-      // if user is logged in block access to auth routes
+      // if user is logged in, block access to auth routes
       if (authInfo.isLoggedIn) navigate("/", { replace: true });
    }, [authInfo.isLoggedIn]);
+
    return <>{children}</>;
 };
 

@@ -5,10 +5,17 @@ import Logo from "../assets/logo.png";
 
 import { HiMoon, HiSun } from "react-icons/hi2";
 import { useAuthContext } from "../context/authContext";
+import { useNotificationContext } from "../context/NotificationContext";
 
 const Navbar = () => {
    const { toggleTheme, theme } = useThemeContext();
    const { authInfo, handleLogOut } = useAuthContext();
+   const { updateNotification } = useNotificationContext();
+
+   const logOut = () => {
+      handleLogOut();
+      updateNotification("info", "Logged out Successfully");
+   };
 
    return (
       <nav className="navbar bg-neutral text-neutral-content">
@@ -41,7 +48,7 @@ const Navbar = () => {
                   />
                   {authInfo?.isLoggedIn ? (
                      <button
-                        onClick={handleLogOut}
+                        onClick={logOut}
                         className="btn btn-sm md:btn-md btn-error btn-outline"
                      >
                         Logout

@@ -168,11 +168,11 @@ const forgotPassword = async (req, res) => {
 
    // password reset URL
    //! change later
-   const resetPasswordURL = `http://localhost:5173/reset-password?token=${token}&id=${user._id}`;
+   const resetPasswordURL = `http://localhost:5173/auth/reset-password?token=${token}&id=${user._id}`;
 
    // send URL to user Email
    var transport = generateMailTransporter(); // nodemailer.transporter
-   const info = await transport.sendMail({
+   await transport.sendMail({
       from: "security@movieRRReview.com", // sender address
       to: user.email, // list of receivers
       subject: "Password Reset Link ✔", // Subject line
@@ -189,7 +189,7 @@ const forgotPassword = async (req, res) => {
 
 // VERIFYING RESET PASSWORD TOKEN @POST
 const resetPasswordTokenStatus = async (req, res) => {
-   return res.status(200).json({ msg: { valid: true } });
+   return res.status(200).json({ valid: true });
 };
 
 // CHANGE PASSWORD @POST
