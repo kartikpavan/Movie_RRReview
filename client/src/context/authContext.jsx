@@ -38,12 +38,19 @@ export const AuthContextProvider = ({ children }) => {
    };
 
    // handle Logout
+   const handleLogOut = () => {
+      // delete auth token from local storage
+      localStorage.removeItem("auth-token");
+      setAuthInfo({ ...initialAuthState });
+   };
+
+   // checking user auth state
    useEffect(() => {
       isUserAuth();
    }, []);
 
    return (
-      <AuthContext.Provider value={{ authInfo, handleSignIn, isUserAuth }}>
+      <AuthContext.Provider value={{ authInfo, handleSignIn, isUserAuth, handleLogOut }}>
          {children}
       </AuthContext.Provider>
    );

@@ -8,7 +8,7 @@ import { useAuthContext } from "../context/authContext";
 
 const Navbar = () => {
    const { toggleTheme, theme } = useThemeContext();
-   const { authInfo } = useAuthContext();
+   const { authInfo, handleLogOut } = useAuthContext();
 
    return (
       <nav className="navbar bg-neutral text-neutral-content">
@@ -40,7 +40,12 @@ const Navbar = () => {
                      className="input input-sm md:input-md input-bordered w-full max-w-xs"
                   />
                   {authInfo?.isLoggedIn ? (
-                     <button className="btn btn-sm md:btn-md btn-error btn-outline">Logout</button>
+                     <button
+                        onClick={handleLogOut}
+                        className="btn btn-sm md:btn-md btn-error btn-outline"
+                     >
+                        Logout
+                     </button>
                   ) : (
                      <NavLink to="/auth/signIn" className="btn btn-ghost md:text-lg">
                         Login
