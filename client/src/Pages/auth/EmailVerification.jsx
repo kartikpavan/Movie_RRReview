@@ -70,10 +70,10 @@ const EmailVerification = () => {
    };
 
    // if no user found, redirect to 404 not found page
-
-   useEffect(() => {
-      if (!user) navigate("/not-found");
-   }, [user]);
+   //! uncomment later
+   // useEffect(() => {
+   //    if (!user) navigate("/not-found");
+   // }, [user]);
 
    return (
       <>

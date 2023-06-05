@@ -100,6 +100,7 @@ const verifyEmail = async (req, res) => {
          name: currentUser.name,
          email: currentUser.email,
          token: jwtToken,
+         isVerified: currentUser.isVerified,
       },
       msg: "Email Verification Successful",
    });
@@ -243,7 +244,13 @@ const signIn = async (req, res) => {
       const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
       return res.status(200).json({
-         data: { id: user._id, name: user.name, email: user.email, token: jwtToken },
+         data: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            token: jwtToken,
+            isVerified: user.isVerified,
+         },
       });
    } catch (error) {
       return res.status(500).status({ error: error });

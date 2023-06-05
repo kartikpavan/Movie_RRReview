@@ -100,7 +100,7 @@ const SignUp = () => {
                   </div>
                   {/* Sign Up Button */}
                   <div className="card-actions justify-center my-2">
-                     <button type="submit" className="btn btn-primary">
+                     <button type="submit" className="btn btn-primary btn-wide">
                         Register
                      </button>
                   </div>

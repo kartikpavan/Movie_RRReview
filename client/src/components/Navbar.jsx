@@ -1,14 +1,12 @@
 import React from "react";
-import { useThemeContext } from "../context/themeContext";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
-import { HiMoon, HiSun } from "react-icons/hi2";
 import { useAuthContext } from "../context/authContext";
 import { useNotificationContext } from "../context/NotificationContext";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
-   const { toggleTheme, theme } = useThemeContext();
    const { authInfo, handleLogOut } = useAuthContext();
    const { updateNotification } = useNotificationContext();
 
@@ -29,17 +27,7 @@ const Navbar = () => {
                </NavLink>
                <div className="flex items-center gap-3">
                   {/* Theme toggle */}
-                  {theme === "light" ? (
-                     <HiMoon
-                        className="text-white transition-all duration-300 ease-in-out cursor-pointer w-10 h-10 "
-                        onClick={toggleTheme}
-                     />
-                  ) : (
-                     <HiSun
-                        className="text-white transition-all duration-300 ease-in-out cursor-pointer w-10 h-10"
-                        onClick={toggleTheme}
-                     />
-                  )}
+                  <ThemeToggle />
                   {/* Text Input */}
                   <input
                      type="text"
