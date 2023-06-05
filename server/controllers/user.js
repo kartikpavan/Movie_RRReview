@@ -90,7 +90,19 @@ const verifyEmail = async (req, res) => {
       subject: "Welcome Email ✔", // Subject line
       html: `<h1>Welcome to our App and thanks for choosing us</h1>`, // html body
    });
-   return res.status(200).json({ msg: "Email Verification Successful" });
+   // generating JWT token
+   const jwtToken = jwt.sign({ userId: currentUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+   });
+   return res.status(200).json({
+      user: {
+         id: currentUser._id,
+         name: currentUser.name,
+         email: currentUser.email,
+         token: jwtToken,
+      },
+      msg: "Email Verification Successful",
+   });
 };
 
 //RESEND USER EMAIL_OTP @POST
