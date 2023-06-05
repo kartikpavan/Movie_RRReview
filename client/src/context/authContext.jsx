@@ -23,6 +23,12 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("auth-token", response.data.token);
    };
 
+   // checking if user is authenticated
+   const isUserAuth = () => {
+      const token = localStorage.getItem("auth-token");
+      if (!token) return;
+   };
+
    // handle Logout
 
    return (
