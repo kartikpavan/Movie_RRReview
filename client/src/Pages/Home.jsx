@@ -1,11 +1,17 @@
 import React from "react";
 import { useAuthContext } from "../context/authContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+   const navigate = useNavigate();
+
    const { authInfo } = useAuthContext();
    console.log(authInfo);
    const isVerified = authInfo.profile?.isVerified;
+
+   const navigateToVerificationPage = () => {
+      navigate("/auth/email-verification", { state: { user: authInfo.profile } });
+   };
 
    return (
       <>
@@ -13,9 +19,12 @@ const Home = () => {
          {authInfo.isLoggedIn && !isVerified ? (
             <div className="bg-info text-info-content w-full text-center p-1">
                Seems like you haven't verified your account,{" "}
-               <Link to="/" className="link link-base font-semibold">
+               <button
+                  onClick={navigateToVerificationPage}
+                  className="link link-base font-semibold"
+               >
                   click here to Verifiy your Account
-               </Link>
+               </button>
             </div>
          ) : null}
       </>

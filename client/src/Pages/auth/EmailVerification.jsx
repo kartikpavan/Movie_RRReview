@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { validOneTimePassword } from "../../utils/validator";
-import { verifyUserEmail } from "../../api/auth";
+import { resendVerifyEmailOTP, verifyUserEmail } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
 import Loader from "../../components/Loader";
 import { useAuthContext } from "../../context/authContext";
@@ -11,13 +11,15 @@ const EmailVerification = () => {
    const navigate = useNavigate();
 
    const { updateNotification } = useNotificationContext();
-   const { isUserAuth } = useAuthContext();
+   const { isUserAuth, authInfo } = useAuthContext();
 
    const [oneTimePassword, setOneTimePassword] = useState(Array.from({ length: 6 }).fill(""));
    const [currentIndex, setCurrentIndex] = useState(0);
    const [isLoading, setIsLoading] = useState(false);
 
    const user = location?.state?.user; // getting this user from sign Up Page
+   const { isLoggedIn } = authInfo;
+   const isVerified = authInfo?.profile?.isVerified;
 
    // creating ref to track current Input field and auto jump to next field
    const inputRef = useRef();
@@ -69,11 +71,24 @@ const EmailVerification = () => {
       setIsLoading(false);
    };
 
+   const handleResendOTP = async () => {
+      // API request to backend to resend email verification email
+      setIsLoading(true);
+      const { error, msg } = await resendVerifyEmailOTP(user.id);
+      if (error) {
+         setIsLoading(false);
+         return updateNotification("error", error);
+      }
+      updateNotification("success", msg);
+      setIsLoading(false);
+   };
+
    // if no user found, redirect to 404 not found page
    //! uncomment later
-   // useEffect(() => {
-   //    if (!user) navigate("/not-found");
-   // }, [user]);
+   useEffect(() => {
+      if (!user) navigate("/not-found");
+      if (isLoggedIn && isVerified) navigate("/", { replace: true });
+   }, [user, isLoggedIn, isVerified]);
 
    return (
       <>
@@ -110,6 +125,9 @@ const EmailVerification = () => {
                         Verify Account
                      </button>
                   </div>
+                  <button onClick={handleResendOTP} className="link text-left link-secondary">
+                     I don't have OTP
+                  </button>
                </div>
             </form>
          </section>

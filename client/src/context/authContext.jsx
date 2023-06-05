@@ -19,6 +19,7 @@ export const AuthContextProvider = ({ children }) => {
    const handleSignIn = async (email, password) => {
       setAuthInfo({ ...authInfo, isLoading: true });
       const response = await userSignIn({ email, password });
+      console.log(response.data);
       if (response.error) {
          updateNotification("error", response.error);
          return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });

@@ -38,14 +38,7 @@ const App = () => {
                   </ProtectedAuth>
                }
             />
-            <Route
-               path="/auth/email-verification"
-               element={
-                  <ProtectedAuth>
-                     <EmailVerification />
-                  </ProtectedAuth>
-               }
-            />
+            <Route path="/auth/email-verification" element={<EmailVerification />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
             <Route path="*" element={<Notfound />} />

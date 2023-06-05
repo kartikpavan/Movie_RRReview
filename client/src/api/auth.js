@@ -24,6 +24,18 @@ export async function verifyUserEmail(userInfo) {
    }
 }
 
+// RESENGD VERIFY EMAIL
+export async function resendVerifyEmailOTP(userId) {
+   try {
+      const { data } = await client.post("/users/resend-email-verification-OTP", { userId });
+      return data;
+   } catch (error) {
+      const { response } = error;
+      if (response?.data) return response.data;
+      return { error: error.message || error };
+   }
+}
+
 // SIGN IN
 export async function userSignIn(userInfo) {
    try {
