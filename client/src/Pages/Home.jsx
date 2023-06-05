@@ -6,7 +6,7 @@ const Home = () => {
    const navigate = useNavigate();
 
    const { authInfo } = useAuthContext();
-   console.log(authInfo);
+   console.log("home : ", authInfo);
    const isVerified = authInfo.profile?.isVerified;
 
    const navigateToVerificationPage = () => {

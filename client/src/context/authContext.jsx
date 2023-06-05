@@ -19,7 +19,6 @@ export const AuthContextProvider = ({ children }) => {
    const handleSignIn = async (email, password) => {
       setAuthInfo({ ...authInfo, isLoading: true });
       const response = await userSignIn({ email, password });
-      console.log(response.data);
       if (response.error) {
          updateNotification("error", response.error);
          return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });
@@ -35,12 +34,18 @@ export const AuthContextProvider = ({ children }) => {
       if (!token) return;
 
       setAuthInfo({ ...authInfo, isLoading: true });
-      const response = await getIsAuth(token);
-      if (response.error) {
-         updateNotification("error", response.error);
-         return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });
+      const { data, error } = await getIsAuth(token);
+      if (error) {
+         updateNotification("error", error);
+         return setAuthInfo({ ...authInfo, isLoading: false, error: error });
       }
-      setAuthInfo({ profile: { ...response.data }, isLoggedIn: true, isLoading: false, error: "" });
+      setAuthInfo({
+         ...authInfo,
+         profile: { ...data },
+         isLoggedIn: true,
+         isLoading: false,
+         error: "",
+      });
    };
 
    // handle Logout

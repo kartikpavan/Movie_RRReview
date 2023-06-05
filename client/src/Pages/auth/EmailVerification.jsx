@@ -18,8 +18,9 @@ const EmailVerification = () => {
    const [isLoading, setIsLoading] = useState(false);
 
    const user = location?.state?.user; // getting this user from sign Up Page
-   const { isLoggedIn } = authInfo;
-   const isVerified = authInfo?.profile?.isVerified;
+   console.log(user);
+   const { isLoggedIn, profile } = authInfo;
+   const isVerified = profile?.isVerified;
 
    // creating ref to track current Input field and auto jump to next field
    const inputRef = useRef();

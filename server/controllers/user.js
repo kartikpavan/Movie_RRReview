@@ -47,7 +47,12 @@ const createUser = async (req, res) => {
          `, // html body
       });
       return res.status(201).json({
-         data: { id: newUser._id, email: newUser.email, name: newUser.name },
+         data: {
+            id: newUser._id,
+            email: newUser.email,
+            name: newUser.name,
+            isVerified: newUser.isVerified,
+         },
          msg: `OTP has been sent to ${newUser.email}, Please Verify your email. `,
       });
    } catch (error) {
