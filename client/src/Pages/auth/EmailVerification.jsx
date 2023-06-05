@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { validOneTimePassword } from "../../utils/validator";
 import { verifyUserEmail } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
+import Loader from "../../components/Loader";
 
 const EmailVerification = () => {
    const location = useLocation(); // returns current location object , represents Browser URL
@@ -12,6 +13,7 @@ const EmailVerification = () => {
 
    const [oneTimePassword, setOneTimePassword] = useState(Array.from({ length: 6 }).fill(""));
    const [currentIndex, setCurrentIndex] = useState(0);
+   const [isLoading, setIsLoading] = useState(false);
 
    const user = location?.state?.user; // getting this user from sign Up Page
 
@@ -52,56 +54,64 @@ const EmailVerification = () => {
       if (!isValidOTP) return updateNotification("error", "Invalid OTP");
 
       // API request to backend to Verify email of new user
+      setIsLoading(true);
       const response = await verifyUserEmail({ OTP: oneTimePassword.join(""), userId: user.id });
-      if (response.error) return updateNotification("error", response.error);
+      if (response.error) {
+         setIsLoading(false);
+         return updateNotification("error", response.error);
+      }
       //! remove later
       console.log(response);
       updateNotification("success", response.msg);
       // navigate("/", { replace: true });
+      setIsLoading(true);
    };
 
    // if no user found, redirect to 404 not found page
    //! uncomment
-   // useEffect(() => {
-   //    if (!user) navigate("/not-found");
-   // }, [user]);
+   useEffect(() => {
+      if (!user) navigate("/not-found");
+   }, [user]);
 
    return (
-      <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
-         <form onSubmit={submitHandler} className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body">
-               <h2 className="text-center text-lg font-semibold">
-                  Enter the OTP to verify your Account
-               </h2>
-               <p className="text-gray-500 text-center">
-                  OTP has been sent to your registered Email{" "}
-                  <span className="text-gray-200">ab*****@gmail.com</span>
-               </p>
-               {/* OTP Input */}
-               <div className="flex items-center justify-between ">
-                  {oneTimePassword?.map((_, idx) => {
-                     return (
-                        <input
-                           key={idx}
-                           type="number"
-                           value={oneTimePassword[idx] || ""}
-                           onChange={(e) => handleOTPChange(e, idx)}
-                           ref={currentIndex === idx ? inputRef : null}
-                           className="input input-bordered w-10 text-lg md:w-12 md:text-2xl"
-                        />
-                     );
-                  })}
-               </div>
+      <>
+         {isLoading && <Loader />}
+         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
+            <form onSubmit={submitHandler} className="card w-96 bg-base-100 shadow-xl">
+               <div className="card-body">
+                  <h2 className="text-center text-lg font-semibold">
+                     Enter the OTP to verify your Account
+                  </h2>
+                  <p className="text-gray-500 text-center">
+                     OTP has been sent to your registered Email{" "}
+                     <span className="text-gray-200">ab*****@gmail.com</span>
+                  </p>
+                  {/* OTP Input */}
+                  <div className="flex items-center justify-between ">
+                     {oneTimePassword?.map((_, idx) => {
+                        return (
+                           <input
+                              key={idx}
+                              type="number"
+                              value={oneTimePassword[idx] || ""}
+                              onChange={(e) => handleOTPChange(e, idx)}
+                              ref={currentIndex === idx ? inputRef : null}
+                              className="input input-bordered w-10 text-lg md:w-12 md:text-2xl"
+                           />
+                        );
+                     })}
+                  </div>
 
-               {/* Submit Button */}
-               <div className="card-actions justify-center my-2">
-                  <button type="submit" className="btn btn-primary">
-                     Verify Account
-                  </button>
+                  {/* Submit Button */}
+                  <div className="card-actions justify-center my-2">
+                     <button type="submit" className="btn btn-primary">
+                        Verify Account
+                     </button>
+                  </div>
                </div>
-            </div>
-         </form>
-      </section>
+            </form>
+         </section>
+      </>
    );
 };
 
