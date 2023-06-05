@@ -224,7 +224,7 @@ const resetPassword = async (req, res) => {
      `, // html body
    });
 
-   return res.status(200).status({ msg: "Password changed successfully" });
+   return res.status(200).json({ msg: "Password changed successfully" });
 };
 
 // SIGN IN

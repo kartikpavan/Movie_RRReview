@@ -18,7 +18,6 @@ const ForgotPassword = () => {
       setIsLoading(true);
       // sending api request to an Endpoint
       const response = await sendForgotPasswordLink(email);
-      console.log(response);
       if (response.error) {
          setIsLoading(false);
          return updateNotification("error", "user Email Not found");

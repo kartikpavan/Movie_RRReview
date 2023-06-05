@@ -13,13 +13,13 @@ import { AuthContextProvider } from "./context/authContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
    <React.StrictMode>
       <BrowserRouter>
-         <AuthContextProvider>
-            <NotificationContextProvider>
+         <NotificationContextProvider>
+            <AuthContextProvider>
                <ThemeContextProvider>
                   <App />
                </ThemeContextProvider>
-            </NotificationContextProvider>
-         </AuthContextProvider>
+            </AuthContextProvider>
+         </NotificationContextProvider>
       </BrowserRouter>
    </React.StrictMode>
 );

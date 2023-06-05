@@ -22,7 +22,6 @@ const SignIn = () => {
       const { ok, error } = validateSignInInfo(userInfo);
       if (!ok) updateNotification("error", error);
       await handleSignIn(userInfo.email, userInfo.password);
-      updateNotification("success", "Welcome back, User");
    };
 
    return (
