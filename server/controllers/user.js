@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
    // checking for duplicate User entries
    const existingUser = await User.findOne({ email: email });
    if (existingUser) {
-      return res.status(409).json({ msg: "User Email already exists" }); // Conflicting Email
+      return res.status(409).json({ error: "User Email already exists" }); // Conflicting Email
    }
    // creating new user instance
    const newUser = User({
@@ -49,9 +49,8 @@ const createUser = async (req, res) => {
          data: { id: newUser._id, email: newUser.email, name: newUser.name },
          msg: `OTP has been sent to ${newUser.email}, Please Verify your email. `,
       });
-      // return res.status(200).json({ data: savedUser });
    } catch (error) {
-      return res.status(500).json({ data: error }); // internal server
+      return res.status(500).json({ error: error }); // internal server
    }
 };
 
@@ -62,20 +61,20 @@ const verifyEmail = async (req, res) => {
    // checking if user exists in DB
    if (!isValidObjectId(userId))
       // isValidObjectId() is mongoose method
-      return res.status(404).json({ msg: "Invalid User / User Not Found" });
+      return res.status(404).json({ error: "Invalid User / User Not Found" });
 
    // find the user using the userId
    const currentUser = await User.findById(userId);
-   if (!currentUser) return res.status(404).json({ msg: "Invalid User / User Not Found" });
-   if (currentUser.isVerified) return res.status(409).json({ msg: "User is already Verified" });
+   if (!currentUser) return res.status(404).json({ error: "Invalid User / User Not Found" });
+   if (currentUser.isVerified) return res.status(409).json({ error: "User is already Verified" });
 
    // getting the hashed OTP from the DB
    const token = await EmailToken.findOne({ owner: userId });
-   if (!token) return res.status(404).json({ msg: "Invalid Token / Token Not Found" });
+   if (!token) return res.status(404).json({ error: "Invalid Token / Token Not Found" });
 
    // checking whether the OTP is valid
    const isMatched = await token.compareToken(OTP); // custom compareToken() method
-   if (!isMatched) return res.status(400).json({ msg: "invalid OTP" });
+   if (!isMatched) return res.status(400).json({ error: "invalid OTP" });
 
    // if OTP is correct then update DB isVerified value to true and save
    currentUser.isVerified = true;
@@ -97,16 +96,17 @@ const verifyEmail = async (req, res) => {
 //RESEND USER EMAIL_OTP @POST
 const resendOTP = async (req, res) => {
    const { userId } = req.body;
-   // find the user details from our
+
+   // find the user details from our DB
    const currentUser = await User.findById(userId);
-   if (!currentUser) return res.status(404).json({ msg: "Invalid User / User Not Found" });
+   if (!currentUser) return res.status(404).json({ error: "Invalid User / User Not Found" });
    if (currentUser.isVerified)
-      return res.status(409).json({ msg: "This User is already Verified" });
+      return res.status(409).json({ error: "This User is already Verified" });
 
    // if token already exist
    const existingToken = await EmailToken.findOne({ owner: userId });
    if (existingToken)
-      return res.status(409).json({ msg: "next Token request available after 1 hour" });
+      return res.status(409).json({ error: "next Token request available after 1 hour" });
 
    // if token not found
    let OTP = generateOTP(6); // 6 digit OTP
@@ -135,16 +135,16 @@ const resendOTP = async (req, res) => {
 // FORGET PASSWORD @POST
 const forgotPassword = async (req, res) => {
    const { email } = req.body;
-   if (!email) return res.status(403).json({ msg: "Email not Provided" });
+   if (!email) return res.status(403).json({ error: "Email not Provided" });
 
    // checking if user exists in DB
    const user = await User.findOne({ email: email });
-   if (!user) return res.status(404).json({ msg: "User Email not found" });
+   if (!user) return res.status(404).json({ error: "User Email not found" });
 
    // checking if reset password token is already present in DB
    const existingToken = await ResetPassword.findOne({ owner: user._id });
    if (existingToken)
-      return res.status(409).json({ msg: "next Token request available after 1 hour" });
+      return res.status(409).json({ error: "next Token request available after 1 hour" });
 
    // reset pass token needs to be unique for each user hence, generate random bytes
    // generating Token (Generates cryptographically strong pseudorandom data.)
@@ -191,7 +191,7 @@ const resetPassword = async (req, res) => {
    if (isMatched) {
       return res
          .status(409)
-         .json({ msg: "New Password cannot be same as Old one. Try something else" });
+         .json({ error: "New Password cannot be same as Old one. Try something else" });
    }
 
    // assigning new password
@@ -221,11 +221,11 @@ const signIn = async (req, res) => {
    try {
       // checking if user email exists
       const user = await User.findOne({ email: email });
-      if (!user) res.status(404).json({ msg: `User with email: ${email} not found` });
+      if (!user) res.status(404).json({ error: `User with email: ${email} not found` });
 
       // check if password is correct
       const isMatched = await user.comparePassword(password);
-      if (!isMatched) res.status(404).json({ msg: `Incorrect Password` });
+      if (!isMatched) res.status(404).json({ error: `Incorrect Password` });
 
       // generating JWT token
       const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -234,7 +234,7 @@ const signIn = async (req, res) => {
          data: { id: user._id, name: user.name, email: user.email, token: jwtToken },
       });
    } catch (error) {
-      return res.status(500).status({ msg: error });
+      return res.status(500).status({ error: error });
    }
 };
 

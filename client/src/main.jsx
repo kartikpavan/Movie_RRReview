@@ -5,14 +5,18 @@ import "./index.css";
 
 import { BrowserRouter } from "react-router-dom";
 
+// Context API
 import { ThemeContextProvider } from "./context/themeContext.jsx";
+import { NotificationContextProvider } from "./context/NotificationContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
    <React.StrictMode>
       <BrowserRouter>
-         <ThemeContextProvider>
-            <App />
-         </ThemeContextProvider>
+         <NotificationContextProvider>
+            <ThemeContextProvider>
+               <App />
+            </ThemeContextProvider>
+         </NotificationContextProvider>
       </BrowserRouter>
    </React.StrictMode>
 );

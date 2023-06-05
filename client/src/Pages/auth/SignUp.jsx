@@ -3,11 +3,14 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { validateSignUpUserInfo } from "../../utils/validator";
 import { createUser } from "../../api/auth";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 const initialState = { name: "", email: "", password: "" };
 
 const SignUp = () => {
    const navigate = useNavigate();
+
+   const { updateNotification } = useNotificationContext();
 
    const [userInfo, setUserInfo] = useState(initialState);
    const [errState, setErrState] = useState(false);
@@ -22,14 +25,15 @@ const SignUp = () => {
    const handleSignUp = async (e) => {
       e.preventDefault();
       const { ok, error } = validateSignUpUserInfo(userInfo);
-      if (!ok) setErrState(true);
-      else setErrState(false);
+      if (!ok) {
+         setErrState(true);
+         updateNotification("error", error);
+      } else setErrState(false);
 
       // API request to backend to register new user
       const response = await createUser(userInfo);
-      if (response.error) return console.log("serer error: ", response);
-      //! remove later
-      console.log(response.data);
+      if (response.error) return updateNotification("error", response.error);
+
       navigate("/auth/email-verification", { state: { user: response.data }, replace: true }); // passing data from one component to another
    };
 

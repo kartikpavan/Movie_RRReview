@@ -2,10 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { validOneTimePassword } from "../../utils/validator";
 import { verifyUserEmail } from "../../api/auth";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 const EmailVerification = () => {
    const location = useLocation(); // returns current location object , represents Browser URL
    const navigate = useNavigate();
+
+   const { updateNotification } = useNotificationContext();
 
    const [oneTimePassword, setOneTimePassword] = useState(Array.from({ length: 6 }).fill(""));
    const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,14 +49,15 @@ const EmailVerification = () => {
    const submitHandler = async (e) => {
       e.preventDefault();
       const isValidOTP = validOneTimePassword(oneTimePassword);
-      if (!isValidOTP) return console.log("Invalid OTP");
+      if (!isValidOTP) return updateNotification("error", "Invalid OTP");
 
       // API request to backend to Verify email of new user
       const response = await verifyUserEmail({ OTP: oneTimePassword.join(""), userId: user.id });
-      if (response.error) return console.log("server error : ", response.error);
+      if (response.error) return updateNotification("error", response.error);
       //! remove later
       console.log(response);
-      navigate("/", { replace: true });
+      updateNotification("success", response.msg);
+      // navigate("/", { replace: true });
    };
 
    // if no user found, redirect to 404 not found page

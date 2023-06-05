@@ -17,6 +17,7 @@ const App = () => {
       // width is full and height is set to fit screen
       <main className="w-full h-screen">
          <Navbar />
+
          <Routes>
             <Route path="/" element={<Home />} />
             {/* Auth Routes */}

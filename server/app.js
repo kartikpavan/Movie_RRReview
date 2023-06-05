@@ -19,7 +19,7 @@ app.use("/api/users", userRouter);
 
 // 404 route
 app.use("/*", (req, res) => {
-   return res.status(404).json({ msg: "Page Not Found" });
+   return res.status(404).json({ error: "Page Not Found" });
 });
 
 // global async-error handler

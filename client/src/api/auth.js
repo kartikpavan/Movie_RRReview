@@ -7,7 +7,7 @@ export async function createUser(userInfo) {
    } catch (error) {
       const { response } = error;
       if (response?.data) return response.data;
-      return { msg: error.message || error };
+      return { error: error.message || error };
    }
 }
 
@@ -18,6 +18,6 @@ export async function verifyUserEmail(userInfo) {
    } catch (error) {
       const { response } = error;
       if (response?.data) return response.data;
-      return { msg: error.message || error };
+      return { error: error.message || error };
    }
 }
