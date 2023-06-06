@@ -113,17 +113,38 @@ const removeActor = async (req, res) => {
    res.status(200).json({ msg: "Actor Deleted Successfully" });
 };
 
-// Search Actors
+// Search Actors @GET
 const searchActor = async (req, res) => {
    const { query } = req;
    const results = await Actor.find({ $text: { $search: `"${query.name}"` } });
-   res.json(results);
+   res.status(200).json({ data: results });
 };
 
-// Latest Actors
+// Latest Actors @GET
 const latestActors = async (req, res) => {
-   const result = await Actor.find().sort({ createdAt: "-1" }).limit(12);
-   res.json(result);
+   const results = await Actor.find().sort({ createdAt: "-1" }).limit(12);
+   res.status(200).json({ data: results });
 };
 
-module.exports = { createActor, updateActor, removeActor, searchActor, latestActors };
+// Single Actor @GET
+const getSingleActor = async (req, res) => {
+   const { actorId } = req.params;
+
+   // checking if actor exists in DB
+   if (!isValidObjectId(actorId))
+      // isValidObjectId() is mongoose method
+      return res.status(404).json({ error: "Invalid actor / actor Not Found" });
+
+   const actor = await Actor.findById(actorId);
+   if (!actor) res.status(404).json({ error: "Invalid actor / actor Not Found" });
+
+   res.status(200).json({ data: actor });
+};
+module.exports = {
+   createActor,
+   updateActor,
+   removeActor,
+   searchActor,
+   latestActors,
+   getSingleActor,
+};
