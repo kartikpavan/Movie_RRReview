@@ -116,8 +116,14 @@ const removeActor = async (req, res) => {
 // Search Actors
 const searchActor = async (req, res) => {
    const { query } = req;
-   const results = await Actor.find({ $text: { $search: query.name } });
+   const results = await Actor.find({ $text: { $search: `"${query.name}"` } });
    res.json(results);
 };
 
-module.exports = { createActor, updateActor, removeActor, searchActor };
+// Latest Actors
+const latestActors = async (req, res) => {
+   const result = await Actor.find().sort({ createdAt: "-1" }).limit(12);
+   res.json(result);
+};
+
+module.exports = { createActor, updateActor, removeActor, searchActor, latestActors };
