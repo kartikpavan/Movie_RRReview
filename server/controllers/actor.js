@@ -113,4 +113,11 @@ const removeActor = async (req, res) => {
    res.status(200).json({ msg: "Actor Deleted Successfully" });
 };
 
-module.exports = { createActor, updateActor, removeActor };
+// Search Actors
+const searchActor = async (req, res) => {
+   const { query } = req;
+   const results = await Actor.find({ $text: { $search: query.name } });
+   res.json(results);
+};
+
+module.exports = { createActor, updateActor, removeActor, searchActor };
