@@ -25,6 +25,12 @@ exports.signInValidator = [
    check("password").trim().notEmpty().withMessage("Password is Missing"),
 ];
 
+exports.actorUploadValidator = [
+   check("name").trim().notEmpty().withMessage("Name is Missing"),
+   check("description").trim().notEmpty().withMessage("Description is Missing"),
+   check("gender").trim().notEmpty().withMessage("Gender is Missing"),
+];
+
 // middleware
 exports.validate = (req, res, next) => {
    const result = validationResult(req).array();
