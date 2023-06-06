@@ -26,6 +26,8 @@ const isValidResetPasswordToken = async (req, res, next) => {
 const isAuth = async (req, res, next) => {
    const token = req.headers?.authorization;
 
+   if (!token) return res.status(404).json({ error: "Missing Auth Token" });
+
    const jwtToken = token.split("Bearer ")[1];
    if (!jwtToken) return res.status(404).json({ error: "invalid Token" });
    const decode = jwt.verify(jwtToken, process.env.JWT_SECRET);
@@ -39,4 +41,10 @@ const isAuth = async (req, res, next) => {
    next();
 };
 
-module.exports = { isValidResetPasswordToken, isAuth };
+const isAdmin = async (req, res, next) => {
+   if (req.user.role !== "admin") return res.status(401).json({ error: "Unauthorized Access" });
+
+   next();
+};
+
+module.exports = { isValidResetPasswordToken, isAuth, isAdmin };

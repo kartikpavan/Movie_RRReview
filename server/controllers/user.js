@@ -256,6 +256,7 @@ const signIn = async (req, res) => {
             email: user.email,
             token: jwtToken,
             isVerified: user.isVerified,
+            role: user.role,
          },
       });
    } catch (error) {

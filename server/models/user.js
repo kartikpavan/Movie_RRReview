@@ -22,6 +22,12 @@ const UserSchema = mongoose.Schema({
       required: true,
       default: false,
    },
+   role: {
+      type: String,
+      required: true,
+      default: "member",
+      enum: ["admin", "member"], // either of these 2 values can be accepted
+   },
 });
 
 // pre Middleware for hashing Password
