@@ -22,7 +22,12 @@ const createActor = async (req, res) => {
    // Cloudinary Image upload
    // making image upload optional
    if (req.file) {
-      const { secure_url, public_id } = await cloudinary.uploader.upload(req.file.path);
+      const { secure_url, public_id } = await cloudinary.uploader.upload(req.file.path, {
+         gravity: "face",
+         height: 500,
+         width: 500,
+         crop: "thumb",
+      });
       newActor.avatar = {
          url: secure_url,
          public_id: public_id,
@@ -54,6 +59,7 @@ const updateActor = async (req, res) => {
 
    const actor = await Actor.findById(actorId);
    if (!actor) return res.status(404).json({ error: "Invalid Actor / Actor Not Found" });
+
    // delete old image from storage if new image is present
    if (actor.avatar?.public_id && file) {
       const { result } = await cloudinary.uploader.destroy(actor.avatar?.public_id);
@@ -83,4 +89,28 @@ const updateActor = async (req, res) => {
    });
 };
 
-module.exports = { createActor, updateActor };
+// Delete actor @DELETE
+const removeActor = async (req, res) => {
+   const { actorId } = req.params;
+
+   // checking if actor exists in DB
+   if (!isValidObjectId(actorId))
+      // isValidObjectId() is mongoose method
+      return res.status(404).json({ error: "Invalid actor / actor Not Found" });
+
+   const actor = await Actor.findById(actorId);
+   if (!actor) return res.status(404).json({ error: "Invalid Actor / Actor Not Found" });
+
+   // delete old image from storage if new image is present
+   if (actor.avatar?.public_id) {
+      const { result } = await cloudinary.uploader.destroy(actor.avatar?.public_id);
+      if (result !== "ok") {
+         return res.status(404).json({ error: "Not able to delete image from Cloud" });
+      }
+   }
+
+   await Actor.findByIdAndDelete(actorId);
+   res.status(200).json({ msg: "Actor Deleted Successfully" });
+};
+
+module.exports = { createActor, updateActor, removeActor };
