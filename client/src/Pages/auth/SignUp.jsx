@@ -6,6 +6,8 @@ import { createUser } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
 import Loader from "../../components/Loader";
 
+import { motion } from "framer-motion";
+
 const initialState = { name: "", email: "", password: "" };
 
 const SignUp = () => {
@@ -45,7 +47,12 @@ const SignUp = () => {
    return (
       <>
          {isLoading && <Loader />}
-         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
+         <motion.section
+            className="w-full h-[calc(100%-5rem)] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+         >
             <form onSubmit={handleSubmit} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Create a new Account</h2>
@@ -112,7 +119,7 @@ const SignUp = () => {
                   </p>
                </div>
             </form>
-         </section>
+         </motion.section>
       </>
    );
 };

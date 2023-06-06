@@ -6,6 +6,8 @@ import { validateSignInInfo } from "../../utils/validator";
 import { useAuthContext } from "../../context/authContext";
 import Loader from "../../components/Loader";
 
+import { motion } from "framer-motion";
+
 const SignIn = () => {
    const { updateNotification } = useNotificationContext();
    const { handleSignIn, authInfo } = useAuthContext();
@@ -27,7 +29,12 @@ const SignIn = () => {
    return (
       <>
          {authInfo.isLoading && <Loader />}
-         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
+         <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { ease: "easeIn", duration: 0.5 } }}
+            className="w-full h-[calc(100%-5rem)] flex items-center justify-center"
+         >
             <form onSubmit={handleSubmit} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Sign In</h2>
@@ -80,7 +87,7 @@ const SignIn = () => {
                   </div>
                </div>
             </form>
-         </section>
+         </motion.section>
       </>
    );
 };

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, createContext } from "react";
 import { getIsAuth, userSignIn } from "../api/auth";
 import { useNotificationContext } from "./NotificationContext";
 
-const AuthContext = createContext();
+const AuthContext = createContext(undefined);
 
 const initialAuthState = {
    profile: null,
@@ -57,7 +57,7 @@ export const AuthContextProvider = ({ children }) => {
 
    // checking user auth state
    useEffect(() => {
-      isUserAuth();
+      isUserAuth()
    }, []);
 
    return (

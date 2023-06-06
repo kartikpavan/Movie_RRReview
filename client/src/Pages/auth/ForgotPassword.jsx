@@ -5,6 +5,8 @@ import { validEmail } from "../../utils/validator";
 import { useNotificationContext } from "../../context/NotificationContext";
 import Loader from "../../components/Loader";
 
+import { motion } from "framer-motion";
+
 const ForgotPassword = () => {
    const { updateNotification } = useNotificationContext();
    const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +31,12 @@ const ForgotPassword = () => {
    return (
       <>
          {isLoading && <Loader />}
-         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
+         <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="w-full h-[calc(100%-5rem)] flex items-center justify-center"
+         >
             <form onSubmit={handleForgotPassword} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Forgot Your Password?</h2>
@@ -73,7 +80,7 @@ const ForgotPassword = () => {
                   </div>
                </div>
             </form>
-         </section>
+         </motion.section>
       </>
    );
 };
