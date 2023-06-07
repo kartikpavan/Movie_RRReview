@@ -7,6 +7,7 @@ const app = express();
 
 const userRouter = require("./routes/user");
 const actorRouter = require("./routes/actor");
+const movieRouter = require("./routes/movie");
 
 //global middlewares
 app.use(cors());
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 // Route Middleware
 app.use("/api/users", userRouter);
 app.use("/api/actors", actorRouter);
+app.use("/api/movies", movieRouter);
 
 // 404 route
 app.use("/*", (req, res) => {
