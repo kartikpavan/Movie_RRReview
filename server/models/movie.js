@@ -28,7 +28,7 @@ const MovieSchema = new Schema(
          required: true,
          enum: ["public", "private"], // if public , display to public otherwise only admin
       },
-      category: {
+      type: {
          type: String,
          required: true,
       },
