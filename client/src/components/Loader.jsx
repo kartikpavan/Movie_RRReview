@@ -9,11 +9,6 @@ const Loader = () => {
       </div>,
       document.getElementById("loader")
    );
-   // return (
-   // 	<div className="overlay">
-   // 		<div class="loader"></div>
-   // 	</div>
-   // );
 };
 
 export default Loader;
