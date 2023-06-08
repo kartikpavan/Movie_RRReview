@@ -105,4 +105,55 @@ const createMovie = async (req, res) => {
    });
 };
 
-module.exports = { uploadTrailer, createMovie };
+const updateMovieWithoutPoster = async (req, res) => {
+   const { body } = req;
+
+   if (!isValidObjectId(req.params.movieId)) return res.json({ error: "Movie id not Found" });
+   const movie = await Movie.findById(req.params.movieId);
+   // checking if movie exists inside DB
+   if (!movie) return res.status(404).json({ error: "Movie Not found inside Database" });
+
+   const {
+      title, // "some title" //*
+      storyLine, // "Some description" //*
+      director, // "Some name"
+      releaseDate, // "07-12-2009" //*
+      status, // "private" //*
+      type, // "movie" //*
+      genres, // ["Sci-fi", "Action","Adventure"] //*
+      tags, // ["action","movie","hollywood"] //*
+      cast, // [{actor:"sds1212sdf",roleAs:"John Doe",leadActor:true}] //*
+      writers, // ['12121','asd231]
+      trailer, // {url:'https:://', public_id:"sdsdqw1212"} //*
+      language, // "english" //*
+   } = body;
+
+   movie.title = title;
+   movie.storyLine = storyLine;
+   movie.releaseDate = releaseDate;
+   movie.status = status;
+   movie.type = type;
+   movie.genres = genres;
+   movie.tags = tags;
+   movie.cast = cast;
+   movie.language = language;
+   movie.trailer = trailer;
+
+   // director and writers are optional fields hence, explicit checking
+   if (director) {
+      if (!isValidObjectId(director)) return res.json({ error: "Invalid Director Id" });
+      movie.director = director;
+   }
+   if (writers) {
+      for (let writer of writers) {
+         if (!isValidObjectId(writer)) return res.json({ error: "Invalid Writer " });
+      }
+      movie.writers = writers;
+   }
+
+   const updatedMovie = await movie.save();
+
+   res.json({ msg: "Movie Updated Successfully", data: updatedMovie });
+};
+
+module.exports = { uploadTrailer, createMovie, updateMovieWithoutPoster };

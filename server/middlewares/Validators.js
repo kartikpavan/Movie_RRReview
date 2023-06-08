@@ -37,7 +37,7 @@ exports.actorUploadValidator = [
 exports.movieUploadValidator = [
    check("title").trim().notEmpty().withMessage("title is Missing"),
    check("storyLine").trim().notEmpty().withMessage("Story line is Missing"),
-   // check("releaseDate").isDate().withMessage("Release Date is Missing"),
+   check("releaseDate").isDate().withMessage("Release Date is Missing"),
    check("status").isIn(["public", "private"]).withMessage("Status can only be public or private"),
    check("type").trim().notEmpty().withMessage("Movie Type is Missing"),
    check("language").trim().notEmpty().withMessage("Language is Missing"),
@@ -100,10 +100,10 @@ exports.movieUploadValidator = [
          }
          return true;
       }),
-   check("poster").custom((_, { req }) => {
-      if (!req.file) throw Error("Poster file is missing");
-      return true;
-   }),
+   // check("poster").custom((_, { req }) => {
+   //    if (!req.file) throw Error("Poster file is missing");
+   //    return true;
+   // }),
 ];
 
 // middleware
