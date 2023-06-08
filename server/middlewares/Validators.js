@@ -87,7 +87,7 @@ exports.movieUploadValidator = [
                throw Error("Trailer Url is invalid");
             }
             const arr = url.split("/");
-            const publicId = arr[arr.length - 1] / split(".")[0];
+            const publicId = arr[arr.length - 1].split(".")[0];
             if (publicId === public_id) {
                throw Error("Trailer Public Id is invalid");
             }
