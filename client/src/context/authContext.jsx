@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
    const { updateNotification } = useNotificationContext();
 
    // Sign in
-   const handleSignIn = async (email, password) => {
+   async function handleSignIn(email, password) {
       setAuthInfo({ ...authInfo, isLoading: true });
       const response = await userSignIn({ email, password });
       if (response.error) {
@@ -26,10 +26,10 @@ export const AuthContextProvider = ({ children }) => {
       setAuthInfo({ profile: { ...response.data }, isLoggedIn: true, isLoading: false, error: "" });
       localStorage.setItem("auth-token", response.data.token);
       updateNotification("success", `Welcome back ${response?.data?.name}`);
-   };
+   }
 
    // checking if user is authenticated and skip Sign In part
-   const isUserAuth = async () => {
+   async function isUserAuth() {
       const token = localStorage.getItem("auth-token");
       if (!token) return;
 
@@ -46,18 +46,18 @@ export const AuthContextProvider = ({ children }) => {
          isLoading: false,
          error: "",
       });
-   };
+   }
 
    // handle Logout
-   const handleLogOut = () => {
+   function handleLogOut() {
       // delete auth token from local storage
       localStorage.removeItem("auth-token");
       setAuthInfo({ ...initialAuthState });
-   };
+   }
 
    // checking user auth state
    useEffect(() => {
-      isUserAuth()
+      isUserAuth();
    }, []);
 
    return (

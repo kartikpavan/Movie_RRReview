@@ -37,19 +37,20 @@ exports.actorUploadValidator = [
 exports.movieUploadValidator = [
    check("title").trim().notEmpty().withMessage("title is Missing"),
    check("storyLine").trim().notEmpty().withMessage("Story line is Missing"),
-   check("releaseDate").isDate().withMessage("Release Date is missing is Missing"),
+   check("releaseDate").isDate().withMessage("Release Date is Missing"),
    check("status").isIn(["public", "private"]).withMessage("Status can only be public or private"),
    check("type").trim().notEmpty().withMessage("Movie Type is Missing"),
    check("language").trim().notEmpty().withMessage("Language is Missing"),
    check("genres")
       .isArray()
       .withMessage("Genre must be array of strings")
-      .custom((value, { req }) => {
+      .custom((value) => {
          for (let genre of value) {
             if (!genreData.includes(genre)) {
                throw Error("Invalid Genre / Not Found");
             }
          }
+         return true;
       }),
    check("tags")
       .isArray({ min: 1 })
@@ -60,6 +61,7 @@ exports.movieUploadValidator = [
                throw Error("Tag must be string");
             }
          }
+         return true;
       }),
    check("cast")
       .isArray()
@@ -67,6 +69,7 @@ exports.movieUploadValidator = [
       .custom((value, { req }) => {
          for (let c of value) {
             if (!isValidObjectId(c.actor)) {
+               //! this can be c.id
                throw Error("Invalid Cast id inside cast object");
             }
             if (!c.roleAs?.trim()) {
@@ -76,6 +79,7 @@ exports.movieUploadValidator = [
                throw Error("leadActor can only be Boolean  inside cast object");
             }
          }
+         return true;
       }),
    check("trailer")
       .isObject()
@@ -94,9 +98,11 @@ exports.movieUploadValidator = [
          } catch (error) {
             throw Error("Trailer Url is invalid");
          }
+         return true;
       }),
    check("poster").custom((_, { req }) => {
       if (!req.file) throw Error("Poster file is missing");
+      return true;
    }),
 ];
 
