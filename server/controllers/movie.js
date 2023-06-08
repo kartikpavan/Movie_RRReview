@@ -244,4 +244,40 @@ const updateMovieWithPoster = async (req, res) => {
    res.json({ msg: "Movie Updated Successfully", data: updatedMovie });
 };
 
-module.exports = { uploadTrailer, createMovie, updateMovieWithoutPoster, updateMovieWithPoster };
+const removeMovie = async (req, res) => {
+   const { movieId } = req.params;
+   if (!isValidObjectId(movieId)) return res.json({ error: "Movie id not Found" });
+
+   const movie = await Movie.findById(movieId);
+   //check if the movie exists inside the DB
+   if (!movie) return res.status(404).json({ error: "Movie Not found inside Database" });
+
+   // removing poster from cloudinary if there is any
+   const posterId = movie.poster?.public_id;
+   if (posterId) {
+      const { result } = await cloudinary.uploader.destroy(posterId);
+      if (result !== "ok") {
+         res.json({ error: "Could not delete poster from Cloud" });
+      }
+   }
+   // removing Video Trailer from cloudinary if there is any
+   const trailerId = movie.trailer?.public_id;
+   if (!trailerId) {
+      return res.status(404).json({ error: "Movie Trailer public_id Not found inside Cloud" });
+   }
+   const { result } = await cloudinary.uploader.destroy(trailerId, { resource_type: "video" });
+   if (result !== "ok") {
+      res.json({ error: "Could not delete trailer from Cloud" });
+   }
+   // removing movie data from Mongo db
+   await Movie.findByIdAndDelete(movieId);
+   res.status(201).json({ msg: "Movie Removed from the Database !" });
+};
+
+module.exports = {
+   uploadTrailer,
+   createMovie,
+   updateMovieWithoutPoster,
+   updateMovieWithPoster,
+   removeMovie,
+};
