@@ -58,6 +58,7 @@ const MovieSchema = new Schema(
          type: Object,
          url: { type: String, required: true },
          public_id: { type: String, required: true },
+         responsiveImages: [URL],
          required: true,
       },
       trailer: {
