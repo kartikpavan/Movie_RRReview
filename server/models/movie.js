@@ -33,7 +33,7 @@ const MovieSchema = new Schema(
          required: true,
       },
       genres: {
-         type: String,
+         type: [String],
          required: true,
          enum: genreData,
       },

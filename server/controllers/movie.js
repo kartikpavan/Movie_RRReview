@@ -27,18 +27,18 @@ const uploadTrailer = async (req, res) => {
 const createMovie = async (req, res) => {
    const { file, body } = req;
    const {
-      title, // "some title" //!
-      storyLine, // "Some description" //!
+      title, // "some title" //*
+      storyLine, // "Some description" //*
       director, // "Some name"
-      releaseDate, // "07-12-2009" //!
-      status, // "private" //!
-      type, // "movie" //!
-      genres, // ["Sci-fi", "Action","Adventure"] //!
-      tags, // ["action","movie","hollywood"] //!
-      cast, // [{actor:"sds1212sdf",roleAs:"John Doe",leadActor:true}] //!
+      releaseDate, // "07-12-2009" //*
+      status, // "private" //*
+      type, // "movie" //*
+      genres, // ["Sci-fi", "Action","Adventure"] //*
+      tags, // ["action","movie","hollywood"] //*
+      cast, // [{actor:"sds1212sdf",roleAs:"John Doe",leadActor:true}] //*
       writers, // ['12121','asd231]
-      trailer, // {url:'https:://', public_id:"sdsdqw1212"} //!
-      language, // "english" //!
+      trailer, // {url:'https:://', public_id:"sdsdqw1212"} //*
+      language, // "english" //*
    } = body;
    console.log(req.body);
 
@@ -50,7 +50,7 @@ const createMovie = async (req, res) => {
       type,
       genres,
       tags,
-      cast, //!
+      cast,
       trailer,
       language,
    });
