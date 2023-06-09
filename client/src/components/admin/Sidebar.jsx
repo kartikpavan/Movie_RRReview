@@ -10,8 +10,14 @@ import {
    AiTwotoneVideoCamera,
    AiOutlineLogout,
 } from "react-icons/ai";
+import Search from "./Search";
 
 const Sidebar = () => {
+   const logout = () => {
+      localStorage.removeItem("auth-token");
+      window.location.reload();
+   };
+
    return (
       <>
          {/* :LOGO and Theme Toggle */}
@@ -23,6 +29,8 @@ const Sidebar = () => {
             <ThemeToggle />
          </div>
          {/* Nav Items */}
+         <Search />
+
          <NavItem to="/">
             <AiOutlineHome /> Home
          </NavItem>
@@ -32,8 +40,13 @@ const Sidebar = () => {
          <NavItem to="/movies">
             <AiTwotoneVideoCamera /> Movies
          </NavItem>
+         <button className="btn btn-outline btn-info text-lg my-3">Add Actor</button>
+         <button className="btn btn-outline btn-info text-lg my-3">Add Movie</button>
 
-         <button className="mt-auto flex items-center justify-between btn btn-error btn-lg btn-outline ">
+         <button
+            onClick={logout}
+            className="mt-auto flex items-center justify-between btn btn-error btn-lg btn-outline "
+         >
             Admin Log Out
             <AiOutlineLogout size={28} />
          </button>
@@ -47,8 +60,8 @@ const NavItem = ({ children, to }) => {
          to={to}
          className={({ isActive }) =>
             isActive
-               ? "flex  items-center gap-x-2 text-2xl text-info font-semibold bg-neutral rounded-md p-2 my-2 transition-all ease-in-out duration-200"
-               : "flex  items-center gap-x-2 text-xl font-semibold  p-2 my-2"
+               ? "flex items-center gap-x-2 text-2xl text-info font-semibold bg-neutral rounded-md p-2 my-3 transition-all ease-in-out duration-200"
+               : "flex items-center gap-x-2 text-xl font-semibold  p-2 my-3"
          }
       >
          {children}

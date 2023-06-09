@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { getIsAuth, userSignIn } from "../api/auth";
 import { useNotificationContext } from "./NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(undefined);
 
@@ -12,6 +13,7 @@ const initialAuthState = {
 };
 
 export const AuthContextProvider = ({ children }) => {
+   const navigate = useNavigate();
    const [authInfo, setAuthInfo] = useState({ ...initialAuthState });
    const { updateNotification } = useNotificationContext();
 
@@ -23,6 +25,7 @@ export const AuthContextProvider = ({ children }) => {
          updateNotification("error", response.error);
          return setAuthInfo({ ...authInfo, isLoading: false, error: response.error });
       }
+      navigate("/", { replace: true });
       setAuthInfo({ profile: { ...response.data }, isLoggedIn: true, isLoading: false, error: "" });
       localStorage.setItem("auth-token", response.data.token);
       updateNotification("success", `Welcome back ${response?.data?.name}`);

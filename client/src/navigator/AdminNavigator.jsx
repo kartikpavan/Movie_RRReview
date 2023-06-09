@@ -3,12 +3,17 @@ import { Routes, Route } from "react-router-dom";
 import { Notfound } from "../Pages";
 import { AdminActors, AdminMovies, Dashboard, Sidebar } from "../components";
 
+import { GiHamburgerMenu } from "react-icons/gi";
+
 const AdminNavigator = () => {
    return (
       <>
          <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col items-center justify-center">
+            <div className="drawer-content flex flex-col m-4 border">
+               <label htmlFor="my-drawer-2" className="drawer-button lg:hidden">
+                  <GiHamburgerMenu size={28} />
+               </label>
                {/* Page content here */}
                <Routes>
                   <Route path="/" element={<Dashboard />} />
@@ -16,9 +21,6 @@ const AdminNavigator = () => {
                   <Route path="/movies" element={<AdminMovies />} />
                   <Route path="*" element={<Notfound />} />
                </Routes>
-               <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-                  Open drawer
-               </label>
             </div>
             <div className="drawer-side">
                <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
