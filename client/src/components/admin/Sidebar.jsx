@@ -9,6 +9,7 @@ import {
    AiOutlineUser,
    AiTwotoneVideoCamera,
    AiOutlineLogout,
+   AiOutlinePlus,
 } from "react-icons/ai";
 import Search from "./Search";
 
@@ -28,9 +29,8 @@ const Sidebar = () => {
             </Link>
             <ThemeToggle />
          </div>
-         {/* Nav Items */}
+         {/* Search bar */}
          <Search />
-
          <NavItem to="/">
             <AiOutlineHome /> Home
          </NavItem>
@@ -40,9 +40,21 @@ const Sidebar = () => {
          <NavItem to="/movies">
             <AiTwotoneVideoCamera /> Movies
          </NavItem>
-         <button className="btn btn-outline btn-info text-lg my-3">Add Actor</button>
-         <button className="btn btn-outline btn-info text-lg my-3">Add Movie</button>
-
+         {/* Add Buttons */}
+         <button
+            onClick={() => window.actor_modal.showModal()}
+            className="btn bg-base-100 text-lg my-3"
+         >
+            <AiOutlinePlus size={22} /> Add Actor
+         </button>
+         <button
+            onClick={() => window.movie_modal.showModal()}
+            className="btn bg-base-100 text-lg my-3"
+         >
+            <AiOutlinePlus size={22} />
+            Add Movie
+         </button>
+         {/* LogOut Button */}
          <button
             onClick={logout}
             className="mt-auto flex items-center justify-between btn btn-error btn-lg btn-outline "
