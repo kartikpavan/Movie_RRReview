@@ -3,10 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { validOneTimePassword } from "../../utils/validator";
 import { resendVerifyEmailOTP, verifyUserEmail } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
-import Loader from "../../components/Loader";
-import { useAuthContext } from "../../context/authContext";
 
-import { motion } from "framer-motion";
+import { useAuthContext } from "../../context/authContext";
+import { Loader } from "../../components";
 
 const EmailVerification = () => {
    const location = useLocation(); // returns current location object , represents Browser URL
@@ -96,12 +95,7 @@ const EmailVerification = () => {
    return (
       <>
          {isLoading && <Loader />}
-         <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="w-full h-[calc(100%-5rem)] flex items-center justify-center"
-         >
+         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
             <form onSubmit={submitHandler} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">
@@ -138,7 +132,7 @@ const EmailVerification = () => {
                   </button>
                </div>
             </form>
-         </motion.section>
+         </section>
       </>
    );
 };

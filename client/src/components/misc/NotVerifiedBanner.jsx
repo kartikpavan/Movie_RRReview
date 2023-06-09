@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../../context/authContext";
 
 const NotVerifiedBanner = () => {
    const navigate = useNavigate();

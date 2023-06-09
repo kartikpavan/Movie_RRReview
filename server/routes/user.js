@@ -37,7 +37,13 @@ router.post(
 router.get("/is-auth", isAuth, (req, res) => {
    const { user } = req;
    res.json({
-      data: { id: user._id, name: user.name, email: user.email, isVerified: user.isVerified },
+      data: {
+         id: user._id,
+         name: user.name,
+         email: user.email,
+         isVerified: user.isVerified,
+         role: user.role,
+      },
    });
 });
 module.exports = router;

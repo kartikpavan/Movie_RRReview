@@ -3,9 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { changePassword, verifyPassResetToken } from "../../api/auth";
 import { useNotificationContext } from "../../context/NotificationContext";
-import Loader from "../../components/Loader";
-
-import { motion } from "framer-motion";
+import { Loader } from "../../components";
 
 //http://localhost:5173/auth/reset-password?token=e72a10f8effc9e4c2dc7ba817f529fae5b50e711bf2082fb5df79c0b0619&id=647db2bd892e4522da3ed649
 const ResetPassword = () => {
@@ -67,44 +65,29 @@ const ResetPassword = () => {
 
    if (isVeryfing) {
       return (
-         <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center"
-         >
+         <section className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center">
             <h1 className="text-xl   md:text-4xl text-secondary font-semibold">
                Plase Wait while we verify your token
             </h1>
             <div className="loading loading-spinner loading-md md:loading-lg text-secondary"></div>
-         </motion.section>
+         </section>
       );
    }
 
    if (!isValid) {
       return (
-         <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center"
-         >
+         <section className="w-full h-[calc(100%-5rem)] flex flex-col gap-y-5 items-center justify-center">
             <h1 className="text-xl   md:text-4xl text-secondary font-semibold">
                Sorry, Token is Invalid
             </h1>
-         </motion.section>
+         </section>
       );
    }
 
    return (
       <>
          {isLoading && <Loader />}
-         <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="w-full h-[calc(100%-5rem)] flex items-center justify-center"
-         >
+         <section className="w-full h-[calc(100%-5rem)] flex items-center justify-center">
             <form onSubmit={handleResetPassword} className="card w-96 bg-base-100 shadow-xl">
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Change Password</h2>
@@ -145,7 +128,7 @@ const ResetPassword = () => {
                   </div>
                </div>
             </form>
-         </motion.section>
+         </section>
       </>
    );
 };

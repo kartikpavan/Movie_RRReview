@@ -107,6 +107,7 @@ const verifyEmail = async (req, res) => {
          email: currentUser.email,
          token: jwtToken,
          isVerified: currentUser.isVerified,
+         role: currentUser.role,
       },
       msg: "Email Verification Successful",
    });

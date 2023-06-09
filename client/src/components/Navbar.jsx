@@ -4,7 +4,7 @@ import Logo from "../assets/logo.png";
 
 import { useAuthContext } from "../context/authContext";
 import { useNotificationContext } from "../context/NotificationContext";
-import ThemeToggle from "./ThemeToggle";
+import { ThemeToggle } from "../components";
 
 const Navbar = () => {
    const { authInfo, handleLogOut } = useAuthContext();
