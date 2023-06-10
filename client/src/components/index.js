@@ -9,8 +9,8 @@ import Dashboard from "./admin/Dashboard";
 import AdminActors from "./admin/AdminActors";
 import AdminMovies from "./admin/AdminMovies";
 import Sidebar from "./admin/Sidebar";
-import MovieModal from "./misc/MovieModal";
-import ActorModal from "./misc/ActorModal";
+import MovieModal from "./admin/MovieModal";
+import ActorModal from "./admin/ActorModal";
 
 export {
   Loader,

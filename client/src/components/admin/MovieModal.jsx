@@ -4,46 +4,49 @@ import { uploadMovieTrailer } from "../../api/movie";
 import { FileUploader } from "react-drag-drop-files";
 import { FaUpload } from "react-icons/fa";
 import { MdOutlineCloudDone } from "react-icons/md";
+import MovieForm from "./MovieForm";
 const videoFileTypes = ["mp4", "avi"];
 
 const MovieModal = () => {
   const { updateNotification } = useNotificationContext();
   const [file, setFile] = useState(null);
-  const [videoSelected, setVideoSelected] = useState(false);
+  const [videoSelected, setVideoSelected] = useState(true);
+  const [isLoading, setIsloading] = useState(false);
+  const [videoInfo, setVideoinfo] = useState({});
 
-  const handleChange = async (file) => {
+  //   Upload Trailer Function
+  const handleUploadTrailer = async (formData) => {
+    setIsloading(true);
     setFile(file);
+    const { error, url, public_id } = await uploadMovieTrailer(formData);
+    if (error) updateNotification("error", error);
+    setVideoinfo({ url, public_id });
+    setVideoSelected(true);
+    setIsloading(false);
+  };
+
+  const handleChange = (file) => {
     const formData = new FormData();
     formData.append("trailer", file);
-    const res = await uploadMovieTrailer(formData);
-    console.log(res);
-    setVideoSelected(true);
+    handleUploadTrailer(formData); // uploading trailer in the background
   };
   // unsopported file type error
   const handleError = (err) => {
     updateNotification("error", err);
   };
-  console.log(file);
   return (
     <>
       <dialog id="movie_modal" className="modal">
-        <form method="dialog" className="modal-box">
-          <h3 className="font-bold text-lg">Add trailer</h3>
-          {/* Progress bar */}
-          {file && !videoSelected && (
-            <>
-              <progress className="progress w-full"></progress>
-            </>
-          )}
+        <form method="dialog" className="modal-box w-11/12 max-w-4xl">
           {/* Text to display after successfull upload */}
           {videoSelected && (
-            <p className="flex items-center gap-2 p-2 text-sm font-semibold text-success rounded-lg">
+            <p className="flex items-center justify-center gap-2 p-2 text-sm font-semibold text-success rounded-lg">
               <MdOutlineCloudDone size={20} className="text-green-400" />
               Movie uploaded Successfully
             </p>
           )}
-
-          {!videoSelected && (
+          {isLoading && <progress className="progress w-full progress-primary" />}
+          {!videoSelected && !isLoading && (
             <>
               <FileUploader
                 multiple={false}
@@ -64,6 +67,8 @@ const MovieModal = () => {
               </p>
             </>
           )}
+
+          {videoSelected && <MovieForm />}
 
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
