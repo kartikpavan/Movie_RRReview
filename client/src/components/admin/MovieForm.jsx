@@ -2,8 +2,11 @@ import React from "react";
 import TagField from "./misc/TagField";
 
 const MovieForm = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
   return (
-    <form className="flex space-x-1">
+    <form onSubmit={handleSubmit} className="flex space-x-1">
       {/* First Section */}
       <section className="w-[60%] h-auto">
         {/* Title */}

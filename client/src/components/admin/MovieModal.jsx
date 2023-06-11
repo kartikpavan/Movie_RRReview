@@ -37,7 +37,8 @@ const MovieModal = () => {
   return (
     <>
       <dialog id="movie_modal" className="modal">
-        <form method="dialog" className="modal-box w-11/12 max-w-4xl">
+        {/* //! later make this form tag  */}
+        <div method="dialog" className="modal-box w-11/12 max-w-4xl">
           {/* Text to display after successfull upload */}
           {videoSelected && (
             <p className="flex items-center justify-center gap-2 p-2 text-sm font-semibold text-success rounded-lg">
@@ -74,7 +75,7 @@ const MovieModal = () => {
             {/* if there is a button in form, it will close the modal */}
             <button className="btn">Close</button>
           </div>
-        </form>
+        </div>
       </dialog>
     </>
   );

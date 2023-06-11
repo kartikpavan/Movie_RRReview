@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const TagField = () => {
+  const [tag, setTag] = useState("");
+  const [allTags, setAllTags] = useState([]);
+  const inputRef = useRef();
+
+  const handleOnChange = ({ target }) => {
+    const { value } = target;
+    if (value !== ",") setTag(value);
+  };
+
+  const handleKeyDown = ({ key }) => {
+    if (key === "," || key === "Enter") {
+      if (!tag) return; // if there is no tag return
+      if (allTags.includes(tag)) return setTag(""); // if tag exists in array , do not add it
+      setAllTags([...allTags, tag]); // else if tag is new then push it inside array
+      setTag(""); // reset input field
+    }
+  };
+
+  const removeTag = (index) => {
+    let newTagList = allTags.filter((_, idx) => idx !== index);
+    setAllTags(newTagList);
+  };
+
+  useEffect(() => {
+    inputRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [tag]);
+
   return (
-    <div className=" border rounded-lg w-full max-w-md px-2 py-1 flex items-center space-x-1">
-      {/* tag 1 */}
-      <Tag>Action</Tag>
-      <Tag>Holywood</Tag>
-      <input type="text" className="flex flex-grow bg-transparent outline-none" />
+    <div
+      onKeyDown={handleKeyDown}
+      className="custom-scroll-bar border rounded-lg w-full max-w-md px-2 py-1 flex items-center space-x-1 overflow-x-auto"
+    >
+      {allTags.map((t, idx) => {
+        return (
+          <Tag key={idx} onClick={() => removeTag(idx)}>
+            {t}
+          </Tag>
+        );
+      })}
+      <input
+        ref={inputRef}
+        value={tag}
+        onChange={handleOnChange}
+        type="text"
+        placeholder="tag one, tag two"
+        className="flex flex-grow bg-transparent outline-none"
+      />
     </div>
   );
 };
