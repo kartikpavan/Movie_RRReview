@@ -11,6 +11,8 @@ import AdminMovies from "./admin/AdminMovies";
 import Sidebar from "./admin/Sidebar";
 import MovieModal from "./admin/MovieModal";
 import ActorModal from "./admin/ActorModal";
+import TagField from "./admin/misc/TagField";
+import LiveSearch from "./admin/misc/LiveSearch";
 
 export {
   Loader,
@@ -24,4 +26,6 @@ export {
   Sidebar,
   MovieModal,
   ActorModal,
+  TagField,
+  LiveSearch,
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNotificationContext } from "../../context/notificationContext";
 import { FileUploader } from "react-drag-drop-files";
 import { FaUpload } from "react-icons/fa";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 const imageFileTypes = ["JPG", "JPEG", "PNG", "GIF"];
 

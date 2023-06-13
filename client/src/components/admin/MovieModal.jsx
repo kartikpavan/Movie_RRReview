@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useNotificationContext } from "../../context/notificationContext";
 import { uploadMovieTrailer } from "../../api/movie";
 import { FileUploader } from "react-drag-drop-files";
 import { FaUpload } from "react-icons/fa";
 import { MdOutlineCloudDone } from "react-icons/md";
 import MovieForm from "./MovieForm";
+import { useNotificationContext } from "../../context/NotificationContext";
 const videoFileTypes = ["mp4", "avi"];
 
 const MovieModal = () => {
@@ -38,7 +38,7 @@ const MovieModal = () => {
     <>
       <dialog id="movie_modal" className="modal">
         {/* //! later make this form tag  */}
-        <div method="dialog" className="modal-box w-11/12 max-w-4xl">
+        <div method="dialog" className="modal-box w-11/12 max-w-4xl h-4/6 overflow-auto">
           {/* Text to display after successfull upload */}
           {videoSelected && (
             <p className="flex items-center justify-center gap-2 p-2 text-sm font-semibold text-success rounded-lg">

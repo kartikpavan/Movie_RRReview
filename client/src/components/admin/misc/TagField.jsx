@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const TagField = () => {
+const TagField = ({ name, onChange }) => {
   const [tag, setTag] = useState("");
   const [allTags, setAllTags] = useState([]);
   const inputRef = useRef();
@@ -8,6 +8,7 @@ const TagField = () => {
   const handleOnChange = ({ target }) => {
     const { value } = target;
     if (value !== ",") setTag(value);
+    onChange(allTags);
   };
 
   const handleKeyDown = ({ key }) => {
@@ -44,6 +45,7 @@ const TagField = () => {
         ref={inputRef}
         value={tag}
         onChange={handleOnChange}
+        name={name}
         type="text"
         placeholder="tag one, tag two"
         className="flex flex-grow bg-transparent outline-none"
