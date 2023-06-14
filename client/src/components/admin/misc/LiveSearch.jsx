@@ -16,9 +16,15 @@ const LiveSearch = ({
     if (results.length) setShowSearchResults(true);
   };
 
-  const handleBlur = () => {
+  const closeSearch = () => {
     setShowSearchResults(false);
     setFocusedItemIndex(-1);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      closeSearch();
+    }, 500);
   };
 
   const handleKeyDown = ({ key }) => {
@@ -39,6 +45,10 @@ const LiveSearch = ({
   };
 
   const handleSelection = (selectedItem) => {
+    // if (selectedItem) {
+    //   onSelect(selectedItem);
+    //   closeSearch();
+    // }
     onSelect(selectedItem);
   };
 

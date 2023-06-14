@@ -1,45 +1,7 @@
 import React, { useState } from "react";
-import { TagField, LiveSearch, ProfileModal } from "../../components";
+import { TagField, LiveSearch, CastField, WritersModal, CastModal } from "../../components";
 import { useNotificationContext } from "../../context/NotificationContext";
-
-const results = [
-  {
-    id: "1",
-    avatar:
-      "https://images.unsplash.com/photo-1643713303351-01f540054fd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "John Doe",
-  },
-  {
-    id: "2",
-    avatar:
-      "https://images.unsplash.com/photo-1643883135036-98ec2d9e50a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "Chandri Anggara",
-  },
-  {
-    id: "3",
-    avatar:
-      "https://images.unsplash.com/photo-1578342976795-062a1b744f37?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "Amin RK",
-  },
-  {
-    id: "4",
-    avatar:
-      "https://images.unsplash.com/photo-1564227901-6b1d20bebe9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "Edward Howell",
-  },
-  {
-    id: "5",
-    avatar:
-      "https://images.unsplash.com/photo-1578342976795-062a1b744f37?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "Amin RK",
-  },
-  {
-    id: "6",
-    avatar:
-      "https://images.unsplash.com/photo-1564227901-6b1d20bebe9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-    name: "Edward Howell",
-  },
-];
+import { results } from "../../data/data";
 
 const defaultMovieInfo = {
   title: "",
@@ -70,7 +32,7 @@ const MovieForm = () => {
   };
 
   const updateDirector = (profile) => {
-    setMovieInfo({ ...movieInfo, director: profile.name }); //! Important change here
+    setMovieInfo({ ...movieInfo, director: profile }); //! Important change here
   };
 
   const updateWriters = (profile) => {
@@ -82,10 +44,20 @@ const MovieForm = () => {
     }
     setMovieInfo({ ...movieInfo, writers: [...writers, profile] });
   };
+
   const removeWriter = (id) => {
     const { writers } = movieInfo;
     const newWriters = writers.filter((w) => w.id !== id);
     setMovieInfo({ ...movieInfo, writers: [...newWriters] });
+  };
+
+  const updateCast = (castInfo) => {
+    setMovieInfo({ ...movieInfo, cast: [...movieInfo.cast, castInfo] });
+  };
+  const removeActor = (id) => {
+    const { cast } = movieInfo;
+    const newCast = cast.filter(({ profile }) => profile.id !== id);
+    setMovieInfo({ ...movieInfo, cast: [...newCast] });
   };
 
   const handleSubmit = async (e) => {
@@ -93,13 +65,13 @@ const MovieForm = () => {
     console.log(movieInfo);
   };
 
-  const { title, storyLine, director, writers } = movieInfo;
+  const { title, storyLine, director, writers, cast } = movieInfo;
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <main className="flex space-x-1">
+      <form>
+        <main className="flex gap-x-2 gap-y-4 flex-col sm:flex-row ">
           {/* First Section */}
-          <section className="w-[60%] h-auto">
+          <section className="w-full sm:w-[60%] h-auto">
             {/* Title */}
             <div>
               <label className="label">
@@ -114,6 +86,7 @@ const MovieForm = () => {
                 className="input input-sm input-bordered w-full max-w-md"
               />
             </div>
+
             {/* Movie Description */}
             <div>
               <label className="label">
@@ -136,28 +109,18 @@ const MovieForm = () => {
             </div>
 
             {/* Cast and Crew */}
-            <h1 className="text-primary font-semibold ">Cast and Crew</h1>
-            {/* Actor */}
-            <div>
-              <LiveSearch
-                results={results}
-                renderItem={(result) => {
-                  const { name, avatar, id } = result;
-                  return (
-                    <div key={id} className="flex items-center space-x-2">
-                      <img
-                        src={avatar}
-                        alt={name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                      <p className="font-semibold">{result.name}</p>
-                    </div>
-                  );
-                }}
-                placeholder="Search Profile"
-                onSelect={(result) => console.log(result)}
-              />
-            </div>
+            <h1 className="text-primary font-semibold ">
+              Cast and Crew <span className="badge badge-sm">{cast?.length}</span>
+              <span
+                className="label-text-alt link mx-2"
+                onClick={() => window.cast_modal.showModal()}
+              >
+                View All
+              </span>
+            </h1>
+
+            {/* Cast */}
+            <CastField onSubmit={updateCast} />
             {/* Director */}
             <div>
               <label className="label">
@@ -192,7 +155,7 @@ const MovieForm = () => {
                 </span>
                 <span
                   className="label-text-alt link mx-14"
-                  onClick={() => window.profile_modal.showModal()}
+                  onClick={() => window.writers_modal.showModal()}
                 >
                   View All
                 </span>
@@ -222,11 +185,26 @@ const MovieForm = () => {
           <section className="w-[40%] border border-dashed border-gray-400 h-48"></section>
         </main>
 
-        <button type="submit" className="btn mt-2">
-          Upload Movie
-        </button>
+        <SubmitFormButton isLoading={false} onClick={handleSubmit} />
       </form>
-      <ProfileModal writers={true} profiles={writers} removeWriter={removeWriter} />
+      <WritersModal profiles={writers} removeWriter={removeWriter} />
+      <CastModal profiles={cast} removeActor={removeActor} />
+    </>
+  );
+};
+
+const SubmitFormButton = ({ isLoading, onClick }) => {
+  return (
+    <>
+      <button className="btn mt-4 btn-wide" type="button" onClick={onClick}>
+        {isLoading && (
+          <>
+            <span className="loading loading-spinner"></span>
+            Submitting Form
+          </>
+        )}
+        Submit
+      </button>
     </>
   );
 };
