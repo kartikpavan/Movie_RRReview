@@ -2,47 +2,31 @@ import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { FaUpload } from "react-icons/fa";
 import { useNotificationContext } from "../../../context/NotificationContext";
+import ActorForm from "../ActorForm";
 
 const imageFileTypes = ["JPG", "JPEG", "PNG", "GIF"];
 
 const ActorModal = () => {
   const { updateNotification } = useNotificationContext();
   const [file, setFile] = useState(null);
+  const [avatarSelected, setAvatarSelected] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
-  const handleChange = (file) => {
-    setFile(file);
+  const handleSubmit = async (actorInfos) => {
+    console.log(actorInfos);
   };
-  // unsopported file type error
-  const handleError = (err) => {
-    updateNotification("error", err);
-  };
+
   return (
     <>
       <dialog id="actor_modal" className="modal">
-        <form method="dialog" className="modal-box">
-          <h3 className="font-bold text-lg text-neutral">This is Actor Modal!</h3>
-          <FileUploader
-            multiple={false}
-            handleChange={handleChange}
-            onTypeError={handleError}
-            name="file"
-            types={imageFileTypes}
-          >
-            <div className="full h-32 border-4 border-dotted border-gray-500 cursor-pointer flex items-center justify-center">
-              <div className="grid place-items-center">
-                <FaUpload className="w-14 h-14 text-neutral" />
-                <p className="font-semibold text-neutral text-lg">Drop Your Files here</p>
-              </div>
-            </div>
-          </FileUploader>
-          <p className="text-gray-400">
-            {file ? `File name: ${file?.name}` : "*No files uploaded yet"}
-          </p>
-          <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
-          </div>
-        </form>
+        {/* //! later make this form tag  */}
+        <div method="dialog" className="modal-box border w-11/12 max-w-2xl">
+          <form method="dialog" className="modal-backdrop">
+            <button className="btn btn-sm  btn-circle  absolute right-2 top-2">X</button>
+          </form>
+
+          <ActorForm title={"Create New Actor"} btnText={"Create"} onSubmit={handleSubmit} />
+        </div>
       </dialog>
     </>
   );

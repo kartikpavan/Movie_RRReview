@@ -16,10 +16,11 @@ import MovieModal from "./admin/modals/MovieModal";
 import WritersModal from "./admin/modals/WritersModal";
 import ActorModal from "./admin/modals/ActorModal";
 import CastModal from "./admin/modals/CastModal";
-import MoviePoster from "./admin/MoviePoster";
+import PosterSelector from "./admin/PosterSelector";
 import GenreSelector from "./admin/misc/GenreSelector";
 import GenreModal from "./admin/modals/GenreModal";
 import Selector from "./admin/misc/Selector";
+import ActorForm from "./admin/ActorForm";
 export {
   Loader,
   NotVerifiedBanner,
@@ -37,8 +38,9 @@ export {
   WritersModal,
   CastField,
   CastModal,
-  MoviePoster,
+  PosterSelector,
   GenreSelector,
   GenreModal,
   Selector,
+  ActorForm,
 };

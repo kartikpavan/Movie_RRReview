@@ -5,7 +5,7 @@ import {
   CastField,
   WritersModal,
   CastModal,
-  MoviePoster,
+  PosterSelector,
   GenreSelector,
   GenreModal,
   Selector,
@@ -90,6 +90,16 @@ const MovieForm = () => {
     setMovieInfo({ ...movieInfo, genres });
   };
 
+  const renderItem = (result) => {
+    const { name, avatar, id } = result;
+    return (
+      <div key={id} className="flex items-center space-x-2">
+        <img src={avatar} alt={name} className="w-12 h-12 rounded-full object-cover" />
+        <p className="font-semibold">{result.name}</p>
+      </div>
+    );
+  };
+
   const { title, storyLine, director, writers, cast, tags, genres, type, language, status } =
     movieInfo;
   return (
@@ -101,7 +111,7 @@ const MovieForm = () => {
             {/* Title */}
             <div>
               <label className="label">
-                <span className="label-text text-primary font-semibold ">Title</span>
+                <span className="label-text font-semibold ">Title</span>
               </label>
               <input
                 value={title}
@@ -116,7 +126,7 @@ const MovieForm = () => {
             {/* Movie Description */}
             <div>
               <label className="label">
-                <span className="label-text text-primary font-semibold ">Storyline</span>
+                <span className="label-text font-semibold ">Storyline</span>
               </label>
               <textarea
                 value={storyLine}
@@ -129,13 +139,13 @@ const MovieForm = () => {
             {/* Tag Field */}
             <div className="mb-2">
               <label className="label">
-                <span className="label-text text-primary font-semibold ">Tags</span>
+                <span className="label-text  font-semibold ">Tags</span>
               </label>
               <TagField value={tags} name="tags" onChange={updateTags} />
             </div>
 
             {/* Cast and Crew */}
-            <h1 className="text-primary font-semibold ">
+            <h1 className=" font-semibold ">
               Cast and Crew <span className="badge badge-sm">{cast?.length}</span>
               <span
                 className="label-text-alt link mx-2"
@@ -149,7 +159,7 @@ const MovieForm = () => {
             {/* Director */}
             <div>
               <label className="label">
-                <span className="label-text text-primary font-semibold">Director</span>
+                <span className="label-text  font-semibold">Director</span>
               </label>
               <LiveSearch
                 name="director"
@@ -157,25 +167,13 @@ const MovieForm = () => {
                 value={director.name}
                 results={results}
                 onSelect={updateDirector}
-                renderItem={(result) => {
-                  const { name, avatar, id } = result;
-                  return (
-                    <div key={id} className="flex items-center space-x-2">
-                      <img
-                        src={avatar}
-                        alt={name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                      <p className="font-semibold">{result.name}</p>
-                    </div>
-                  );
-                }}
+                renderItem={renderItem}
               />
             </div>
             {/* Writers */}
             <div>
               <label className="label">
-                <span className="label-text text-primary font-semibold">
+                <span className="label-text  font-sesmibold">
                   Writers <span className="badge badge-sm">{writers?.length}</span>
                 </span>
                 <span
@@ -190,19 +188,7 @@ const MovieForm = () => {
                 placeholder="Search Profile"
                 results={results}
                 onSelect={updateWriters}
-                renderItem={(result) => {
-                  const { name, avatar, id } = result;
-                  return (
-                    <div key={id} className="flex items-center space-x-2">
-                      <img
-                        src={avatar}
-                        alt={name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                      <p className="font-semibold">{result.name}</p>
-                    </div>
-                  );
-                }}
+                renderItem={renderItem}
               />
             </div>
             {/* Date Picker */}
@@ -217,7 +203,7 @@ const MovieForm = () => {
           </section>
           {/* Second Section */}
           <section className="w-full sm:w-[40%] border-gray-400">
-            <MoviePoster
+            <PosterSelector
               name="poster"
               onChange={handleChange}
               selectedPoster={selectedPosterForUI}
@@ -259,7 +245,7 @@ const MovieForm = () => {
 const SubmitFormButton = ({ isLoading, onClick }) => {
   return (
     <>
-      <button className="btn mt-4 w-full btn-primary sm:text-xl" type="button" onClick={onClick}>
+      <button className="btn mt-4 w-full btn-active sm:text-xl" type="button" onClick={onClick}>
         {isLoading && (
           <>
             <span className="loading loading-spinner"></span>

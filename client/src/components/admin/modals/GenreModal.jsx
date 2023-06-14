@@ -37,8 +37,8 @@ const GenreModal = ({ onSubmit }) => {
         </section>
         <div className="modal-action">
           {/* if there is a button, it will close the modal */}
-          <button className="btn">Close</button>
-          <button className="btn btn-primary" onClick={handleSubmit}>
+          <button className="btn btn-error btn-outline">Close</button>
+          <button className="btn btn-neutral" onClick={handleSubmit}>
             Select
           </button>
         </div>

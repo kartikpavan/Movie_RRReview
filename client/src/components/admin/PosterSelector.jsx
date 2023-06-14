@@ -1,8 +1,8 @@
 import React from "react";
 
-const MoviePoster = ({ accept, name, selectedPoster, onChange }) => {
+const PosterSelector = ({ accept, name, selectedPoster, onChange, forActor }) => {
   return (
-    <div className="border border-dashed rounded-md ">
+    <div className={`border border-dashed rounded-md ${forActor ? "w-44" : null}`}>
       <input accept={accept} onChange={onChange} id={name} name={name} type="file" hidden />
       <label htmlFor={name}>
         {selectedPoster ? (
@@ -17,9 +17,9 @@ const MoviePoster = ({ accept, name, selectedPoster, onChange }) => {
 
 const PosterUI = () => {
   return (
-    <div className="flex items-center justify-center h-48  cursor-pointer">
-      <span className="text-lg font-semibold">Selecte Movie Poster</span>
+    <div className="flex items-center justify-center aspect-square cursor-pointer">
+      <span className="text-lg font-semibold">Select Poster</span>
     </div>
   );
 };
-export default MoviePoster;
+export default PosterSelector;

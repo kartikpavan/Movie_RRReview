@@ -3,7 +3,7 @@ const GenreSelector = ({ totalGenresSelected }) => {
   return (
     <div className="mt-4">
       <div className="indicator">
-        <span className="indicator-item badge badge-secondary">{totalGenresSelected} selected</span>
+        <span className="indicator-item badge">{totalGenresSelected}</span>
         <button
           className="btn btn-neutral"
           onClick={() => window.genre_modal.showModal()}

@@ -71,10 +71,14 @@ const CastField = ({ onSubmit }) => {
           placeholder="Type here"
           className="input input-bordered "
         />
-        <button type="button" className="btn btn-neutral mt-2" onClick={handleSubmit}>
-          Add
-        </button>
       </div>
+      <button
+        type="button"
+        className="btn btn-neutral btn-sm mt-2 w-full sm:max-w-[20%]"
+        onClick={handleSubmit}
+      >
+        Add
+      </button>
     </div>
   );
 };
