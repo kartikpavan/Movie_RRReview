@@ -13,7 +13,7 @@ import MovieModal from "./admin/MovieModal";
 import ActorModal from "./admin/ActorModal";
 import TagField from "./admin/misc/TagField";
 import LiveSearch from "./admin/misc/LiveSearch";
-
+import ProfileModal from "./admin/ProfileModal";
 export {
   Loader,
   NotVerifiedBanner,
@@ -28,4 +28,5 @@ export {
   ActorModal,
   TagField,
   LiveSearch,
+  ProfileModal,
 };

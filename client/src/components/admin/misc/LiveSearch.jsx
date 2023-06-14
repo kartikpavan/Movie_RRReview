@@ -7,6 +7,7 @@ const LiveSearch = ({
   onChange = null,
   placeholder = "",
   onSelect = null,
+  name = "",
 }) => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [focusedItemIndex, setFocusedItemIndex] = useState(-1); // using -1 , to not focus on any search result
@@ -14,14 +15,10 @@ const LiveSearch = ({
   const handleFocus = () => {
     if (results.length) setShowSearchResults(true);
   };
-  const closeSearch = () => {
+
+  const handleBlur = () => {
     setShowSearchResults(false);
     setFocusedItemIndex(-1);
-  };
-  const handleBlur = () => {
-    setTimeout(() => {
-      closeSearch();
-    }, 1000);
   };
 
   const handleKeyDown = ({ key }) => {
@@ -48,6 +45,7 @@ const LiveSearch = ({
   return (
     <div className="relative">
       <input
+        name={name}
         value={value}
         onChange={onChange}
         onKeyDown={handleKeyDown}
@@ -55,7 +53,7 @@ const LiveSearch = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         type="text"
-        className="input input-bordered input-primary w-full max-w-md"
+        className="input input-bordered w-full max-w-md"
       />
       <SearchResults
         visible={showSearchResults}
@@ -87,11 +85,11 @@ const SearchResults = ({
   if (!visible) return null;
 
   return (
-    <div className="absolute max-w-md right-0 left-0 top-14 bg-base-200 shadow-md rounded-md p-2 max-h-48 overflow-auto">
+    <div className="absolute z-50 max-w-md right-0 left-0 top-14 bg-base-200 shadow-md rounded-md p-2 max-h-48 overflow-auto">
       {results?.map((result, idx) => {
         return (
           <SingleResultCard
-            key={result.id}
+            key={idx.toString()}
             ref={idx === focusedItemIndex ? resultContainer : null}
             item={result}
             renderItem={renderItem}
