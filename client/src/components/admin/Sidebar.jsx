@@ -25,7 +25,7 @@ const Sidebar = () => {
       <div className="flex items-center justify-between ">
         <Link to="/" className="flex items-center gap-3">
           <img src={Logo} alt="logo" className="w-16" />
-          <p className="hidden md:block md:text-2xl">RRReview</p>
+          <p className="hidden md:block md:text-xl">RRReview</p>
         </Link>
         <ThemeToggle />
       </div>
@@ -41,23 +41,17 @@ const Sidebar = () => {
         <AiTwotoneVideoCamera /> Movies
       </NavItem>
       {/* Add Buttons */}
-      <button
-        onClick={() => window.actor_modal.showModal()}
-        className="btn bg-base-100 text-lg my-3"
-      >
+      <button onClick={() => window.actor_modal.showModal()} className="btn bg-base-100 my-3">
         <AiOutlinePlus size={22} /> Add Actor
       </button>
-      <button
-        onClick={() => window.movie_modal.showModal()}
-        className="btn bg-base-100 text-lg my-3"
-      >
+      <button onClick={() => window.movie_modal.showModal()} className="btn bg-base-100 my-3">
         <AiOutlinePlus size={22} />
         Add Movie
       </button>
       {/* LogOut Button */}
       <button
         onClick={logout}
-        className="mt-auto flex items-center justify-between btn btn-error btn-lg btn-outline "
+        className="mt-auto flex items-center justify-between btn btn-error btn-outline "
       >
         Admin Log Out
         <AiOutlineLogout size={28} />
@@ -72,8 +66,8 @@ const NavItem = ({ children, to }) => {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? "flex items-center gap-x-2 text-2xl text-info font-semibold bg-neutral rounded-md p-2 my-3 transition-all ease-in-out duration-200"
-          : "flex items-center gap-x-2 text-xl font-semibold  p-2 my-3"
+          ? "flex items-center gap-x-2 text-lg text-info font-semibold bg-neutral rounded-md p-2 my-3 transition-all ease-in-out duration-200"
+          : "flex items-center gap-x-2 text-lg font-semibold p-2 my-1"
       }
     >
       {children}
