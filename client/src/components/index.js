@@ -9,14 +9,17 @@ import Dashboard from "./admin/Dashboard";
 import AdminActors from "./admin/AdminActors";
 import AdminMovies from "./admin/AdminMovies";
 import Sidebar from "./admin/Sidebar";
-import MovieModal from "./admin/MovieModal";
-import ActorModal from "./admin/ActorModal";
+import CastField from "./admin/misc/CastField";
 import TagField from "./admin/misc/TagField";
 import LiveSearch from "./admin/misc/LiveSearch";
-import WritersModal from "./admin/WritersModal";
-import CastModal from "./admin/CastModal";
-import CastField from "./admin/misc/CastField";
-
+import MovieModal from "./admin/modals/MovieModal";
+import WritersModal from "./admin/modals/WritersModal";
+import ActorModal from "./admin/modals/ActorModal";
+import CastModal from "./admin/modals/CastModal";
+import MoviePoster from "./admin/MoviePoster";
+import GenreSelector from "./admin/misc/GenreSelector";
+import GenreModal from "./admin/modals/GenreModal";
+import Selector from "./admin/misc/Selector";
 export {
   Loader,
   NotVerifiedBanner,
@@ -34,4 +37,8 @@ export {
   WritersModal,
   CastField,
   CastModal,
+  MoviePoster,
+  GenreSelector,
+  GenreModal,
+  Selector,
 };

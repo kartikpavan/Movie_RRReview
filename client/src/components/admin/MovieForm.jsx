@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { TagField, LiveSearch, CastField, WritersModal, CastModal } from "../../components";
+import {
+  TagField,
+  LiveSearch,
+  CastField,
+  WritersModal,
+  CastModal,
+  MoviePoster,
+  GenreSelector,
+  GenreModal,
+  Selector,
+} from "../../components";
 import { useNotificationContext } from "../../context/NotificationContext";
-import { results } from "../../data/data";
+import { languageOptions, results, statusOptions, typeOptions } from "../../data/data";
 
 const defaultMovieInfo = {
   title: "",
@@ -14,16 +24,33 @@ const defaultMovieInfo = {
   poster: null,
   genres: [],
   type: "",
-  langguage: "",
+  language: "",
   status: "",
 };
 
 const MovieForm = () => {
   const { updateNotification } = useNotificationContext();
   const [movieInfo, setMovieInfo] = useState(defaultMovieInfo);
+  const [selectedPosterForUI, setSelectedPosterForUI] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(movieInfo);
+  };
+
+  const updatePosterforUI = (poster) => {
+    const url = URL.createObjectURL(poster);
+    setSelectedPosterForUI(url);
+  };
 
   const handleChange = ({ target }) => {
-    const { value, name } = target;
+    const { value, name, files } = target;
+    if (name === "poster") {
+      // poster upload to cloud
+      const poster = files[0];
+      updatePosterforUI(poster);
+      return setMovieInfo({ ...movieInfo, poster });
+    }
     setMovieInfo({ ...movieInfo, [name]: value });
   };
 
@@ -59,19 +86,18 @@ const MovieForm = () => {
     const newCast = cast.filter(({ profile }) => profile.id !== id);
     setMovieInfo({ ...movieInfo, cast: [...newCast] });
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(movieInfo);
+  const updateGenres = (genres) => {
+    setMovieInfo({ ...movieInfo, genres });
   };
 
-  const { title, storyLine, director, writers, cast } = movieInfo;
+  const { title, storyLine, director, writers, cast, tags, genres, type, language, status } =
+    movieInfo;
   return (
     <>
       <form>
-        <main className="flex gap-x-2 gap-y-4 flex-col sm:flex-row ">
+        <main className="flex gap-4 flex-col sm:flex-row h-full">
           {/* First Section */}
-          <section className="w-full sm:w-[60%] h-auto">
+          <section className="w-full sm:w-[60%]">
             {/* Title */}
             <div>
               <label className="label">
@@ -105,7 +131,7 @@ const MovieForm = () => {
               <label className="label">
                 <span className="label-text text-primary font-semibold ">Tags</span>
               </label>
-              <TagField name="tags" onChange={updateTags} />
+              <TagField value={tags} name="tags" onChange={updateTags} />
             </div>
 
             {/* Cast and Crew */}
@@ -118,7 +144,6 @@ const MovieForm = () => {
                 View All
               </span>
             </h1>
-
             {/* Cast */}
             <CastField onSubmit={updateCast} />
             {/* Director */}
@@ -180,15 +205,53 @@ const MovieForm = () => {
                 }}
               />
             </div>
+            {/* Date Picker */}
+            <div className="mt-4">
+              <input
+                className="input input-bordered"
+                type="date"
+                name="releaseDate"
+                onChange={handleChange}
+              />
+            </div>
           </section>
           {/* Second Section */}
-          <section className="w-[40%] border border-dashed border-gray-400 h-48"></section>
+          <section className="w-full sm:w-[40%] border-gray-400">
+            <MoviePoster
+              name="poster"
+              onChange={handleChange}
+              selectedPoster={selectedPosterForUI}
+              accept="image/jpg,image/jpeg,image/png"
+            />
+            <GenreSelector totalGenresSelected={genres?.length} />
+            <Selector
+              label="Type"
+              options={typeOptions}
+              onChange={handleChange}
+              name="type"
+              value={type}
+            />
+            <Selector
+              label="Language"
+              options={languageOptions}
+              onChange={handleChange}
+              name="language"
+              value={language}
+            />
+            <Selector
+              label="Status"
+              options={statusOptions}
+              onChange={handleChange}
+              name="status"
+              value={status}
+            />
+          </section>
         </main>
-
         <SubmitFormButton isLoading={false} onClick={handleSubmit} />
       </form>
       <WritersModal profiles={writers} removeWriter={removeWriter} />
       <CastModal profiles={cast} removeActor={removeActor} />
+      <GenreModal onSubmit={updateGenres} />
     </>
   );
 };
@@ -196,7 +259,7 @@ const MovieForm = () => {
 const SubmitFormButton = ({ isLoading, onClick }) => {
   return (
     <>
-      <button className="btn mt-4 btn-wide" type="button" onClick={onClick}>
+      <button className="btn mt-4 w-full btn-primary sm:text-xl" type="button" onClick={onClick}>
         {isLoading && (
           <>
             <span className="loading loading-spinner"></span>

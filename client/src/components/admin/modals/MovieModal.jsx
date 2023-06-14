@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { uploadMovieTrailer } from "../../api/movie";
+import { uploadMovieTrailer } from "../../../api/movie";
 import { FileUploader } from "react-drag-drop-files";
 import { FaUpload } from "react-icons/fa";
 import { MdOutlineCloudDone } from "react-icons/md";
-import MovieForm from "./MovieForm";
-import { useNotificationContext } from "../../context/NotificationContext";
+import MovieForm from "../MovieForm";
+import { useNotificationContext } from "../../../context/NotificationContext";
 const videoFileTypes = ["mp4", "avi"];
 
 const MovieModal = () => {
@@ -38,7 +38,10 @@ const MovieModal = () => {
     <>
       <dialog id="movie_modal" className="modal">
         {/* //! later make this form tag  */}
-        <div method="dialog" className="modal-box w-11/12 max-w-4xl h-4/6 overflow-auto">
+        <div method="dialog" className="modal-box border w-11/12 max-w-4xl h-4/6 overflow-auto">
+          <form method="dialog" className="modal-backdrop">
+            <button className="btn btn-sm  btn-circle  absolute right-2 top-2">X</button>
+          </form>
           {/* Text to display after successfull upload */}
           {videoSelected && (
             <p className="flex items-center justify-center gap-2 p-2 text-sm font-semibold text-success rounded-lg">
@@ -70,11 +73,6 @@ const MovieModal = () => {
           )}
 
           {videoSelected && <MovieForm />}
-
-          <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
-          </div>
         </div>
       </dialog>
     </>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const WritersModal = ({ profiles = [], removeWriter }) => {
   return (
     <>

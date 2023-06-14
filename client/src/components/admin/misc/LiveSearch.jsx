@@ -11,6 +11,7 @@ const LiveSearch = ({
 }) => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [focusedItemIndex, setFocusedItemIndex] = useState(-1); // using -1 , to not focus on any search result
+  const [defaultValue, setDefaultValue] = useState("");
 
   const handleFocus = () => {
     if (results.length) setShowSearchResults(true);
@@ -45,19 +46,28 @@ const LiveSearch = ({
   };
 
   const handleSelection = (selectedItem) => {
-    // if (selectedItem) {
-    //   onSelect(selectedItem);
-    //   closeSearch();
-    // }
-    onSelect(selectedItem);
+    if (selectedItem) {
+      onSelect(selectedItem);
+      closeSearch();
+    }
+    // onSelect(selectedItem);
   };
+
+  const handleChange = (e) => {
+    setDefaultValue(e.target.value);
+    onChange && onChange();
+  };
+
+  useEffect(() => {
+    if (value) setDefaultValue(value);
+  }, [value]);
 
   return (
     <div className="relative">
       <input
         name={name}
-        value={value}
-        onChange={onChange}
+        value={defaultValue}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         onBlur={handleBlur}

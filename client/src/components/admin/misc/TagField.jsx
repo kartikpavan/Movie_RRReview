@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const TagField = ({ name, onChange }) => {
+const TagField = ({ name, onChange, value }) => {
   const [tag, setTag] = useState("");
   const [allTags, setAllTags] = useState([]);
   const inputRef = useRef();
@@ -24,6 +24,10 @@ const TagField = ({ name, onChange }) => {
     let newTagList = allTags.filter((_, idx) => idx !== index);
     setAllTags(newTagList);
   };
+
+  useEffect(() => {
+    if (value?.length) setAllTags(value);
+  }, [value]);
 
   useEffect(() => {
     inputRef.current.scrollIntoView({ behavior: "smooth" });
