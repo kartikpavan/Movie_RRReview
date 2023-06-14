@@ -1,11 +1,9 @@
 import { CatchError, getAuthToken } from "../utils/helper";
 import client from "./client";
 
-// Upload Movie Trailer only
-
-export async function uploadMovieTrailer(formData) {
+export async function createActor(actorInfo) {
   try {
-    const { data } = await client.post("/movies/upload-trailer", formData, {
+    const { data } = await client.post("/actors/create", actorInfo, {
       headers: {
         Authorization: "Bearer " + getAuthToken(),
         "Content-Type": "multipart/form-data",

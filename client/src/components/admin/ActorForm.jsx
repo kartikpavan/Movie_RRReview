@@ -9,7 +9,7 @@ const defaultActorValues = {
   gender: "male",
   avatar: null,
 };
-const ActorForm = ({ btnText, title, onSubmit }) => {
+const ActorForm = ({ btnText, title, onSubmit, isLoading }) => {
   const { updateNotification } = useNotificationContext();
   const [actorInfo, setActorInfo] = useState(defaultActorValues);
   const [selectedPosterForUI, setSelectedPosterForUI] = useState(false);
@@ -34,7 +34,14 @@ const ActorForm = ({ btnText, title, onSubmit }) => {
     const { ok, error } = validateActorInfo(actorInfo);
     if (!ok) updateNotification("error", error);
     // submit form
-    onSubmit(actorInfo);
+    const formData = new FormData();
+    for (let key in actorInfo) {
+      if (key) {
+        formData.append(key, actorInfo[key]);
+      }
+    }
+    onSubmit(formData);
+    setActorInfo({ ...defaultActorValues });
   };
 
   const { gender, name, description } = actorInfo;
@@ -88,9 +95,16 @@ const ActorForm = ({ btnText, title, onSubmit }) => {
             ></textarea>
           </div>
         </div>
-        <button className="btn btn-neutral w-full btn-sm mt-3" type="submit">
-          {btnText}
-        </button>
+        {isLoading ? (
+          <button type="button" className="btn w-full btn-sm mt-3" disabled={isLoading}>
+            <span className="loading loading-spinner"></span>
+            Creating Actor
+          </button>
+        ) : (
+          <button className="btn w-full btn-sm mt-3" type="submit">
+            {btnText}
+          </button>
+        )}
       </form>
     </>
   );
