@@ -55,7 +55,7 @@ const LiveSearch = ({
 
   const handleChange = (e) => {
     setDefaultValue(e.target.value);
-    onChange && onChange();
+    onChange && onChange(e); // whenever something is typed here, an API call is being sent to fetch all Actors
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const LiveSearch = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         type="text"
-        className="input input-bordered w-full max-w-md"
+        className="input input-bordered w-full"
       />
       <SearchResults
         visible={showSearchResults}

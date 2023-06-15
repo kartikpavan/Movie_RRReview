@@ -36,7 +36,7 @@ const TagField = ({ name, onChange, value }) => {
   return (
     <div
       onKeyDown={handleKeyDown}
-      className="custom-scroll-bar border rounded-lg w-full max-w-md px-2 py-1 flex items-center space-x-1 overflow-x-auto"
+      className="custom-scroll-bar border rounded-lg w-full px-2 py-1 flex items-center space-x-1 overflow-x-auto"
     >
       {allTags.map((t, idx) => {
         return (

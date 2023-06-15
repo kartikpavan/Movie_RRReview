@@ -12,6 +12,8 @@ import {
 } from "../../components";
 import { useNotificationContext } from "../../context/NotificationContext";
 import { languageOptions, results, statusOptions, typeOptions } from "../../data/data";
+import { useSearchContext } from "../../context/SearchContext";
+import { searchActor } from "../../api/actor";
 
 const defaultMovieInfo = {
   title: "",
@@ -30,6 +32,7 @@ const defaultMovieInfo = {
 
 const MovieForm = () => {
   const { updateNotification } = useNotificationContext();
+  const { handleSearch, isSearching, results } = useSearchContext();
   const [movieInfo, setMovieInfo] = useState(defaultMovieInfo);
   const [selectedPosterForUI, setSelectedPosterForUI] = useState("");
 
@@ -59,7 +62,7 @@ const MovieForm = () => {
   };
 
   const updateDirector = (profile) => {
-    setMovieInfo({ ...movieInfo, director: profile }); //! Important change here
+    setMovieInfo({ ...movieInfo, director: profile });
   };
 
   const updateWriters = (profile) => {
@@ -94,10 +97,16 @@ const MovieForm = () => {
     const { name, avatar, id } = result;
     return (
       <div key={id} className="flex items-center space-x-2">
-        <img src={avatar} alt={name} className="w-12 h-12 rounded-full object-cover" />
+        <img src={avatar.url} alt={name} className="w-12 h-12 rounded-full object-cover" />
         <p className="font-semibold">{result.name}</p>
       </div>
     );
+  };
+
+  const searchFieldChange = ({ target }) => {
+    const { value } = target;
+    setMovieInfo({ ...movieInfo, director: { name: value } }); // display director name as value in input field when selected from dropdown
+    handleSearch(searchActor, value);
   };
 
   const { title, storyLine, director, writers, cast, tags, genres, type, language, status } =
@@ -111,7 +120,7 @@ const MovieForm = () => {
             {/* Title */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold ">Title</span>
+                <span className="label-text font-semibold">Title</span>
               </label>
               <input
                 value={title}
@@ -119,7 +128,7 @@ const MovieForm = () => {
                 name="title"
                 type="text"
                 placeholder="Type here"
-                className="input input-sm input-bordered w-full max-w-md"
+                className="input input-sm input-bordered w-full"
               />
             </div>
 
@@ -132,14 +141,14 @@ const MovieForm = () => {
                 value={storyLine}
                 onChange={handleChange}
                 name="storyLine"
-                className="textarea textarea-bordered h-24 w-full max-w-md"
+                className="textarea textarea-bordered h-24 w-full"
                 placeholder="Storyline"
               ></textarea>
             </div>
             {/* Tag Field */}
             <div className="mb-2">
               <label className="label">
-                <span className="label-text  font-semibold ">Tags</span>
+                <span className="label-text font-semibold">Tags</span>
               </label>
               <TagField value={tags} name="tags" onChange={updateTags} />
             </div>
@@ -159,7 +168,7 @@ const MovieForm = () => {
             {/* Director */}
             <div>
               <label className="label">
-                <span className="label-text  font-semibold">Director</span>
+                <span className="label-text font-semibold">Director</span>
               </label>
               <LiveSearch
                 name="director"
@@ -168,6 +177,7 @@ const MovieForm = () => {
                 results={results}
                 onSelect={updateDirector}
                 renderItem={renderItem}
+                onChange={searchFieldChange}
               />
             </div>
             {/* Writers */}

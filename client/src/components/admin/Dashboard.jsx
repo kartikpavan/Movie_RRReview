@@ -1,14 +1,18 @@
-import React from "react";
-import { ActorModal, MovieModal } from "../../components";
+import React, { useState } from "react";
+import { debounce } from "lodash";
 
 const Dashboard = () => {
-  return (
-    <main className="w-full">
-      {/* Modals */}
-      <ActorModal />
-      <MovieModal />
-    </main>
-  );
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const debounceSearch = debounce((value) => {
+    setSearchTerm(value);
+  }, 800);
+
+  function handleChange(e) {
+    debounceSearch(e.target?.value);
+  }
+  console.log(searchTerm);
+  return <main className="w-full"></main>;
 };
 
 export default Dashboard;

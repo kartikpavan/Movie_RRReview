@@ -69,15 +69,15 @@ const CastField = ({ onSubmit }) => {
           name="roleAs"
           type="text"
           placeholder="Type here"
-          className="input input-bordered "
+          className="input input-bordered"
         />
       </div>
       <button
         type="button"
-        className="btn btn-neutral btn-sm mt-2 w-full sm:max-w-[20%]"
+        className="btn btn-info btn-sm mt-2 w-full sm:max-w-[40%]"
         onClick={handleSubmit}
       >
-        Add
+        Add Actor
       </button>
     </div>
   );
