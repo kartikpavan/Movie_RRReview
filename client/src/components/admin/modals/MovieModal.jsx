@@ -37,10 +37,9 @@ const MovieModal = () => {
   return (
     <>
       <dialog id="movie_modal" className="modal">
-        {/* //! later make this form tag  */}
-        <div method="dialog" className="modal-box border w-11/12 max-w-4xl h-4/6 overflow-auto">
+        <div method="dialog" className="modal-box w-11/12 max-w-4xl h-4/6 overflow-auto">
           <form method="dialog" className="modal-backdrop">
-            <button className="btn btn-sm  btn-circle  absolute right-2 top-2">X</button>
+            <button className="btn btn-sm btn-circle absolute right-2 top-2">X</button>
           </form>
           {/* Text to display after successfull upload */}
           {videoSelected && (

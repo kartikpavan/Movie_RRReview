@@ -32,9 +32,12 @@ const defaultMovieInfo = {
 
 const MovieForm = () => {
   const { updateNotification } = useNotificationContext();
-  const { handleSearch, isSearching, results } = useSearchContext();
+  const { handleSearch, isSearching, results, resetSearch } = useSearchContext();
   const [movieInfo, setMovieInfo] = useState(defaultMovieInfo);
   const [selectedPosterForUI, setSelectedPosterForUI] = useState("");
+  const [writerName, setWriterName] = useState("");
+  const [writersProfile, setWritersProfile] = useState([]);
+  const [directorProfile, setDirectorProfile] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,33 +57,39 @@ const MovieForm = () => {
       updatePosterforUI(poster);
       return setMovieInfo({ ...movieInfo, poster });
     }
+    if (name === "writers") return setWriterName(value);
     setMovieInfo({ ...movieInfo, [name]: value });
   };
 
+  //tags
   const updateTags = (allTags) => {
     setMovieInfo({ ...movieInfo, tags: allTags });
   };
 
+  //director
   const updateDirector = (profile) => {
     setMovieInfo({ ...movieInfo, director: profile });
+    resetSearch(); // this function indicates that we have selected the item and  reset the state values inside searchContext
   };
 
+  //writers
   const updateWriters = (profile) => {
     const { writers } = movieInfo;
     // Checking if the writer is already present inside the writer array
     for (let writer of writers) {
-      if (writer.id === profile.id)
+      if (writer._id === profile._id)
         return updateNotification("warning", "Writer is already selected");
     }
     setMovieInfo({ ...movieInfo, writers: [...writers, profile] });
+    setWriterName("");
   };
-
-  const removeWriter = (id) => {
+  const removeWriter = (profileId) => {
     const { writers } = movieInfo;
-    const newWriters = writers.filter((w) => w.id !== id);
+    const newWriters = writers.filter((w) => w._id !== profileId);
     setMovieInfo({ ...movieInfo, writers: [...newWriters] });
   };
 
+  //cast and crew
   const updateCast = (castInfo) => {
     setMovieInfo({ ...movieInfo, cast: [...movieInfo.cast, castInfo] });
   };
@@ -89,8 +98,23 @@ const MovieForm = () => {
     const newCast = cast.filter(({ profile }) => profile.id !== id);
     setMovieInfo({ ...movieInfo, cast: [...newCast] });
   };
+
+  // genres
   const updateGenres = (genres) => {
     setMovieInfo({ ...movieInfo, genres });
+  };
+
+  // checking for live input field change
+  const searchFieldChange = ({ target }) => {
+    const { value, name } = target;
+    if (name === "director") {
+      setMovieInfo({ ...movieInfo, director: { name: value } }); // display director name as value in input field when selected from dropdown
+      handleSearch(searchActor, value, setDirectorProfile);
+    }
+    if (name === "writers") {
+      setWriterName(value);
+      handleSearch(searchActor, value, setWritersProfile);
+    }
   };
 
   const renderItem = (result) => {
@@ -101,12 +125,6 @@ const MovieForm = () => {
         <p className="font-semibold">{result.name}</p>
       </div>
     );
-  };
-
-  const searchFieldChange = ({ target }) => {
-    const { value } = target;
-    setMovieInfo({ ...movieInfo, director: { name: value } }); // display director name as value in input field when selected from dropdown
-    handleSearch(searchActor, value);
   };
 
   const { title, storyLine, director, writers, cast, tags, genres, type, language, status } =
@@ -174,7 +192,7 @@ const MovieForm = () => {
                 name="director"
                 placeholder="Search Profile"
                 value={director.name}
-                results={results}
+                results={directorProfile}
                 onSelect={updateDirector}
                 renderItem={renderItem}
                 onChange={searchFieldChange}
@@ -196,9 +214,11 @@ const MovieForm = () => {
               <LiveSearch
                 name="writers"
                 placeholder="Search Profile"
-                results={results}
+                value={writerName}
+                results={writersProfile}
                 onSelect={updateWriters}
                 renderItem={renderItem}
+                onChange={searchFieldChange}
               />
             </div>
             {/* Date Picker */}

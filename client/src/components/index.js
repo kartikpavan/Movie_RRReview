@@ -16,7 +16,7 @@ import MovieModal from "./admin/modals/MovieModal";
 import WritersModal from "./admin/modals/WritersModal";
 import ActorModal from "./admin/modals/ActorModal";
 import CastModal from "./admin/modals/CastModal";
-import PosterSelector from "./admin/PosterSelector";
+import PosterSelector from "./admin/misc/PosterSelector";
 import GenreSelector from "./admin/misc/GenreSelector";
 import GenreModal from "./admin/modals/GenreModal";
 import Selector from "./admin/misc/Selector";

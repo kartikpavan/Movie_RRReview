@@ -19,14 +19,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* hide scroll */
-/* body::-webkit-scrollbar {
+body::-webkit-scrollbar {
   display: none;
-} */
+}
 
 /* custom scrollbar  */
 /* width */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 10px;
   height: 5px;
 }
 

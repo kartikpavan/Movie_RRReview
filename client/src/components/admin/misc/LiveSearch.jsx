@@ -62,6 +62,12 @@ const LiveSearch = ({
     if (value) setDefaultValue(value);
   }, [value]);
 
+  //Checking the results length to toggle the fetched result Container visibility
+  useEffect(() => {
+    if (results.length) return setShowSearchResults(true);
+    else return setShowSearchResults(false);
+  }, [results.length]);
+
   return (
     <div className="relative">
       <input

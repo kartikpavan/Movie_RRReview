@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PosterSelector from "./PosterSelector";
+import PosterSelector from "./misc/PosterSelector";
 import { validateActorInfo } from "../../utils/validator";
 import { useNotificationContext } from "../../context/NotificationContext";
 
