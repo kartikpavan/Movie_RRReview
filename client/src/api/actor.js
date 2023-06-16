@@ -31,7 +31,7 @@ export async function searchActor(query) {
    }
 }
 
-// Fetch Actors for UI
+// Fetch Actors for admin UI
 export async function getActors(pageNumber, limit) {
    try {
       const { data } = await client.get(`/actors/get-actors?pageNo=${pageNumber}&limit=${limit}`, {

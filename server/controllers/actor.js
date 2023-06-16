@@ -143,7 +143,7 @@ const getSingleActor = async (req, res) => {
 
 // get All Actors @GET
 const getActors = async (req, res) => {
-   const { pageNo, limit } = req.query;
+   const { pageNo = 0, limit = 9 } = req.query;
    const actors = await Actor.find({})
       .sort({ createdAt: "-1" })
       .skip(Number(pageNo) * Number(limit))

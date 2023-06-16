@@ -6,6 +6,7 @@ const {
    updateMovieWithoutPoster,
    updateMovieWithPoster,
    removeMovie,
+   getPaginatedMovies,
 } = require("../controllers/movie");
 const { isAuth, isAdmin } = require("../middlewares/user");
 const { uploadVideo, uploadImage } = require("../middlewares/multer");
@@ -44,5 +45,7 @@ router.patch(
    updateMovieWithPoster
 );
 router.delete("/delete-movie/:movieId", isAuth, isAdmin, removeMovie);
+// pagination route
+router.get("/get-movies", isAuth, isAdmin, getPaginatedMovies);
 
 module.exports = router;
