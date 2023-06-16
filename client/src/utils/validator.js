@@ -78,3 +78,27 @@ export function validateActorInfo(actorInfo) {
 
   return { ok: true };
 }
+
+export function validateMovieInfo(movieInfo) {
+  const { title, storyLine, language, releaseDate, status, type, genres, tags, cast } = movieInfo;
+  if (!title.trim()) return { ok: false, error: "Title is Missing" };
+  if (!storyLine.trim()) return { ok: false, error: "Story is Missing" };
+  if (!language.trim()) return { ok: false, error: "Language is Missing" };
+  if (!releaseDate.trim()) return { ok: false, error: "Release Date is Missing" };
+  if (!status.trim()) return { ok: false, error: "Movie Status is Missing" };
+  if (!type.trim()) return { ok: false, error: "Movie Type is Missing" };
+  if (!genres.length) return { ok: false, error: "Genres are Missing" };
+  if (!tags.length) return { ok: false, error: "Tags are Missing" };
+  if (!cast.length) return { ok: false, error: "Cast and Crew are Missing" };
+  for (let g of genres) {
+    if (typeof g !== "string") return { ok: false, error: "Genre type must be string" };
+  }
+  for (let t of tags) {
+    if (typeof t !== "string") return { ok: false, error: "Tags type must be string" };
+  }
+  for (let c of cast) {
+    if (typeof c !== "object") return { ok: false, error: "Cast type must be Object" };
+  }
+
+  return { ok: true, error: null };
+}

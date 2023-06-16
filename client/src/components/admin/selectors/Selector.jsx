@@ -10,7 +10,7 @@ const Selector = ({ name, value, onChange, label, options }) => {
         onChange={onChange}
         className="select select-bordered w-full sm:w-1/2"
       >
-        <option disabled defaultValue={label}>
+        <option disabled label={label}>
           {label}
         </option>
         {options?.map((opt, idx) => {

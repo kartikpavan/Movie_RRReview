@@ -14,6 +14,7 @@ import { useNotificationContext } from "../../context/NotificationContext";
 import { languageOptions, results, statusOptions, typeOptions } from "../../data/data";
 import { useSearchContext } from "../../context/SearchContext";
 import { searchActor } from "../../api/actor";
+import { validateMovieInfo } from "../../utils/validator";
 
 const defaultMovieInfo = {
   title: "",
@@ -30,7 +31,7 @@ const defaultMovieInfo = {
   status: "",
 };
 
-const MovieForm = () => {
+const MovieForm = ({ onSubmit, isLoading }) => {
   const { updateNotification } = useNotificationContext();
   const { handleSearch, isSearching, results, resetSearch } = useSearchContext();
   const [movieInfo, setMovieInfo] = useState(defaultMovieInfo);
@@ -41,7 +42,45 @@ const MovieForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(movieInfo);
+    const { ok, error } = validateMovieInfo(movieInfo);
+    if (!ok) return updateNotification("error", error);
+
+    // cast,tags,writers and genres must be converted into string
+    const { tags, genres, cast, writers, director, poster } = movieInfo;
+    const formData = new FormData();
+
+    const finalMovieInfo = {
+      ...movieInfo,
+    };
+
+    finalMovieInfo.tags = JSON.stringify(tags);
+    finalMovieInfo.genres = JSON.stringify(genres);
+
+    const finalCast = cast.map((c) => {
+      return {
+        actor: c.profile._id,
+        roleAs: c.roleAs,
+        leadActor: c.leadActor,
+      };
+    });
+    finalMovieInfo.cast = JSON.stringify(finalCast);
+
+    if (writers.length) {
+      const finalWriters = writers.map((w) => w._id);
+      finalMovieInfo.writers = JSON.stringify(finalWriters);
+    }
+
+    if (director._id) {
+      finalMovieInfo.director = director._id;
+    }
+
+    if (poster) finalMovieInfo.poster = poster;
+
+    for (let key in finalMovieInfo) {
+      formData.append(key, finalMovieInfo[key]);
+    }
+
+    onSubmit(formData, setMovieInfo, defaultMovieInfo);
   };
 
   const updatePosterforUI = (poster) => {
@@ -263,7 +302,7 @@ const MovieForm = () => {
             />
           </section>
         </main>
-        <SubmitFormButton isLoading={false} onClick={handleSubmit} />
+        <SubmitFormButton isLoading={isLoading} onClick={handleSubmit} />
       </form>
       <WritersModal profiles={writers} removeWriter={removeWriter} />
       <CastModal profiles={cast} removeActor={removeActor} />
@@ -279,10 +318,10 @@ const SubmitFormButton = ({ isLoading, onClick }) => {
         {isLoading && (
           <>
             <span className="loading loading-spinner"></span>
-            Submitting Form
+            Uploading Movie Please Wait
           </>
         )}
-        Submit
+        {!isLoading && "Submit"}
       </button>
     </>
   );
