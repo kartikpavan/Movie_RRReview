@@ -2,9 +2,7 @@ import Loader from "./misc/Loader";
 import NotVerifiedBanner from "./misc/NotVerifiedBanner";
 import ProtectedAuth from "./misc/ProtectedAuth";
 import ThemeToggle from "./misc/ThemeToggle";
-
 import Navbar from "./Navbar";
-
 import Dashboard from "./admin/Dashboard";
 import AdminActors from "./admin/AdminActors";
 import AdminMovies from "./admin/AdminMovies";
@@ -21,6 +19,9 @@ import GenreSelector from "./admin/selectors/GenreSelector";
 import GenreModal from "./admin/modals/GenreModal";
 import Selector from "./admin/selectors/Selector";
 import ActorForm from "./admin/ActorForm";
+import Stats from "./admin/Stats";
+import LatestUploads from "./admin/LatestUploads";
+import SingleMovieListItem from "./admin/SingleMovieListItem";
 
 export {
   Loader,
@@ -44,4 +45,7 @@ export {
   GenreModal,
   Selector,
   ActorForm,
+  Stats,
+  LatestUploads,
+  SingleMovieListItem,
 };

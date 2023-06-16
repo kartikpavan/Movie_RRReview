@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNotificationContext } from "../../../context/NotificationContext";
 import ActorForm from "../ActorForm";
 import { createActor } from "../../../api/actor";
+import { useNotificationContext } from "../../../context/notificationContext";
 
 const ActorModal = () => {
   const { updateNotification } = useNotificationContext();

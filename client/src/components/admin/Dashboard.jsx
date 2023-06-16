@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { debounce } from "lodash";
+import Stats from "./Stats";
+import LatestUploads from "./LatestUploads";
 
 const Dashboard = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const debounceSearch = debounce((value) => {
-    setSearchTerm(value);
-  }, 800);
-
-  function handleChange(e) {
-    debounceSearch(e.target?.value);
-  }
-  console.log(searchTerm);
-  return <main className="w-full"></main>;
+  return (
+    <main className="w-full lg:w-[70%]">
+      {/* Stats */}
+      {/* <section className="w-full grid grid-cols-1 md:grid-cols-3">
+        <div className="max-w-32"></div>
+      </section> */}
+      <Stats />
+      <LatestUploads />
+    </main>
+  );
 };
 
 export default Dashboard;

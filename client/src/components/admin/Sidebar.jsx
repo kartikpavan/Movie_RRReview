@@ -66,7 +66,7 @@ const NavItem = ({ children, to }) => {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? "flex items-center gap-x-2 text-lg text-info font-semibold bg-neutral rounded-md p-2 my-3 transition-all ease-in-out duration-200"
+          ? "flex items-center gap-x-2 text-lg text-info font-semibold bg-base-100 rounded-md p-2 my-3 transition-all ease-in-out duration-200"
           : "flex items-center gap-x-2 text-lg font-semibold p-2 my-1"
       }
     >

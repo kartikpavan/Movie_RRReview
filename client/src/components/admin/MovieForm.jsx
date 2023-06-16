@@ -10,11 +10,11 @@ import {
   GenreModal,
   Selector,
 } from "../../components";
-import { useNotificationContext } from "../../context/NotificationContext";
 import { languageOptions, results, statusOptions, typeOptions } from "../../data/data";
 import { useSearchContext } from "../../context/SearchContext";
 import { searchActor } from "../../api/actor";
 import { validateMovieInfo } from "../../utils/validator";
+import { useNotificationContext } from "../../context/notificationContext";
 
 const defaultMovieInfo = {
   title: "",
