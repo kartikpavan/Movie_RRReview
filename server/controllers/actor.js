@@ -140,6 +140,17 @@ const getSingleActor = async (req, res) => {
 
    res.status(200).json({ data: actor });
 };
+
+// get All Actors @GET
+const getActors = async (req, res) => {
+   const { pageNo, limit } = req.query;
+   const actors = await Actor.find({})
+      .sort({ createdAt: "-1" })
+      .skip(Number(pageNo) * Number(limit))
+      .limit(Number(limit));
+   res.status(200).json({ data: { actors } });
+};
+
 module.exports = {
    createActor,
    updateActor,
@@ -147,4 +158,5 @@ module.exports = {
    searchActor,
    latestActors,
    getSingleActor,
+   getActors,
 };
