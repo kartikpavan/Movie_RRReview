@@ -14,7 +14,7 @@ const WritersModal = ({ profiles = [], removeWriter }) => {
                   <div key={_id} className="flex flex-col gap-2 mb-4">
                     <img
                       className="w-32 max-w-32 object-fill rounded-md shadow-sm "
-                      src={avatar.url}
+                      src={avatar?.url}
                       alt={name}
                     />
                     <p className="text-lg font-semibold">{name}</p>

@@ -11,18 +11,18 @@ const CastModal = ({ profiles = [], removeActor }) => {
           ) : (
             <section className="flex items-center space-x-5 justify-center">
               {profiles?.map((p, idx) => {
-                const { id, name, avatar } = p.profile;
+                const { _id, name, avatar } = p.profile;
                 return (
-                  <div key={id} className="flex flex-col gap-2 mb-4">
+                  <div key={_id} className="flex flex-col gap-2 mb-4">
                     <img
-                      className="w-32 h-48 object-fill rounded-md shadow-sm "
-                      src={avatar}
+                      className="w-32 max-w-32 object-fill rounded-md shadow-sm "
+                      src={avatar?.url}
                       alt={name}
                     />
                     <p className="text-lg font-semibold">{name}</p>
                     <button
                       className="btn btn-xs btn-outline btn-error"
-                      onClick={() => removeActor(id)}
+                      onClick={() => removeActor(_id)}
                     >
                       Remove
                     </button>

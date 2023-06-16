@@ -2,6 +2,8 @@ import { useState } from "react";
 import LiveSearch from "./LiveSearch";
 import { results } from "../../../data/data";
 import { useNotificationContext } from "../../../context/NotificationContext";
+import { useSearchContext } from "../../../context/SearchContext";
+import { searchActor } from "../../../api/actor";
 
 // cast = [{actor:id,roleAs:" ",leadActor:true}]
 const defaultCast = {
@@ -11,7 +13,9 @@ const defaultCast = {
 };
 const CastField = ({ onSubmit }) => {
   const { updateNotification } = useNotificationContext();
+  const { handleSearch, resetSearch } = useSearchContext();
   const [castInfo, setCastInfo] = useState({ ...defaultCast });
+  const [profiles, setProfiles] = useState([]);
 
   const handleChange = ({ target }) => {
     const { name, value, checked } = target;
@@ -28,8 +32,28 @@ const CastField = ({ onSubmit }) => {
     if (!profile.name) return updateNotification("error", "Cast Profile is missing");
     if (!roleAs.trim()) return updateNotification("error", "Cast Role is missing");
     onSubmit(castInfo);
-    setCastInfo({ ...defaultCast });
+    setCastInfo({ ...defaultCast, profile: { name: "" } });
     updateNotification("info", "Cast Updated ");
+    resetSearch(); // resetting search field
+    setProfiles([]); // clearing all input fields
+  };
+
+  const searchFieldChange = ({ target }) => {
+    const { value, name } = target;
+    const { profile } = castInfo;
+    profile.name = value;
+    setCastInfo({ ...castInfo, ...profile });
+    handleSearch(searchActor, value, setProfiles);
+  };
+
+  const renderItem = (result) => {
+    const { name, avatar, id } = result;
+    return (
+      <div key={id} className="flex items-center space-x-2">
+        <img src={avatar.url} alt={name} className="w-12 h-12 rounded-full object-cover" />
+        <p className="font-semibold">{result.name}</p>
+      </div>
+    );
   };
 
   const { leadActor, profile, roleAs } = castInfo;
@@ -50,17 +74,10 @@ const CastField = ({ onSubmit }) => {
         <LiveSearch
           placeholder="Search Profile"
           value={profile.name}
-          results={results}
+          results={profiles}
           onSelect={handleProfileSelect}
-          renderItem={(result) => {
-            const { name, avatar, id } = result;
-            return (
-              <div key={id} className="flex items-center space-x-2">
-                <img src={avatar} alt={name} className="w-12 h-12 rounded-full object-cover" />
-                <p className="font-semibold">{result.name}</p>
-              </div>
-            );
-          }}
+          renderItem={renderItem}
+          onChange={searchFieldChange}
         />
         <span>as</span>
         <input

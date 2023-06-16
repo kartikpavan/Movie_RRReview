@@ -93,9 +93,9 @@ const MovieForm = () => {
   const updateCast = (castInfo) => {
     setMovieInfo({ ...movieInfo, cast: [...movieInfo.cast, castInfo] });
   };
-  const removeActor = (id) => {
+  const removeActor = (profileId) => {
     const { cast } = movieInfo;
-    const newCast = cast.filter(({ profile }) => profile.id !== id);
+    const newCast = cast.filter(({ profile }) => profile._id !== profileId);
     setMovieInfo({ ...movieInfo, cast: [...newCast] });
   };
 

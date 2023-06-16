@@ -16,11 +16,12 @@ import MovieModal from "./admin/modals/MovieModal";
 import WritersModal from "./admin/modals/WritersModal";
 import ActorModal from "./admin/modals/ActorModal";
 import CastModal from "./admin/modals/CastModal";
-import PosterSelector from "./admin/misc/PosterSelector";
-import GenreSelector from "./admin/misc/GenreSelector";
+import PosterSelector from "./admin/selectors/PosterSelector";
+import GenreSelector from "./admin/selectors/GenreSelector";
 import GenreModal from "./admin/modals/GenreModal";
-import Selector from "./admin/misc/Selector";
+import Selector from "./admin/selectors/Selector";
 import ActorForm from "./admin/ActorForm";
+
 export {
   Loader,
   NotVerifiedBanner,

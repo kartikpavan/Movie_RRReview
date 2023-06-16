@@ -15,13 +15,13 @@ export const SearchContextProvider = ({ children }) => {
     if (error) return updateNotification("error", error);
     if (!data.length) return setResultNotFound(true);
     setResults(data);
-    updatorFunc([...data]);
+    updatorFunc && updatorFunc([...data]);
     console.log(data);
   }, 500);
 
   const handleSearch = (method, query, updatorFunc) => {
     if (!query.trim()) {
-      updatorFunc([]);
+      updatorFunc && updatorFunc([]);
       resetSearch();
     }
     debounceSearch(method, query, updatorFunc);
