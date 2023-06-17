@@ -23,6 +23,7 @@ import Stats from "./admin/Stats";
 import LatestUploads from "./admin/LatestUploads";
 import SingleMovieListItem from "./admin/SingleMovieListItem";
 import Pagination from "./Pagination";
+import UpdateActorModal from "./admin/modals/UpdateActorModal";
 export {
    Loader,
    NotVerifiedBanner,
@@ -49,4 +50,5 @@ export {
    LatestUploads,
    SingleMovieListItem,
    Pagination,
+   UpdateActorModal,
 };

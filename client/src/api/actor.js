@@ -45,3 +45,18 @@ export async function getActors(pageNumber, limit) {
       return CatchError(error);
    }
 }
+
+// Update Actor
+export async function updateActor(actorId, formData) {
+   try {
+      const { data } = await client.post(`/actors/update/${actorId}`, formData, {
+         headers: {
+            Authorization: "Bearer " + getAuthToken(),
+            "Content-Type": "multipart/form-data",
+         },
+      });
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}
