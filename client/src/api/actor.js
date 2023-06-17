@@ -60,3 +60,18 @@ export async function updateActor(actorId, formData) {
       return CatchError(error);
    }
 }
+
+// Delete Actor
+export async function deleteActor(actorId) {
+   try {
+      const { data } = await client.delete(`/actors/delete/${actorId}`, {
+         headers: {
+            Authorization: "Bearer " + getAuthToken(),
+            "Content-Type": "multipart/form-data",
+         },
+      });
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}

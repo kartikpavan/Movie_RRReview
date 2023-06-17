@@ -24,6 +24,7 @@ import LatestUploads from "./admin/LatestUploads";
 import SingleMovieListItem from "./admin/SingleMovieListItem";
 import Pagination from "./Pagination";
 import UpdateActorModal from "./admin/modals/UpdateActorModal";
+import ConfirmModal from "./admin/modals/ConfirmModal";
 export {
    Loader,
    NotVerifiedBanner,
@@ -51,4 +52,5 @@ export {
    SingleMovieListItem,
    Pagination,
    UpdateActorModal,
+   ConfirmModal,
 };

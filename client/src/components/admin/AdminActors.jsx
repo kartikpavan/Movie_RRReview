@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
-import { getActors, searchActor } from "../../api/actor";
+import { deleteActor, getActors, searchActor } from "../../api/actor";
 import { useNotificationContext } from "../../context/notificationContext";
 import { useSearchContext } from "../../context/SearchContext";
 import Pagination from "../Pagination";
 import UpdateActorModal from "./modals/UpdateActorModal";
 import Search from "./Search";
 import Loader from "../misc/Loader";
+import ConfirmModal from "./modals/ConfirmModal";
 
 const AdminActors = () => {
    const { updateNotification } = useNotificationContext();
@@ -17,6 +18,7 @@ const AdminActors = () => {
    const [selectedProfile, setSelectedProfile] = useState(null);
    const [results, setResults] = useState([]);
    const [loading, setLoading] = useState(false);
+   const [busyIndicator, setBusyIndicator] = useState(false);
 
    const nextPage = () => {
       setCurrentPage((prev) => prev + 1);
@@ -55,11 +57,28 @@ const AdminActors = () => {
    //Edit Actor
    const handleEditActor = (actor) => {
       window.update_actor_modal.showModal();
-      console.log(actor);
       setSelectedProfile(actor);
    };
    // Delete Actor
-   const handleDeleteActor = (actor) => {};
+   const handleDeleteActor = (actor) => {
+      window.confirm_modal.showModal();
+      setSelectedProfile(actor);
+   };
+   const confirmDeleteActor = async () => {
+      console.log(selectedProfile);
+      setBusyIndicator(true);
+      const { error, msg } = await deleteActor(selectedProfile._id);
+      if (error) {
+         setBusyIndicator(false);
+         return updateNotification("error", error);
+      }
+      updateNotification("info", msg);
+      setBusyIndicator(false);
+      window.confirm_modal.close();
+      // refetching actors from DB to update the UI
+      fetchActors(currentPage);
+   };
+
    // View Actor information
    const handleViewActor = (actor) => {};
 
@@ -75,7 +94,7 @@ const AdminActors = () => {
 
    return (
       <>
-         {loading && <Loader />}
+         {loading && <div className="loading loading-bars loading-lg"></div>}
          <section className="w-full lg:w-[80%]">
             <div className="flex items-center justify-between  mr-4 ">
                <h3 className="leading-6 font-medium text-base-content text-2xl">All Actors</h3>
@@ -133,6 +152,12 @@ const AdminActors = () => {
                </>
             )}
          </section>
+         <ConfirmModal
+            title={"Delete Profile?"}
+            subtitle={"This action will Delete the Profile Completely"}
+            onConfirm={confirmDeleteActor}
+            loading={busyIndicator}
+         />
          <UpdateActorModal profileToUpdate={selectedProfile} />
       </>
    );

@@ -115,10 +115,10 @@ const removeActor = async (req, res) => {
 
 // Search Actors @GET
 const searchActor = async (req, res) => {
-   const { query } = req;
+   const { name } = req.query;
    // const results = await Actor.find({ $text: { $search: `"${query.name}"` } }); -- Full text Search
-   const results = await Actor.find({ name: { $regex: query.name, $options: "i" } });
-
+   if (!name) return res.json({ error: "Search Field cannot be empty" });
+   const results = await Actor.find({ name: { $regex: name, $options: "i" } });
    res.status(200).json({ data: results });
 };
 

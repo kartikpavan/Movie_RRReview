@@ -28,7 +28,7 @@ export const SearchContextProvider = ({ children }) => {
    const handleSearch = (method, query, updatorFunc) => {
       if (!query.trim()) {
          updatorFunc && updatorFunc([]);
-         resetSearch();
+         return resetSearch();
       }
       debounceSearch(method, query, updatorFunc);
    };

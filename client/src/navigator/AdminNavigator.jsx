@@ -22,16 +22,15 @@ const AdminNavigator = () => {
                   <GiHamburgerMenu size={28} />
                </label>
                {/* Page content here */}
+               {/* Modals */}
+               <ActorModal />
+               <MovieModal />
                <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/actors" element={<AdminActors />} />
                   <Route path="/movies" element={<AdminMovies />} />
                   <Route path="*" element={<Notfound />} />
                </Routes>
-               {/* Modals */}
-               <ActorModal />
-
-               <MovieModal />
             </div>
             <div className="drawer-side">
                <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
