@@ -116,7 +116,9 @@ const removeActor = async (req, res) => {
 // Search Actors @GET
 const searchActor = async (req, res) => {
    const { query } = req;
-   const results = await Actor.find({ $text: { $search: `"${query.name}"` } });
+   // const results = await Actor.find({ $text: { $search: `"${query.name}"` } }); -- Full text Search
+   const results = await Actor.find({ name: { $regex: query.name, $options: "i" } });
+
    res.status(200).json({ data: results });
 };
 

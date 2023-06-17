@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
-import { getActors } from "../../api/actor";
-import { useNotificationContext } from "../../context/notificationContext.jsx";
+import { getActors, searchActor } from "../../api/actor";
+import { useNotificationContext } from "../../context/notificationContext";
+import { useSearchContext } from "../../context/SearchContext";
 import Pagination from "../Pagination";
 import UpdateActorModal from "./modals/UpdateActorModal";
+import Search from "./Search";
+import Loader from "../misc/Loader";
 
 const AdminActors = () => {
    const { updateNotification } = useNotificationContext();
-   const [actors, setActors] = useState();
+   const { handleSearch, resetSearch, resultNotFound } = useSearchContext();
+   const [actors, setActors] = useState([]);
    const [currentPage, setCurrentPage] = useState(0);
    const [reachedEnd, setReachedEnd] = useState(false);
    const [selectedProfile, setSelectedProfile] = useState(null);
+   const [results, setResults] = useState([]);
+   const [loading, setLoading] = useState(false);
 
    const nextPage = () => {
       setCurrentPage((prev) => prev + 1);
@@ -25,53 +31,107 @@ const AdminActors = () => {
       });
    };
 
+   // Fetch Actor from DB
    const fetchActors = async (pageNumber) => {
+      setLoading(true);
       const { error, data } = await getActors(pageNumber, 9);
-      if (error) return updateNotification("error", error);
+      if (error) {
+         setLoading(false);
+         return updateNotification("error", error);
+      }
       if (!data?.actors.length) {
+         setLoading(false);
          setCurrentPage(pageNumber - 1);
          return setReachedEnd(true);
       }
       setActors(data?.actors);
+      setLoading(false);
    };
+   // Fetch Actor when page number changes
    useEffect(() => {
       fetchActors(currentPage);
    }, [currentPage]);
 
-   const handleDeleteActor = (actor) => {};
+   //Edit Actor
    const handleEditActor = (actor) => {
       window.update_actor_modal.showModal();
       console.log(actor);
       setSelectedProfile(actor);
    };
+   // Delete Actor
+   const handleDeleteActor = (actor) => {};
+   // View Actor information
    const handleViewActor = (actor) => {};
+
+   // Search for actors
+   const handleOnSearch = (searchTerm) => {
+      handleSearch(searchActor, searchTerm, setResults);
+   };
+   // Reset Search Button
+   const handleOnSearchReset = () => {
+      resetSearch();
+      setResults([]);
+   };
 
    return (
       <>
+         {loading && <Loader />}
          <section className="w-full lg:w-[80%]">
-            <h3 className="leading-6 font-medium text-base-content text-2xl">All Actors</h3>
-            <div className="flex flex-wrap gap-5 my-4">
-               {actors?.map((actor) => {
-                  return (
-                     <SingleActorProfile
-                        key={actor._id}
-                        actor={actor}
-                        handleEditActor={() => handleEditActor(actor)}
-                        handleDeleteActor={() => handleDeleteActor(actor)}
-                        handleViewActor={() => handleViewActor(actor)}
-                     />
-                  );
-               })}
-            </div>
-            <div className="w-full flex items-center justify-end -ml-5">
-               <div className="join">
-                  <Pagination
-                     nextPage={nextPage}
-                     previousPage={previousPage}
-                     currentPage={currentPage}
+            <div className="flex items-center justify-between  mr-4 ">
+               <h3 className="leading-6 font-medium text-base-content text-2xl">All Actors</h3>
+               <div className="mt-4 mb-2 w-96">
+                  <Search
+                     placeholder={"Search Actors"}
+                     onSubmit={handleOnSearch}
+                     onReset={handleOnSearchReset}
+                     showResetIcon={results?.length}
                   />
                </div>
             </div>
+            {resultNotFound ? (
+               <h1 className="w-full text-center font-semibold text-3xl text-info p-2 my-3 opacity-40">
+                  OOPS! No Records Found
+               </h1>
+            ) : (
+               <>
+                  <div className="flex flex-wrap gap-5 my-4">
+                     {results.length
+                        ? results?.map((actor) => {
+                             return (
+                                <SingleActorProfile
+                                   key={actor._id}
+                                   actor={actor}
+                                   handleEditActor={() => handleEditActor(actor)}
+                                   handleDeleteActor={() => handleDeleteActor(actor)}
+                                   handleViewActor={() => handleViewActor(actor)}
+                                />
+                             );
+                          })
+                        : actors?.map((actor) => {
+                             return (
+                                <SingleActorProfile
+                                   key={actor._id}
+                                   actor={actor}
+                                   handleEditActor={() => handleEditActor(actor)}
+                                   handleDeleteActor={() => handleDeleteActor(actor)}
+                                   handleViewActor={() => handleViewActor(actor)}
+                                />
+                             );
+                          })}
+                  </div>
+                  {!results.length ? (
+                     <div className="w-full flex items-center justify-end -ml-5">
+                        <div className="join">
+                           <Pagination
+                              nextPage={nextPage}
+                              previousPage={previousPage}
+                              currentPage={currentPage}
+                           />
+                        </div>
+                     </div>
+                  ) : null}
+               </>
+            )}
          </section>
          <UpdateActorModal profileToUpdate={selectedProfile} />
       </>
