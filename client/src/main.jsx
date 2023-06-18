@@ -10,18 +10,21 @@ import { ThemeContextProvider } from "./context/themeContext.jsx";
 import { NotificationContextProvider } from "./context/NotificationContext.jsx";
 import { AuthContextProvider } from "./context/authContext.jsx";
 import { SearchContextProvider } from "./context/SearchContext.jsx";
+import { MovieContextProvider } from "./context/MovieContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <NotificationContextProvider>
-        <SearchContextProvider>
-          <AuthContextProvider>
-            <ThemeContextProvider>
-              <App />
-            </ThemeContextProvider>
-          </AuthContextProvider>
-        </SearchContextProvider>
+        <MovieContextProvider>
+          <SearchContextProvider>
+            <AuthContextProvider>
+              <ThemeContextProvider>
+                <App />
+              </ThemeContextProvider>
+            </AuthContextProvider>
+          </SearchContextProvider>
+        </MovieContextProvider>
       </NotificationContextProvider>
     </BrowserRouter>
   </React.StrictMode>

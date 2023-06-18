@@ -28,7 +28,7 @@ const SearchMovieScreen = () => {
   }, [query]);
 
   return (
-    <div className="w-full lg:w-[80%]">
+    <section className="bg-base-200 w-[70%] p-4 rounded-md">
       {resultNotFound ? (
         <h1 className="w-full text-center font-semibold text-3xl text-info p-2 my-3 opacity-40">
           OOPS! No Records Found
@@ -59,7 +59,7 @@ const SearchMovieScreen = () => {
           </tbody>
         </table>
       )}
-    </div>
+    </section>
   );
 };
 

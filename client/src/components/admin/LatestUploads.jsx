@@ -1,48 +1,66 @@
-import React from "react";
-
-import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
+import React, { useEffect } from "react";
 import SingleMovieListItem from "./SingleMovieListItem";
-
-const movie = {
-   poster:
-      "https://m.media-amazon.com/images/M/MV5BMTc3NjI2MjU0Nl5BMl5BanBnXkFtZTgwNDk3ODYxMTE@._V1_.jpg",
-   title: "Mission Impossible",
-   genres: ["Hollywood", "Action", "Hero"],
-   status: "Public",
-   _id: "sdsdsaq",
-};
+import { useMovieContext } from "../../context/MovieContext";
+import UpdateMovieModal from "./modals/UpdateMovieModal";
+import Pagination from "../Pagination";
 
 const LatestUploads = () => {
-   const deleteMovie = () => {};
-   const editMovie = () => {};
-   const openMovie = () => {};
+  const {
+    movies,
+    reachedEnd,
+    selectedMovie,
+    currentPage,
+    fetchMovies,
+    nextPage,
+    previousPage,
+    handleDeleteMovie,
+    handleEditMovie,
+    handleViewMovie,
+  } = useMovieContext();
 
-   return (
-      <div className="bg-base-200 w-[70%] p-4 rounded-md">
-         <h3 className="leading-6 font-medium text-base-content text-2xl">Latest Uploads</h3>
-         <div className="overflow-x-auto">
-            <table className="table table-sm">
-               {/* head */}
-               <thead>
-                  <tr>
-                     <th>Title</th>
-                     <th>Status</th>
-                     <th className="text-center">Actions</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {/* row 1 */}
+  useEffect(() => {
+    fetchMovies(currentPage);
+  }, [currentPage]);
+
+  return (
+    <>
+      <section className="bg-base-200 w-[70%] p-4 rounded-md">
+        <h3 className="leading-6 font-medium text-base-content text-2xl my-4">Latest Movies</h3>
+        <div className=" overflow-x-auto">
+          <table className="table table-sm">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th className="text-center">Actions</th>
+              </tr>
+            </thead>
+            {/* body */}
+            <tbody>
+              {movies?.map((movie) => {
+                return (
                   <SingleMovieListItem
-                     movie={movie}
-                     onDelete={deleteMovie}
-                     onEdit={editMovie}
-                     onOpen={openMovie}
+                    key={movie._id}
+                    movie={movie}
+                    onDelete={handleDeleteMovie}
+                    onEdit={handleEditMovie}
+                    onOpen={handleViewMovie}
                   />
-               </tbody>
-            </table>
-         </div>
-      </div>
-   );
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="w-full flex items-center justify-end mt-4">
+          <div className="join">
+            <Pagination nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} />
+          </div>
+        </div>
+      </section>
+      <UpdateMovieModal movieToUpdate={selectedMovie} />
+    </>
+  );
 };
 
 export default LatestUploads;

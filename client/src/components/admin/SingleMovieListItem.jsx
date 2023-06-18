@@ -9,7 +9,7 @@ const SingleMovieListItem = ({ movie, onDelete, onOpen, onEdit }) => {
       <td>
         <div className="flex items-center space-x-3 w-96">
           <div>
-            <img src={poster?.url} alt={title} className="w-32 h-32 " />
+            <img src={poster?.url} alt={title} className="w-20 h-20 object-fill " />
           </div>
           <div>
             <div className="font-bold">{title}</div>

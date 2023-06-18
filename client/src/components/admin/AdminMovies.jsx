@@ -1,59 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useNotificationContext } from "../../context/NotificationContext";
-import { getMovieForUpdateForm, getMovies } from "../../api/movie";
 import Pagination from "../Pagination";
 import SingleMovieListItem from "./SingleMovieListItem";
 import { UpdateMovieModal } from "..";
+import { useMovieContext } from "../../context/MovieContext";
 const AdminMovies = () => {
-  const { updateNotification } = useNotificationContext();
-  const [movies, setMovies] = useState();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [reachedEnd, setReachedEnd] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState("");
+  const {
+    movies,
+    reachedEnd,
+    selectedMovie,
+    currentPage,
+    fetchMovies,
+    nextPage,
+    previousPage,
+    handleDeleteMovie,
+    handleEditMovie,
+    handleViewMovie,
+  } = useMovieContext();
 
-  const nextPage = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-  const previousPage = () => {
-    setCurrentPage((prev) => {
-      if (prev < 1) {
-        return prev;
-      } else {
-        return prev - 1;
-      }
-    });
-  };
-
-  const fetchMovies = async (pageNumber) => {
-    const { error, data } = await getMovies(pageNumber, 5);
-    if (error) return updateNotification("error", error);
-    if (!data?.movies.length) {
-      setCurrentPage(pageNumber - 1);
-      return setReachedEnd(true);
-    }
-    setMovies(data?.movies);
-  };
   useEffect(() => {
     fetchMovies(currentPage);
   }, [currentPage]);
 
-  const handleDeleteMovie = (movie) => {
-    console.log("movie Delete trigger: ", movie);
-  };
-  const handleEditMovie = async (movie) => {
-    console.log("update Movie Trigger", movie);
-    // ! Update Movie on HOLD
-    // const { error, data } = await getMovieForUpdateForm(movie._id);
-    // if (error) return updateNotification("error", error);
-    // setSelectedMovie(movie);
-    window.update_movie_modal.showModal();
-  };
-  const handleViewMovie = (movie) => {};
-
   return (
     <>
-      <section className="w-full lg:w-[80%]">
-        <h3 className="leading-6 font-medium text-base-content text-2xl">All Movies</h3>
+      <h3 className="leading-6 font-medium text-base-content text-2xl my-4">All Movies</h3>
+      <section className="bg-base-200 w-[70%] p-4 rounded-md">
         <div className=" overflow-x-auto">
           <table className="table table-sm">
             {/* head */}
@@ -80,7 +51,7 @@ const AdminMovies = () => {
             </tbody>
           </table>
         </div>
-        <div className="w-full flex items-center justify-end -ml-5">
+        <div className="w-full flex items-center justify-end mt-4">
           <div className="join">
             <Pagination nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} />
           </div>
