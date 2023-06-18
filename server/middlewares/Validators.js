@@ -106,6 +106,10 @@ exports.movieUploadValidator = [
    // }),
 ];
 
+exports.reviewValidator = [
+   check("rating").isFloat({ min: 0, max: 10 }).withMessage("Rating must be number"),
+];
+
 // middleware
 exports.validate = (req, res, next) => {
    const result = validationResult(req).array();
