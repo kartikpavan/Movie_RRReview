@@ -8,6 +8,7 @@ const {
   removeMovie,
   getPaginatedMovies,
   methodToPrefillUpdateMovieForm,
+  searchMovies,
 } = require("../controllers/movie");
 const { isAuth, isAdmin } = require("../middlewares/user");
 const { uploadVideo, uploadImage } = require("../middlewares/multer");
@@ -50,5 +51,6 @@ router.delete("/delete-movie/:movieId", isAuth, isAdmin, removeMovie);
 router.get("/get-movies", isAuth, isAdmin, getPaginatedMovies);
 // route to fetch data to pre-fill the Movie Update form
 router.get("/get-movie-for-updateform/:movieId", isAuth, isAdmin, methodToPrefillUpdateMovieForm);
-
+// route to search Movies
+router.get("/search", isAuth, isAdmin, searchMovies);
 module.exports = router;

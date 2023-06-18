@@ -330,6 +330,13 @@ const methodToPrefillUpdateMovieForm = async (req, res) => {
     },
   });
 };
+
+const searchMovies = async (req, res) => {
+  const { title } = req.query;
+  if (!title) return res.json({ error: "Search Field cannot be empty" });
+  const results = await Movie.find({ title: { $regex: title, $options: "i" } });
+  res.status(200).json({ data: results });
+};
 //64821e9e566d316e7e19d551
 module.exports = {
   uploadTrailer,
@@ -339,4 +346,5 @@ module.exports = {
   removeMovie,
   getPaginatedMovies,
   methodToPrefillUpdateMovieForm,
+  searchMovies,
 };

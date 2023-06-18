@@ -60,3 +60,18 @@ export async function getMovieForUpdateForm(movieId) {
     return CatchError(error);
   }
 }
+
+// Search movies
+export async function searchMoviesForAdmin(query) {
+  try {
+    const { data } = await client.get(`/movies/search?title=${query}`, {
+      headers: {
+        Authorization: "Bearer " + getAuthToken(),
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data;
+  } catch (error) {
+    return CatchError(error);
+  }
+}

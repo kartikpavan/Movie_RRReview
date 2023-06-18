@@ -5,9 +5,8 @@ import { useNotificationContext } from "../../context/NotificationContext";
 import { useSearchContext } from "../../context/SearchContext";
 import Pagination from "../Pagination";
 import UpdateActorModal from "./modals/UpdateActorModal";
-import Search from "./Search";
-import Loader from "../misc/Loader";
 import ConfirmModal from "./modals/ConfirmModal";
+import SearchActorsInput from "./SearchActorsInput";
 
 const AdminActors = () => {
   const { updateNotification } = useNotificationContext();
@@ -99,7 +98,7 @@ const AdminActors = () => {
         <div className="flex items-center justify-between  mr-4 ">
           <h3 className="leading-6 font-medium text-base-content text-2xl">All Actors</h3>
           <div className="mt-4 mb-2 w-96">
-            <Search
+            <SearchActorsInput
               placeholder={"Search Actors"}
               onSubmit={handleOnSearch}
               onReset={handleOnSearchReset}

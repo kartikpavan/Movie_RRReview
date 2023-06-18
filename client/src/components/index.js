@@ -26,6 +26,9 @@ import Pagination from "./Pagination";
 import UpdateActorModal from "./admin/modals/UpdateActorModal";
 import ConfirmModal from "./admin/modals/ConfirmModal";
 import UpdateMovieModal from "./admin/modals/UpdateMovieModal";
+import SearchMovieScreen from "./admin/SearchMovieScreen";
+import SearchActorsInput from "./admin/SearchActorsInput";
+import SearchMoviesInput from "./admin/SearchMoviesInput";
 export {
   Loader,
   NotVerifiedBanner,
@@ -55,4 +58,7 @@ export {
   UpdateActorModal,
   ConfirmModal,
   UpdateMovieModal,
+  SearchMovieScreen,
+  SearchActorsInput,
+  SearchMoviesInput,
 };

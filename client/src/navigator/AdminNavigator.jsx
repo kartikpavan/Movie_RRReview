@@ -7,6 +7,7 @@ import {
   AdminMovies,
   Dashboard,
   MovieModal,
+  SearchMovieScreen,
   Sidebar,
 } from "../components";
 
@@ -29,6 +30,7 @@ const AdminNavigator = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/actors" element={<AdminActors />} />
             <Route path="/movies" element={<AdminMovies />} />
+            <Route path="/search" element={<SearchMovieScreen />} />
             <Route path="*" element={<Notfound />} />
           </Routes>
         </div>
