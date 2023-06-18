@@ -37,7 +37,7 @@ const Sidebar = () => {
          </div>
          {/* Search bar */}
          {/* <Search placeholder={"Search.."} /> */}
-         <SearchMoviesInput placeholder={"Search Movies"} onSubmit={handleSearchMovie} />
+         <SearchMoviesInput placeholder={"Search Movies..."} onSubmit={handleSearchMovie} />
          <NavItem to="/">
             <AiOutlineHome /> Home
          </NavItem>

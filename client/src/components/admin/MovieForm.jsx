@@ -321,7 +321,9 @@ const MovieForm = ({ onSubmit, isLoading, movieToUpdate }) => {
                   />
                </section>
             </main>
-            <SubmitFormButton isLoading={isLoading} onClick={handleSubmit} />
+            <div className="w-full grid place-items-center">
+               <SubmitFormButton isLoading={isLoading} onClick={handleSubmit} />
+            </div>
          </form>
          <WritersModal profiles={writers} removeWriter={removeWriter} />
          <CastModal profiles={cast} removeActor={removeActor} />
@@ -333,14 +335,14 @@ const MovieForm = ({ onSubmit, isLoading, movieToUpdate }) => {
 const SubmitFormButton = ({ isLoading, onClick }) => {
    return (
       <>
-         <button className="btn mt-4 w-full btn-active sm:text-xl" type="button" onClick={onClick}>
+         <button className="btn mt-4 w-1/2 text-lg btn-neutral" type="button" onClick={onClick}>
             {isLoading && (
                <>
                   <span className="loading loading-spinner"></span>
                   Uploading Movie Please Wait
                </>
             )}
-            {!isLoading && "Submit"}
+            {!isLoading && "Upload Movie"}
          </button>
       </>
    );

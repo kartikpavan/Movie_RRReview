@@ -27,7 +27,7 @@ export const MovieContextProvider = ({ children }) => {
 
    // Fetch Movies
    const fetchMovies = async (pageNumber) => {
-      const { error, data } = await getMovies(pageNumber, 5);
+      const { error, data } = await getMovies(pageNumber, 6);
       if (error) return updateNotification("error", error);
       if (!data?.movies.length) {
          setCurrentPage(pageNumber - 1);
