@@ -3,12 +3,12 @@ import Stats from "./Stats";
 import LatestUploads from "./LatestUploads";
 
 const Dashboard = () => {
-   return (
-      <main className="w-full">
-         <Stats />
-         <LatestUploads />
-      </main>
-   );
+  return (
+    <main className="w-full">
+      <Stats />
+      <LatestUploads />
+    </main>
+  );
 };
 
 export default Dashboard;

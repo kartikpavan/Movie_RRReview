@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TagField,
   LiveSearch,
@@ -14,7 +14,7 @@ import { languageOptions, results, statusOptions, typeOptions } from "../../data
 import { useSearchContext } from "../../context/SearchContext";
 import { searchActor } from "../../api/actor";
 import { validateMovieInfo } from "../../utils/validator";
-import { useNotificationContext } from "../../context/notificationContext";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 const defaultMovieInfo = {
   title: "",
@@ -31,7 +31,7 @@ const defaultMovieInfo = {
   status: "",
 };
 
-const MovieForm = ({ onSubmit, isLoading }) => {
+const MovieForm = ({ onSubmit, isLoading, movieToUpdate }) => {
   const { updateNotification } = useNotificationContext();
   const { handleSearch, isSearching, results, resetSearch } = useSearchContext();
   const [movieInfo, setMovieInfo] = useState(defaultMovieInfo);
@@ -166,8 +166,26 @@ const MovieForm = ({ onSubmit, isLoading }) => {
     );
   };
 
-  const { title, storyLine, director, writers, cast, tags, genres, type, language, status } =
-    movieInfo;
+  useEffect(() => {
+    if (movieToUpdate) {
+      setMovieInfo({ ...movieToUpdate, poster: null, releaseDate: releaseDate.split("T")[0] });
+      setSelectedPosterForUI(movieToUpdate.poster.url);
+    }
+  }, [movieToUpdate]);
+
+  const {
+    title,
+    releaseDate,
+    storyLine,
+    director,
+    writers,
+    cast,
+    tags,
+    genres,
+    type,
+    language,
+    status,
+  } = movieInfo;
   return (
     <>
       <form>
@@ -267,6 +285,7 @@ const MovieForm = ({ onSubmit, isLoading }) => {
                 type="date"
                 name="releaseDate"
                 onChange={handleChange}
+                value={releaseDate}
               />
             </div>
           </section>

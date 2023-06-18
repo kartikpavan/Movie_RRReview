@@ -88,7 +88,13 @@ const MovieModal = () => {
             </>
           )}
 
-          {videoSelected && <MovieForm onSubmit={handleMovieSubmit} isLoading={isMovieUploading} />}
+          {videoSelected && (
+            <MovieForm
+              onSubmit={handleMovieSubmit}
+              isLoading={isMovieUploading}
+              movieToUpdate={false}
+            />
+          )}
         </div>
       </dialog>
     </>
