@@ -13,19 +13,19 @@ import { SearchContextProvider } from "./context/SearchContext.jsx";
 import { MovieContextProvider } from "./context/MovieContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <NotificationContextProvider>
-        <MovieContextProvider>
-          <SearchContextProvider>
-            <AuthContextProvider>
-              <ThemeContextProvider>
-                <App />
-              </ThemeContextProvider>
-            </AuthContextProvider>
-          </SearchContextProvider>
-        </MovieContextProvider>
-      </NotificationContextProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+   <React.StrictMode>
+      <BrowserRouter>
+         <NotificationContextProvider>
+            <MovieContextProvider>
+               <SearchContextProvider>
+                  <AuthContextProvider>
+                     <ThemeContextProvider>
+                        <App />
+                     </ThemeContextProvider>
+                  </AuthContextProvider>
+               </SearchContextProvider>
+            </MovieContextProvider>
+         </NotificationContextProvider>
+      </BrowserRouter>
+   </React.StrictMode>
 );

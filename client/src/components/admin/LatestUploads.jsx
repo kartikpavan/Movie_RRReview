@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import SingleMovieListItem from "./SingleMovieListItem";
 import { useMovieContext } from "../../context/MovieContext";
-import UpdateMovieModal from "./modals/UpdateMovieModal";
 import Pagination from "../Pagination";
 
 const LatestUploads = () => {
@@ -62,7 +61,6 @@ const LatestUploads = () => {
                </div>
             </div>
          </section>
-         <UpdateMovieModal movieToUpdate={selectedMovie} />
       </>
    );
 };

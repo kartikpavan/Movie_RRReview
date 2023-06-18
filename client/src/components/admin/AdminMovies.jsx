@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import SingleMovieListItem from "./SingleMovieListItem";
-import { UpdateMovieModal } from "..";
 import { useMovieContext } from "../../context/MovieContext";
 const AdminMovies = () => {
    const {
@@ -61,12 +60,8 @@ const AdminMovies = () => {
                </div>
             </div>
          </section>
-         <UpdateMovieModal movieToUpdate={selectedMovie} />
       </>
    );
 };
 
-// onDelete={deleteMovie}
-// onEdit={editMovie}
-// onOpen={openMovie}
 export default AdminMovies;

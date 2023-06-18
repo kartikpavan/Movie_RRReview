@@ -38,16 +38,11 @@ export const MovieContextProvider = ({ children }) => {
 
    // delete Movie
    const handleDeleteMovie = (movie) => {
-      console.log("movie Delete trigger: ", movie);
+      // console.log("movie Delete trigger: ", movie);
    };
    //   Update movie
    const handleEditMovie = async (movie) => {
-      console.log("update Movie Trigger", movie);
-      // ! Update Movie on HOLD
-      // const { error, data } = await getMovieForUpdateForm(movie._id);
-      // if (error) return updateNotification("error", error);
-      // setSelectedMovie(movie);
-      window.update_movie_modal.showModal();
+      // window.update_movie_modal.showModal();
    };
    //   View Movie
    const handleViewMovie = (movie) => {};
