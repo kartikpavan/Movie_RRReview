@@ -3,8 +3,8 @@ import React from "react";
 const Stats = () => {
    return (
       <div className="w-full lg:w-[70%]">
-         <div className="max-w-full sm:mx-auto">
-            <div className="sm:flex sm:space-x-4">
+         <div className="max-w-full lg:mx-auto">
+            <div className="lg:flex sm:space-x-4">
                <div className="inline-block align-bottom rounded-lg text-left overflow-hidden shadow transform transition-all mb-4 w-full sm:w-1/3 sm:my-8">
                   <div className="bg-base-200 p-5">
                      <div className="sm:flex sm:items-start">

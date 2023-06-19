@@ -22,4 +22,40 @@ const parseMovieData = (req, res, next) => {
    next();
 };
 
-module.exports = { generateRandomBytes, parseMovieData };
+const averageRatingPipeline = (movieId) => {
+   return [
+      // Stage 1
+      {
+         //*(NOTE : All these records like rating ,_id needs to be inside the same DB)
+         $lookup: {
+            from: "Review", // looking inside Review Collection
+            localField: "rating", // we are working with the rating field here
+            foreignField: "_id", // passing the id of the particular review
+            as: "avgRating", // alias name
+         },
+      },
+      // Stage 2
+      {
+         // match all the records from lookup stage and,
+         // fiter records that match the parent movie ID / particular movie
+         $match: {
+            parentMovie: movieId,
+         },
+      },
+      //  Stage 3
+      {
+         // grouping all the data
+         $group: {
+            _id: null,
+            // calculating the average rating
+            ratingAvg: {
+               $avg: "$rating", // localField prop name
+            },
+            reviewCount: {
+               $sum: 1,
+            },
+         },
+      },
+   ];
+};
+module.exports = { generateRandomBytes, parseMovieData, averageRatingPipeline };
