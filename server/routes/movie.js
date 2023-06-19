@@ -10,7 +10,12 @@ const {
    methodToPrefillUpdateMovieForm,
    searchMovies,
 } = require("../controllers/movie");
-const { getLatestMoviesForUsers, getSingleMovieForUsers } = require("../controllers/movieUser");
+const {
+   getLatestMoviesForUsers,
+   getSingleMovieForUsers,
+   getRelatedMoviesForUser,
+   getTopRatedMovies,
+} = require("../controllers/movieUser");
 const { isAuth, isAdmin } = require("../middlewares/user");
 const { uploadVideo, uploadImage } = require("../middlewares/multer");
 const { movieUploadValidator, validate } = require("../middlewares/Validators");
@@ -59,5 +64,7 @@ router.get("/search", isAuth, isAdmin, searchMovies);
 //! USER ROUTES
 router.get("/latest-movies", getLatestMoviesForUsers);
 router.get("/single-movie/:movieId", getSingleMovieForUsers);
+router.get("/related-movies/:movieId", getRelatedMoviesForUser);
+router.get("/top-rated-movies", getTopRatedMovies);
 
 module.exports = router;
