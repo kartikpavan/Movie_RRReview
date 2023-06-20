@@ -17,6 +17,7 @@
       "react-dom": "^18.2.0",
       "react-drag-drop-files": "^2.3.10",
       "react-icons": "^4.9.0",
+      "react-loading-skeleton": "^3.3.1",
       "react-router-dom": "^6.11.2"
    },
    "devDependencies": {

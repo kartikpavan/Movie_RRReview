@@ -1,11 +1,19 @@
 import React from "react";
 import { NotVerifiedBanner } from "../components";
+import TopRatedMovies from "../components/TopRatedMovies";
+import HeroSlider from "../components/HeroSlider";
 
 const Home = () => {
    return (
       <>
          <NotVerifiedBanner />
-         <section className="text-2xl text-secondary">HOME</section>
+         <main className="max-w-screen-xl mx-auto">
+            {/* Image Slider */}
+            <HeroSlider />
+            {/* Top Rated movies  */}
+            <TopRatedMovies />
+            <TopRatedMovies />
+         </main>
       </>
    );
 };

@@ -11,6 +11,7 @@ import {
    ResetPassword,
    SignIn,
    SignUp,
+   SingleMovie,
 } from "./Pages";
 import AdminNavigator from "./navigator/AdminNavigator";
 import { ProtectedAuth } from "./components";
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/auth/email-verification" element={<EmailVerification />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
+            <Route path="/movie/:movieId" element={<SingleMovie />} />
             <Route path="*" element={<Notfound />} />
          </Routes>
       </main>
