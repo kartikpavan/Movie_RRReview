@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { getLatestMovies } from "../api/movie";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 let currentIndex = 0;
 let timer;
@@ -10,6 +11,7 @@ const HeroSlider = () => {
    const [slide, setSlide] = useState({});
    const [clonedSlide, setClonedSlide] = useState({});
    const [visible, setVisible] = useState(false);
+   const [upNext, setUpNext] = useState([]);
 
    const slideRef = useRef();
    const clonedSlideRef = useRef();
@@ -21,6 +23,18 @@ const HeroSlider = () => {
       setSlide(data[0]);
    };
 
+   const handleUpNextSection = (idx) => {
+      if (!movies.length) return;
+      const upNextCount = idx + 1;
+      const end = upNextCount + 2;
+      let newSlides = [...movies];
+      newSlides = newSlides.slice(idx + 1, movies.length);
+      if (!newSlides.length) {
+         newSlides = [...movies].slice(0, 3);
+      }
+      setUpNext([...newSlides]);
+   };
+
    // next slide
    const handleNextClick = () => {
       pauseSlideShow();
@@ -30,6 +44,7 @@ const HeroSlider = () => {
 
       clonedSlideRef.current.classList.add("slide-out-to-left");
       slideRef.current.classList.add("slide-in-from-right");
+      handleUpNextSection(currentIndex);
    };
 
    // previouse slide
@@ -41,6 +56,7 @@ const HeroSlider = () => {
 
       clonedSlideRef.current.classList.add("slide-out-to-right");
       slideRef.current.classList.add("slide-in-from-left");
+      handleUpNextSection(currentIndex);
    };
 
    // removing all animation classes
@@ -61,9 +77,7 @@ const HeroSlider = () => {
 
    // slide show start() function
    const startSlideShow = () => {
-      // timer = setInterval(() => {
-      //    handleNextClick();
-      // }, 5000);
+      timer = setInterval(handleNextClick, 1000);
    };
 
    // slide show pause() function
@@ -83,7 +97,10 @@ const HeroSlider = () => {
    }, []);
 
    useEffect(() => {
-      if (movies.length) startSlideShow();
+      if (movies.length && visible) {
+         startSlideShow();
+         handleUpNextSection(currentIndex);
+      }
       return () => pauseSlideShow();
    }, [movies.length, visible]);
 
@@ -92,9 +109,10 @@ const HeroSlider = () => {
          {/* Slide Show Section */}
          <section className="w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
             {/* Current Slide */}
-            <Slide src={slide.poster} title={slide.title} ref={slideRef} />
+            <Slide movieId={slide._id} src={slide.poster} title={slide.title} ref={slideRef} />
             {/* CLones Slide */}
             <Slide
+               movieId={slide._id}
                src={clonedSlide.poster}
                title={clonedSlide.title}
                ref={clonedSlideRef}
@@ -111,21 +129,39 @@ const HeroSlider = () => {
             </div>
          </section>
          {/* Up Next Section */}
-         <section className="w-1/5 bg-pink-500 rounded-r-lg"></section>
+         <section className="w-1/5 rounded-r-lg bg-base-200">
+            <h1 className="font-semibold text-2xl px-3 pb-3">Up Next</h1>
+            <div className="space-y-3 p-3">
+               {upNext.map((item, idx) => {
+                  return (
+                     <img
+                        key={item._id}
+                        src={item.poster}
+                        className="object-cover h-40 aspect-video rounded-md"
+                     />
+                  );
+               })}
+            </div>
+         </section>
       </main>
    );
 };
 
 const Slide = forwardRef((props, ref) => {
-   const { src, title, className = "", ...rest } = props;
+   const { movieId, src, title, className = "", ...rest } = props;
    return (
-      <div ref={ref} className={"relative cursor-pointer" + className} {...rest}>
+      <Link
+         to={`/movie/${movieId}`}
+         ref={ref}
+         className={"relative cursor-pointer block" + className}
+         {...rest}
+      >
          <img src={src} className="aspect-video object-contain" />
          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black"></div>
          <p className="absolute inset-x-0 bottom-0 text-white font-semibold text-3xl p-2">
             {title}
          </p>
-      </div>
+      </Link>
    );
 });
 

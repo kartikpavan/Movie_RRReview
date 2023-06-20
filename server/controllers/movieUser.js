@@ -85,9 +85,9 @@ const getSingleMovieForUsers = async (req, res) => {
             return {
                _id: c._id,
                profile: {
-                  actorId: c.actor._id,
-                  name: c.name,
-                  avatar: c.avatar?.url,
+                  actorId: c.actor?._id,
+                  name: c.actor?.name,
+                  avatar: c.actor?.avatar?.url,
                },
                roleAs: c.roleAs,
                leadActor: c.leadActor,

@@ -72,10 +72,10 @@ const createMovie = async (req, res) => {
       const { secure_url, public_id, responsive_breakpoints } = await cloudinary.uploader.upload(
          file.path,
          {
-            // transformation: {
-            //    width: 1280,
-            //    height: 720,
-            // },
+            transformation: {
+               width: 1280,
+               height: 720,
+            },
             responsive_breakpoints: {
                create_derived: true,
                max_width: 640,

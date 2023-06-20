@@ -90,10 +90,30 @@ export async function getTopRatedMovies(type) {
    }
 }
 
-//
+// get latest movies
 export async function getLatestMovies() {
    try {
       const { data } = await client.get("/movies/latest-movies");
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}
+
+// get single Movie
+export async function getSingleMovie(movieId) {
+   try {
+      const { data } = await client.get(`/movies/single-movie/${movieId}`);
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}
+
+// Get Related Movies
+export async function getRelatedMovies(movieId) {
+   try {
+      const { data } = await client.get(`/movies/related-movies/${movieId}`);
       return data;
    } catch (error) {
       return CatchError(error);
