@@ -57,6 +57,43 @@ input[type="number"]::-webkit-outer-spin-button {
       transform: translateX(0%);
    }
 }
+
+.slide-in-from-left {
+   animation: slideInFromLeft 0.3s ease-in;
+}
+@keyframes slideInFromLeft {
+   from {
+      transform: translateX(-100%);
+   }
+   to {
+      transform: translateX(0%);
+   }
+}
+
+.slide-out-to-left {
+   animation: slideOutToLeft 0.3s ease-in;
+}
+@keyframes slideOutToLeft {
+   from {
+      transform: translateX(0%);
+   }
+   to {
+      transform: translateX(-100%);
+   }
+}
+
+.slide-out-to-right {
+   animation: slideOutToRight 0.3s ease-in;
+}
+@keyframes slideOutToRight {
+   from {
+      transform: translateX(0%);
+   }
+   to {
+      transform: translateX(100%);
+   }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

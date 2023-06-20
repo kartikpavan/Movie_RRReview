@@ -11,7 +11,7 @@ const MovieList = ({ label, movies = [] }) => {
    if (!movies.length) return null;
    return (
       <>
-         <h1 className="text-2xl font-semibold my-2 px-2">{label}</h1>
+         <h1 className="text-xl font-semibold mt-8 mb-2 px-2">{label}</h1>
          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 px-2">
             {movies?.map((movie, idx) => {
                return (
