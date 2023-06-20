@@ -3,144 +3,115 @@ import { getLatestMovies } from "../api/movie";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
+// import { Carousel } from "react-responsive-carousel";
+// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+// import ImageGallery from "react-image-gallery";
+// import "react-image-gallery/styles/css/image-gallery.css";
 let currentIndex = 0;
 let timer;
 
 const HeroSlider = () => {
-   // const [movies, setMovies] = useState([]);
-   // const [slide, setSlide] = useState({});
-   // const [clonedSlide, setClonedSlide] = useState({});
-   // const [visible, setVisible] = useState(false);
-   // const [upNext, setUpNext] = useState([]);
-
-   // const slideRef = useRef();
-   // const clonedSlideRef = useRef();
-
-   // const fetchLatestMovies = async () => {
-   //    const { data, error } = await getLatestMovies();
-   //    if (error) return console.log(error);
-   //    setMovies(data);
-   //    setSlide(data[0]);
-   // };
-
-   // const handleUpNextSection = (idx) => {
-   //    if (!movies.length) return;
-   //    const upNextCount = idx + 1;
-   //    const end = upNextCount + 2;
-   //    let newSlides = [...movies];
-   //    newSlides = newSlides.slice(idx + 1, movies.length);
-   //    if (!newSlides.length) {
-   //       newSlides = [...movies].slice(0, 3);
-   //    }
-   //    setUpNext([...newSlides]);
-   // };
-
-   // // next slide
-   // const handleNextClick = () => {
-   //    pauseSlideShow();
-   //    setClonedSlide(movies[currentIndex]); // storing previous slide
-   //    currentIndex = (currentIndex + 1) % movies.length;
-   //    setSlide(movies[currentIndex]); // next slide
-
-   //    clonedSlideRef.current.classList.add("slide-out-to-left");
-   //    slideRef.current.classList.add("slide-in-from-right");
-   //    handleUpNextSection(currentIndex);
-   // };
-
-   // // previouse slide
-   // const handlePreviousClick = () => {
-   //    pauseSlideShow();
-   //    setClonedSlide(movies[currentIndex]); // storing previous slide
-   //    currentIndex = (currentIndex + movies.length - 1) % movies.length;
-   //    setSlide(movies[currentIndex]); // next slide
-
-   //    clonedSlideRef.current.classList.add("slide-out-to-right");
-   //    slideRef.current.classList.add("slide-in-from-left");
-   //    handleUpNextSection(currentIndex);
-   // };
-
-   // // removing all animation classes
-   // const handleAnimationEnd = () => {
-   //    const classes = [
-   //       "slide-in-from-right",
-   //       "slide-in-from-left",
-   //       "slide-out-to-left",
-   //       "slide-out-to-right",
-   //    ];
-
-   //    slideRef.current.classList.remove(...classes);
-   //    clonedSlideRef.current.classList.remove(...classes);
-
-   //    setClonedSlide({});
-   //    startSlideShow();
-   // };
-
-   // // slide show start() function
-   // const startSlideShow = () => {
-   //    timer = setInterval(handleNextClick, 1000);
-   // };
-
-   // // slide show pause() function
-   // const pauseSlideShow = () => clearInterval(timer);
-
-   // // Checking the focus of the web app
-   // const handleVisibilityChange = () => {
-   //    console.log(document.visibilityState);
-   //    if (document.visibilityState === "hidden") setVisible(false);
-   //    if (document.visibilityState === "visible") setVisible(true);
-   // };
-
-   // useEffect(() => {
-   //    fetchLatestMovies();
-   //    document.addEventListener("visibilitychange", handleVisibilityChange);
-   //    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-   // }, []);
-
-   // useEffect(() => {
-   //    if (movies.length && visible) {
-   //       startSlideShow();
-   //       handleUpNextSection(currentIndex);
-   //    }
-   //    return () => pauseSlideShow();
-   // }, [movies.length, visible]);
    const [movies, setMovies] = useState([]);
+   const [slide, setSlide] = useState({});
+   const [clonedSlide, setClonedSlide] = useState({});
+   const [visible, setVisible] = useState(false);
+   const [upNext, setUpNext] = useState([]);
+
+   const slideRef = useRef();
+   const clonedSlideRef = useRef();
+
    const fetchLatestMovies = async () => {
       const { data, error } = await getLatestMovies();
       if (error) return console.log(error);
       setMovies(data);
+      setSlide(data[0]);
    };
+
+   const handleUpNextSection = (idx) => {
+      if (!movies.length) return;
+      const upNextCount = idx + 1;
+      const end = upNextCount + 2;
+      let newSlides = [...movies];
+      newSlides = newSlides.slice(idx + 1, movies.length);
+      if (!newSlides.length) {
+         newSlides = [...movies].slice(0, 3);
+      }
+      setUpNext([...newSlides]);
+   };
+
+   // next slide
+   const handleNextClick = () => {
+      pauseSlideShow();
+      setClonedSlide(movies[currentIndex]); // storing previous slide
+      currentIndex = (currentIndex + 1) % movies.length;
+      setSlide(movies[currentIndex]); // next slide
+
+      clonedSlideRef.current.classList.add("slide-out-to-left");
+      slideRef.current.classList.add("slide-in-from-right");
+      handleUpNextSection(currentIndex);
+   };
+
+   // previouse slide
+   const handlePreviousClick = () => {
+      pauseSlideShow();
+      setClonedSlide(movies[currentIndex]); // storing previous slide
+      currentIndex = (currentIndex + movies.length - 1) % movies.length;
+      setSlide(movies[currentIndex]); // next slide
+
+      clonedSlideRef.current.classList.add("slide-out-to-right");
+      slideRef.current.classList.add("slide-in-from-left");
+      handleUpNextSection(currentIndex);
+   };
+
+   // removing all animation classes
+   const handleAnimationEnd = () => {
+      const classes = [
+         "slide-in-from-right",
+         "slide-in-from-left",
+         "slide-out-to-left",
+         "slide-out-to-right",
+      ];
+
+      slideRef.current.classList.remove(...classes);
+      clonedSlideRef.current.classList.remove(...classes);
+
+      setClonedSlide({});
+      startSlideShow();
+   };
+
+   // slide show start() function
+   const startSlideShow = () => {
+      timer = setInterval(handleNextClick, 5000);
+   };
+
+   // slide show pause() function
+   const pauseSlideShow = () => clearInterval(timer);
+
+   // Checking the focus of the web app
+   const handleVisibilityChange = () => {
+      console.log(document.visibilityState);
+      if (document.visibilityState === "hidden") setVisible(false);
+      if (document.visibilityState === "visible") setVisible(true);
+   };
+
    useEffect(() => {
       fetchLatestMovies();
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
    }, []);
+
+   useEffect(() => {
+      if (movies.length) {
+         startSlideShow();
+         handleUpNextSection(currentIndex);
+      }
+      return () => pauseSlideShow();
+   }, [movies.length, visible]);
 
    return (
       <main className="w-full flex mt-2">
          {/* Slide Show Section */}
-         <Carousel
-            autoFocus
-            autoPlay={true}
-            infiniteLoop={true}
-            interval={1000}
-            showIndicators={false}
-            showStatus={false}
-            // showThumbs={false}
-         >
-            {movies?.map((movie) => {
-               return (
-                  <Link
-                     key={movie?._id}
-                     className="aspect-video w-4/5 block"
-                     to={`/movie/${movie?._id}`}
-                  >
-                     <img src={movie?.poster} alt="poster" className="h-full w-full object-cover" />
-                  </Link>
-               );
-            })}
-         </Carousel>
-         {/* <section className="w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
+         <section className="w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
             <Slide movieId={slide._id} src={slide.poster} title={slide.title} ref={slideRef} />
             <Slide
                movieId={slide._id}
@@ -158,9 +129,9 @@ const HeroSlider = () => {
                   <MdKeyboardArrowRight size={30} />
                </button>
             </div>
-         </section> */}
+         </section>
          {/* Up Next Section */}
-         {/* <section className="w-1/5 rounded-r-lg bg-base-200">
+         <section className="w-1/5 rounded-r-lg bg-base-200">
             <h1 className="font-semibold text-2xl px-3 pb-3">Up Next</h1>
             <div className="space-y-3 p-3">
                {upNext.map((item, idx) => {
@@ -173,27 +144,27 @@ const HeroSlider = () => {
                   );
                })}
             </div>
-         </section> */}
+         </section>
       </main>
    );
 };
 
-// const Slide = forwardRef((props, ref) => {
-//    const { movieId, src, title, className = "", ...rest } = props;
-//    return (
-//       <Link
-//          to={`/movie/${movieId}`}
-//          ref={ref}
-//          className={"relative cursor-pointer block" + className}
-//          {...rest}
-//       >
-//          <img src={src} className="aspect-video object-contain" />
-//          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black"></div>
-//          <p className="absolute inset-x-0 bottom-0 text-white font-semibold text-3xl p-2">
-//             {title}
-//          </p>
-//       </Link>
-//    );
-// });
+const Slide = forwardRef((props, ref) => {
+   const { movieId, src, title, className = "", ...rest } = props;
+   return (
+      <Link
+         to={`/movie/${movieId}`}
+         ref={ref}
+         className={"relative cursor-pointer block" + className}
+         {...rest}
+      >
+         <img src={src} className="aspect-video object-contain" />
+         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black"></div>
+         <p className="absolute inset-x-0 bottom-0 text-white font-semibold text-3xl p-2">
+            {title}
+         </p>
+      </Link>
+   );
+});
 
 export default HeroSlider;
