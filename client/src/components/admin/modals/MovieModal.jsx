@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { uploadMovie, uploadMovieTrailer } from "../../../api/movie";
 import { FileUploader } from "react-drag-drop-files";
-import { FaUpload } from "react-icons/fa";
+import { FaLess, FaUpload } from "react-icons/fa";
 import { MdOutlineCloudDone } from "react-icons/md";
 import MovieForm from "../MovieForm";
 import { useNotificationContext } from "../../../context/NotificationContext";
@@ -85,8 +85,8 @@ const MovieModal = () => {
                      >
                         <div className="full m-3 h-32 border-4 border-dotted border-gray-500 cursor-pointer flex items-center justify-center">
                            <div className="grid place-items-center">
-                              <FaUpload className="w-14 h-14 text-neutral" />
-                              <p className="font-semibold text-neutral text-lg">
+                              <FaUpload className="w-14 h-14 text-primary" />
+                              <p className="font-semibold text-primary text-lg">
                                  Drop Your Files here
                               </p>
                            </div>

@@ -82,7 +82,9 @@ export async function searchMoviesForAdmin(query) {
 export async function getTopRatedMovies(type) {
    try {
       let endpoint = "/movies/top-rated-movies";
-      if (type) endpoint += "?type" + type;
+      if (type) {
+         endpoint = `/movies/top-rated-movies?type=${type}`;
+      }
       const { data } = await client.get(endpoint);
       return data;
    } catch (error) {

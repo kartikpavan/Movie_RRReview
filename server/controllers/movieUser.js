@@ -137,7 +137,7 @@ const getRelatedMoviesForUser = async (req, res) => {
 };
 
 const getTopRatedMovies = async (req, res) => {
-   const { type = "Film" } = req.query; // default type
+   const { type } = req.query; // default type
 
    const movies = await Movie.aggregate(topRatedMoviesPipeline(type));
 

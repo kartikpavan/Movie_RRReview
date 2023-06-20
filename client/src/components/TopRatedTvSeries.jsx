@@ -3,12 +3,12 @@ import { getTopRatedMovies } from "../api/movie";
 import { useNotificationContext } from "../context/NotificationContext";
 import MovieList from "./MovieList";
 
-const TopRatedMovies = () => {
+const TopRatedTvSeries = () => {
    const { updateNotification } = useNotificationContext();
    const [movies, setMovies] = useState([]);
 
    const fetchTopRatedMovies = async () => {
-      const { data, error } = await getTopRatedMovies("Film");
+      const { data, error } = await getTopRatedMovies("TV Series");
       if (error) return updateNotification("error", error);
       setMovies(data);
    };
@@ -19,9 +19,9 @@ const TopRatedMovies = () => {
 
    return (
       <>
-         <MovieList movies={movies} label={"Top Rated (Movies)"} />
+         <MovieList movies={movies} label={"Top Rated (TV Series)"} />
       </>
    );
 };
 
-export default TopRatedMovies;
+export default TopRatedTvSeries;

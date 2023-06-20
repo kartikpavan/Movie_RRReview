@@ -12,7 +12,7 @@ const Stats = () => {
                            <h3 className="leading-6 font-medium text-base-content">
                               Total Uploads
                            </h3>
-                           <p className="text-3xl font-bold text-info">71,897</p>
+                           <p className="text-3xl font-bold text-primary">71,897</p>
                         </div>
                      </div>
                   </div>
@@ -24,7 +24,7 @@ const Stats = () => {
                            <h3 className="leading-6 font-medium text-base-content">
                               Total Reviews
                            </h3>
-                           <p className="text-3xl font-bold text-info">58.16%</p>
+                           <p className="text-3xl font-bold text-primary">58.16%</p>
                         </div>
                      </div>
                   </div>
@@ -36,7 +36,7 @@ const Stats = () => {
                            <h3 className="text-sm leading-6 font-medium text-base-content">
                               Total Users
                            </h3>
-                           <p className="text-3xl font-bold text-info">24.57%</p>
+                           <p className="text-3xl font-bold text-primary">24.57%</p>
                         </div>
                      </div>
                   </div>

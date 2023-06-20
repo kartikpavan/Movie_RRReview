@@ -6,7 +6,7 @@ const GenreSelector = ({ totalGenresSelected }) => {
          <div className="indicator">
             <span className="indicator-item badge">{totalGenresSelected}</span>
             <button
-               className="btn btn-neutral"
+               className="btn btn-base-300"
                onClick={() => window.genre_modal.showModal()}
                type="button"
             >

@@ -16,7 +16,7 @@ const Navbar = () => {
    };
 
    return (
-      <nav className="navbar bg-neutral text-neutral-content">
+      <nav className="navbar bg-primary text-primary-content ">
          {/* navbar width*/}
          <div className="w-full lg:w-[80%] xl:w-[70%]  mx-auto">
             <div className="flex items-center justify-between w-full">

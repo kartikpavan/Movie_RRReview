@@ -4,11 +4,11 @@ const ThemeContext = createContext();
 
 export const ThemeContextProvider = ({ children }) => {
    const [theme, setTheme] = useState(
-      localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+      localStorage.getItem("theme") ? localStorage.getItem("theme") : "corporate"
    );
 
    const toggleTheme = () => {
-      setTheme((prev) => (prev === "light" ? "dracula" : "light"));
+      setTheme((prev) => (prev === "corporate" ? "halloween" : "corporate"));
    };
 
    useEffect(() => {

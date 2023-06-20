@@ -2,6 +2,7 @@ import React from "react";
 import { NotVerifiedBanner } from "../components";
 import TopRatedMovies from "../components/TopRatedMovies";
 import HeroSlider from "../components/HeroSlider";
+import TopRatedTvSeries from "../components/TopRatedTvSeries";
 
 const Home = () => {
    return (
@@ -12,7 +13,7 @@ const Home = () => {
             <HeroSlider />
             {/* Top Rated movies  */}
             <TopRatedMovies />
-            <TopRatedMovies />
+            <TopRatedTvSeries />
          </main>
       </>
    );

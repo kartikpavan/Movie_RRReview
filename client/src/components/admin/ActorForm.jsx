@@ -108,7 +108,7 @@ const ActorForm = ({ btnText, title, onSubmit, isLoading, profileToUpdate }) => 
                   Uoploading
                </button>
             ) : (
-               <button className="btn w-full btn-sm mt-3 btn-neutral" type="submit">
+               <button className="btn w-full btn-sm mt-3 btn-primary" type="submit">
                   {btnText}
                </button>
             )}

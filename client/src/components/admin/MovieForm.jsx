@@ -335,7 +335,7 @@ const MovieForm = ({ onSubmit, isLoading, movieToUpdate }) => {
 const SubmitFormButton = ({ isLoading, onClick }) => {
    return (
       <>
-         <button className="btn mt-4 w-1/2 text-lg btn-neutral" type="button" onClick={onClick}>
+         <button className="btn mt-4 w-1/2 text-lg btn-primary" type="button" onClick={onClick}>
             {isLoading && (
                <>
                   <span className="loading loading-spinner"></span>
