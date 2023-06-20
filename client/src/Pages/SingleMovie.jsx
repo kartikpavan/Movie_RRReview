@@ -60,12 +60,7 @@ const SingleMovie = () => {
                {/* Hero Section */}
                <div>
                   {/* Movie Trailer */}
-                  <video
-                     poster={poster}
-                     controls
-                     src={trailer}
-                     className="w-full h-[500px] rounded-md"
-                  ></video>
+                  <video poster={poster} controls src={trailer} className="w-full "></video>
                </div>
                <div className="flex justify-between items-center">
                   {/* title */}
@@ -151,7 +146,7 @@ const SingleMovie = () => {
                               <img
                                  src={c.profile?.avatar}
                                  alt={c.profile?.name}
-                                 className="w-20 h-20 rounded-full"
+                                 className="h-24 w-24 rounded-full "
                               />
                               <p className="text-primary font-semibold text-center">
                                  {c.profile?.name}

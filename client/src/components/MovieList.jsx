@@ -28,7 +28,7 @@ const ListItem = ({ movie }) => {
          <img
             src={movie.poster || <Skeleton />}
             alt={movie.title}
-            className="h-72 object- rounded-md"
+            className="aspect-video object-cover rounded-md"
          />
 
          <h1 className="font-semibold">{trimTitle(movie.title) || <Skeleton />}</h1>
