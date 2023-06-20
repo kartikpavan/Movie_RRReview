@@ -23,7 +23,7 @@ const Navbar = () => {
                {/* Logo */}
                <NavLink to="/" className="flex items-center gap-3">
                   <img src={Logo} alt="logo" className="w-16" />
-                  <p className="hidden md:block md:text-2xl">RRReview</p>
+                  <p className="hidden md:block md:text-2xl font-semibold">RRReview</p>
                </NavLink>
                <div className="flex items-center gap-3">
                   {/* Theme toggle */}
@@ -35,10 +35,7 @@ const Navbar = () => {
                      className="input input-sm md:input-md input-bordered w-full max-w-xs"
                   />
                   {authInfo?.isLoggedIn ? (
-                     <button
-                        onClick={logOut}
-                        className="btn btn-sm md:btn-md btn-error btn-outline"
-                     >
+                     <button onClick={logOut} className="btn btn-sm md:btn-md btn-error">
                         Logout
                      </button>
                   ) : (

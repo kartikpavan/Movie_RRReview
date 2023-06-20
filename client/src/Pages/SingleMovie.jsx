@@ -6,6 +6,7 @@ import Loader from "../components/misc/Loader";
 import RatingStar from "../components/RatingStar";
 import RelatedMovies from "../components/RelatedMovies";
 import { useAuthContext } from "../context/authContext";
+import AddRatingModal from "../components/admin/modals/AddRatingModal";
 
 const SingleMovie = () => {
    const { updateNotification } = useNotificationContext();
@@ -34,6 +35,11 @@ const SingleMovie = () => {
       if (!authInfo.isLoggedIn) {
          return navigate("/auth/signIn");
       }
+      window.add_rating_modal.showModal();
+   };
+
+   const handleRatingSuccess = (reviews) => {
+      setMovie({ ...movie, reviews: reviews });
    };
 
    const {
@@ -161,6 +167,7 @@ const SingleMovie = () => {
                <RelatedMovies movieId={movieId} />
             </main>
          )}
+         <AddRatingModal movieId={movieId} onSuccess={handleRatingSuccess} />
       </>
    );
 };

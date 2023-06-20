@@ -127,7 +127,7 @@ const EmailVerification = () => {
                         Verify Account
                      </button>
                   </div>
-                  <button onClick={handleResendOTP} className="link text-left link-secondary">
+                  <button onClick={handleResendOTP} className="link text-left link-primary">
                      I don't have OTP
                   </button>
                </div>

@@ -1,6 +1,7 @@
 const { isValidObjectId } = require("mongoose");
 const Review = require("../models/review");
 const Movie = require("../models/movie");
+const { getAvgRatings } = require("../utils/helper");
 
 const postReview = async (req, res) => {
    const { content, rating } = req.body;
@@ -34,7 +35,9 @@ const postReview = async (req, res) => {
    await movie.save(); // updating review for movie
    await newReview.save(); // saving new review and
 
-   res.status(201).json({ msg: "Your Review has been added" });
+   const reviews = await getAvgRatings(movie._id); // we are getting the avg rating as well to update the UI as soon as someone post a review
+
+   res.status(201).json({ msg: "Your Review has been added", reviews });
 };
 
 const updateReview = async (req, res) => {

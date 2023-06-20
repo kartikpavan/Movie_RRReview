@@ -105,7 +105,7 @@ const ActorForm = ({ btnText, title, onSubmit, isLoading, profileToUpdate }) => 
             {isLoading ? (
                <button type="button" className="btn w-full btn-sm mt-3" disabled={isLoading}>
                   <span className="loading loading-spinner"></span>
-                  Uoploading
+                  Uploading
                </button>
             ) : (
                <button className="btn w-full btn-sm mt-3 btn-primary" type="submit">
