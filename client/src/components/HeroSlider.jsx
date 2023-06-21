@@ -3,10 +3,8 @@ import { getLatestMovies } from "../api/movie";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-// import { Carousel } from "react-responsive-carousel";
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import ImageGallery from "react-image-gallery";
-// import "react-image-gallery/styles/css/image-gallery.css";
+import HeroSliderSkeleton from "./Skeletons/HeroSliderSkeleton";
+
 let currentIndex = 0;
 let timer;
 
@@ -16,15 +14,21 @@ const HeroSlider = () => {
    const [clonedSlide, setClonedSlide] = useState({});
    const [visible, setVisible] = useState(false);
    const [upNext, setUpNext] = useState([]);
+   const [isLoading, setIsLoading] = useState(false);
 
    const slideRef = useRef();
    const clonedSlideRef = useRef();
 
    const fetchLatestMovies = async (signal) => {
+      setIsLoading(true);
       const { data, error } = await getLatestMovies(signal);
-      if (error) return console.log(error);
+      if (error) {
+         setIsLoading(false);
+         return console.log(error);
+      }
       setMovies(data);
       setSlide(data[0]);
+      setIsLoading(false); //!
    };
 
    const handleUpNextSection = (idx) => {
@@ -81,7 +85,9 @@ const HeroSlider = () => {
 
    // slide show start() function
    const startSlideShow = () => {
-      timer = setInterval(handleNextClick, 5000);
+      if (!isLoading) {
+         timer = setInterval(handleNextClick, 5000);
+      }
    };
 
    // slide show pause() function
@@ -114,43 +120,62 @@ const HeroSlider = () => {
    }, [movies.length, visible]);
 
    return (
-      <main className="w-full flex flex-col md:flex-row mt-2">
-         {/* Slide Show Section */}
-         <section className="md:w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
-            <Slide movieId={slide._id} src={slide.poster} title={slide.title} ref={slideRef} />
-            <Slide
-               movieId={slide._id}
-               src={clonedSlide.poster}
-               title={clonedSlide.title}
-               ref={clonedSlideRef}
-               onAnimationEnd={handleAnimationEnd}
-               className={"absolute inset-0"}
-            />
-            <div className="absolute top-1/2 -translate-y-1/2 w-full flex items-center justify-between  px-2">
-               <button type="button" className="btn btn-ghost" onClick={handlePreviousClick}>
-                  <MdKeyboardArrowLeft size={30} />
-               </button>
-               <button type="button" className="btn btn-ghost" onClick={handleNextClick}>
-                  <MdKeyboardArrowRight size={30} />
-               </button>
-            </div>
-         </section>
-         {/* Up Next Section */}
-         <section className="md:w-1/5 flex flex-col rounded-r-lg bg-base-200">
-            <h1 className="font-semibold text-md  mb-1 md:text-2xl px-3 md:pb-3">Up Next</h1>
-            <div className="md:space-y-3 px-3 flex items-baseline space-x-2 md:space-x-0 overflow-hidden md:block">
-               {upNext.map((item, idx) => {
-                  return (
-                     <img
-                        key={item._id}
-                        src={item.poster}
-                        className="object-cover h-20 md:h-40 aspect-video rounded-md"
-                     />
-                  );
-               })}
-            </div>
-         </section>
-      </main>
+      <>
+         {isLoading ? (
+            <HeroSliderSkeleton />
+         ) : (
+            <main className="w-full flex flex-col md:flex-row mt-2">
+               {/* Slide Show Section */}
+               <section className="md:w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
+                  <Slide
+                     movieId={slide._id}
+                     src={slide.poster}
+                     title={slide.title}
+                     ref={slideRef}
+                  />
+                  <Slide
+                     movieId={slide._id}
+                     src={clonedSlide.poster}
+                     title={clonedSlide.title}
+                     ref={clonedSlideRef}
+                     onAnimationEnd={handleAnimationEnd}
+                     className={"absolute inset-0"}
+                  />
+                  <div className="absolute top-1/2 -translate-y-1/2 w-full flex items-center justify-between  px-2">
+                     <button
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        onClick={handlePreviousClick}
+                     >
+                        <MdKeyboardArrowLeft size={30} />
+                     </button>
+                     <button
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        onClick={handleNextClick}
+                     >
+                        <MdKeyboardArrowRight size={30} />
+                     </button>
+                  </div>
+               </section>
+               {/* Up Next Section */}
+               <section className="md:w-1/5 flex flex-col rounded-r-lg bg-base-200">
+                  <h1 className="font-semibold text-md  mb-1 md:text-2xl px-3 md:pb-3">Up Next</h1>
+                  <div className="md:space-y-3 px-3 flex items-baseline space-x-2 md:space-x-0 overflow-hidden md:block">
+                     {upNext.map((item, idx) => {
+                        return (
+                           <img
+                              key={item._id}
+                              src={item.poster}
+                              className="object-cover h-20 md:h-40 aspect-video rounded-md"
+                           />
+                        );
+                     })}
+                  </div>
+               </section>
+            </main>
+         )}
+      </>
    );
 };
 

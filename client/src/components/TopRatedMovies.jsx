@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import { getTopRatedMovies } from "../api/movie";
 import { useNotificationContext } from "../context/NotificationContext";
 import MovieList from "./MovieList";
+import TopRatedSkeleton from "./Skeletons/TopRatedSkeleton";
 
 const TopRatedMovies = () => {
    const { updateNotification } = useNotificationContext();
    const [movies, setMovies] = useState([]);
+   const [isLoading, setIsLoading] = useState(false);
 
    const fetchTopRatedMovies = async (signal) => {
+      setIsLoading(true);
       const { data, error } = await getTopRatedMovies("Film", signal);
-      if (error) return updateNotification("error", error);
+      if (error) {
+         setIsLoading(false);
+         return updateNotification("error", error);
+      }
       setMovies(data);
+      setIsLoading(false);
    };
 
    useEffect(() => {
@@ -21,7 +28,11 @@ const TopRatedMovies = () => {
 
    return (
       <>
-         <MovieList movies={movies} label={"Top Rated (Movies)"} />
+         {isLoading ? (
+            <TopRatedSkeleton />
+         ) : (
+            <MovieList movies={movies} label={"Top Rated (Movies)"} />
+         )}
       </>
    );
 };

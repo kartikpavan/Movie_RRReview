@@ -1,7 +1,6 @@
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+
 import RatingStar from "./RatingStar";
 
 const MovieList = ({ label, movies = [] }) => {
@@ -26,12 +25,12 @@ const ListItem = ({ movie }) => {
    return (
       <Link to={`/movie/${movie._id}`}>
          <img
-            src={movie.poster || <Skeleton />}
+            src={movie.poster}
             alt={movie.title}
             className="aspect-video object-cover rounded-md"
          />
 
-         <h1 className="font-semibold">{trimTitle(movie.title) || <Skeleton />}</h1>
+         <h1 className="font-semibold">{trimTitle(movie.title)}</h1>
          <RatingStar rating={movie.reviews?.ratingAvg} />
       </Link>
    );
