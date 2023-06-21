@@ -7,6 +7,7 @@ import RatingStar from "../components/RatingStar";
 import RelatedMovies from "../components/RelatedMovies";
 import { useAuthContext } from "../context/authContext";
 import AddRatingModal from "../components/admin/modals/AddRatingModal";
+import { ActorProfileModal } from "../components";
 
 const SingleMovie = () => {
    const { updateNotification } = useNotificationContext();
@@ -15,6 +16,7 @@ const SingleMovie = () => {
    const { movieId } = useParams();
    const [loading, setLoading] = useState(false);
    const [movie, setMovie] = useState({});
+   const [selectedProfile, setSelectedProfile] = useState("");
 
    const fetchSingleMovie = async () => {
       setLoading(true);
@@ -38,8 +40,14 @@ const SingleMovie = () => {
       window.add_rating_modal.showModal();
    };
 
+   // we are updating the movie object based on the latest review added by the user , so that UI changes can be seen immediately without reload
    const handleRatingSuccess = (reviews) => {
       setMovie({ ...movie, reviews: reviews });
+   };
+
+   const handleOpenActorProfile = (actorId) => {
+      setSelectedProfile(actorId);
+      window.actor_profile_modal.showModal();
    };
 
    const {
@@ -68,16 +76,19 @@ const SingleMovie = () => {
                   {/* Movie Trailer */}
                   <video poster={poster} controls src={trailer} className="w-full"></video>
                </div>
-               <div className="flex justify-between items-center">
+               <div className="flex flex-col md:flex-row justify-between md:items-center">
                   {/* title */}
-                  <h1 className="text-4xl font-semibold text-primary py-3">{title}</h1>
+                  <h1 className="text-2xl md:text-4xl font-semibold text-primary py-3">{title}</h1>
                   {/* Reviews */}
-                  <div className="flex flex-col items-end">
+                  <div className=" md:items-end">
                      <RatingStar rating={reviews.ratingAvg} />
-                     <Link to={`/movie/reviews/` + _id} className="link link-primary link-hover">
+                     <Link
+                        to={`/movie/reviews/` + _id}
+                        className="link link-primary link-hover block"
+                     >
                         {reviews.reviewCount} Reviews
                      </Link>
-                     <button className="link link-primary " type="button" onClick={handleRateMovie}>
+                     <button className="link link-accent " type="button" onClick={handleRateMovie}>
                         Rate the Movie
                      </button>
                   </div>
@@ -120,7 +131,12 @@ const SingleMovie = () => {
                   {/* Director */}
                   <div className="flex space-x-2">
                      <p className="text-gray-500">Director:</p>
-                     <p className="text-primary hover:underline cursor-pointer">{director.name}</p>
+                     <p
+                        className="text-primary hover:underline cursor-pointer"
+                        onClick={() => handleOpenActorProfile(_id)}
+                     >
+                        {director.name}
+                     </p>
                   </div>
                   {/* Writers */}
                   <div className="flex space-x-2">
@@ -132,6 +148,7 @@ const SingleMovie = () => {
                                  <p
                                     key={w._id}
                                     className="text-primary hover:underline cursor-pointer"
+                                    onClick={() => handleOpenActorProfile(w._id)}
                                  >
                                     {w.name}
                                  </p>
@@ -142,12 +159,13 @@ const SingleMovie = () => {
                   </div>
                   {/* Cast */}
                   <p className="text-gray-500">Cast:</p>
-                  <div className="space-x-2 flex">
+                  <div className="space-x-2 flex flex-wrap ">
                      {cast?.map((c) => {
                         return (
                            <div
                               key={c.profile?.actorId}
-                              className="flex flex-col items-center gap-y-1 cursor-pointer hover:bg-base-300 rounded-md p-1"
+                              className="flex flex-col items-center gap-y-1 cursor-pointer hover:bg-base-300 rounded-md p-1 "
+                              onClick={() => handleOpenActorProfile(c.profile?.actorId)}
                            >
                               <img
                                  src={c.profile?.avatar}
@@ -168,6 +186,7 @@ const SingleMovie = () => {
             </main>
          )}
          <AddRatingModal movieId={movieId} onSuccess={handleRatingSuccess} />
+         <ActorProfileModal actorId={selectedProfile} />
       </>
    );
 };

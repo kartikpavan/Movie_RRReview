@@ -7,14 +7,16 @@ const TopRatedMovies = () => {
    const { updateNotification } = useNotificationContext();
    const [movies, setMovies] = useState([]);
 
-   const fetchTopRatedMovies = async () => {
-      const { data, error } = await getTopRatedMovies("Film");
+   const fetchTopRatedMovies = async (signal) => {
+      const { data, error } = await getTopRatedMovies("Film", signal);
       if (error) return updateNotification("error", error);
       setMovies(data);
    };
 
    useEffect(() => {
-      fetchTopRatedMovies();
+      const controller = new AbortController();
+      fetchTopRatedMovies(controller.signal);
+      return () => controller.abort();
    }, []);
 
    return (

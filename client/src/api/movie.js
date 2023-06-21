@@ -79,13 +79,13 @@ export async function searchMoviesForAdmin(query) {
 //! USER
 
 // Top rated Movies
-export async function getTopRatedMovies(type) {
+export async function getTopRatedMovies(type, signal) {
    try {
       let endpoint = "/movies/top-rated-movies";
       if (type) {
          endpoint = `/movies/top-rated-movies?type=${type}`;
       }
-      const { data } = await client.get(endpoint);
+      const { data } = await client.get(endpoint, { signal });
       return data;
    } catch (error) {
       return CatchError(error);
@@ -93,9 +93,9 @@ export async function getTopRatedMovies(type) {
 }
 
 // get latest movies
-export async function getLatestMovies() {
+export async function getLatestMovies(signal) {
    try {
-      const { data } = await client.get("/movies/latest-movies");
+      const { data } = await client.get("/movies/latest-movies", { signal });
       return data;
    } catch (error) {
       return CatchError(error);

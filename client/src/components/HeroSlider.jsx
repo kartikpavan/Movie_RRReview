@@ -20,8 +20,8 @@ const HeroSlider = () => {
    const slideRef = useRef();
    const clonedSlideRef = useRef();
 
-   const fetchLatestMovies = async () => {
-      const { data, error } = await getLatestMovies();
+   const fetchLatestMovies = async (signal) => {
+      const { data, error } = await getLatestMovies(signal);
       if (error) return console.log(error);
       setMovies(data);
       setSlide(data[0]);
@@ -95,9 +95,14 @@ const HeroSlider = () => {
    };
 
    useEffect(() => {
-      fetchLatestMovies();
+      const controller = new AbortController();
+      fetchLatestMovies(controller.signal);
       document.addEventListener("visibilitychange", handleVisibilityChange);
-      return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+      return () => {
+         controller.abort();
+         pauseSlideShow();
+         document.removeEventListener("visibilitychange", handleVisibilityChange);
+      };
    }, []);
 
    useEffect(() => {
@@ -109,9 +114,9 @@ const HeroSlider = () => {
    }, [movies.length, visible]);
 
    return (
-      <main className="w-full flex mt-2">
+      <main className="w-full flex flex-col md:flex-row mt-2">
          {/* Slide Show Section */}
-         <section className="w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
+         <section className="md:w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
             <Slide movieId={slide._id} src={slide.poster} title={slide.title} ref={slideRef} />
             <Slide
                movieId={slide._id}
@@ -131,15 +136,15 @@ const HeroSlider = () => {
             </div>
          </section>
          {/* Up Next Section */}
-         <section className="w-1/5 rounded-r-lg bg-base-200">
-            <h1 className="font-semibold text-2xl px-3 pb-3">Up Next</h1>
-            <div className="space-y-3 p-3">
+         <section className="md:w-1/5 flex flex-col rounded-r-lg bg-base-200">
+            <h1 className="font-semibold text-md  mb-1 md:text-2xl px-3 md:pb-3">Up Next</h1>
+            <div className="md:space-y-3 px-3 flex items-baseline space-x-2 md:space-x-0 overflow-hidden md:block">
                {upNext.map((item, idx) => {
                   return (
                      <img
                         key={item._id}
                         src={item.poster}
-                        className="object-cover h-40 aspect-video rounded-md"
+                        className="object-cover h-20 md:h-40 aspect-video rounded-md"
                      />
                   );
                })}
@@ -160,7 +165,7 @@ const Slide = forwardRef((props, ref) => {
       >
          <img src={src} className="aspect-video object-contain" />
          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black"></div>
-         <p className="absolute inset-x-0 bottom-0 text-white font-semibold text-3xl p-2">
+         <p className="absolute inset-x-0 bottom-0 text-white font-semibold text-xl md:text-3xl p-2">
             {title}
          </p>
       </Link>

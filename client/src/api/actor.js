@@ -75,3 +75,13 @@ export async function deleteActor(actorId) {
       return CatchError(error);
    }
 }
+
+// get Single Actor
+export async function getSingleActor(actorId) {
+   try {
+      const { data } = await client.get(`/actors/actor/${actorId}`);
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}

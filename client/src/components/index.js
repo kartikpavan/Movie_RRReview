@@ -28,6 +28,7 @@ import ConfirmModal from "./admin/modals/ConfirmModal";
 import SearchMovieScreen from "./admin/SearchMovieScreen";
 import SearchActorsInput from "./admin/SearchActorsInput";
 import SearchMoviesInput from "./admin/SearchMoviesInput";
+import ActorProfileModal from "./admin/modals/ActorProfileModal";
 export {
    Loader,
    NotVerifiedBanner,
@@ -59,4 +60,5 @@ export {
    SearchMovieScreen,
    SearchActorsInput,
    SearchMoviesInput,
+   ActorProfileModal,
 };
