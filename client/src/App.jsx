@@ -9,6 +9,7 @@ import {
    Home,
    Notfound,
    ResetPassword,
+   Reviews,
    SignIn,
    SignUp,
    SingleMovie,
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
             <Route path="/movie/:movieId" element={<SingleMovie />} />
+            <Route path="/movie/reviews/:movieId" element={<Reviews />} />
             <Route path="*" element={<Notfound />} />
          </Routes>
       </main>

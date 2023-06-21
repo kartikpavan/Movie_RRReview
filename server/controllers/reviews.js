@@ -53,9 +53,9 @@ const updateReview = async (req, res) => {
 
    review.content = content;
    review.rating = rating;
-   await review.save();
+   const editedReview = await review.save();
 
-   res.status(201).json({ msg: "Your Review has been Updated" });
+   res.status(201).json({ msg: "Your Review has been Updated", data: editedReview });
 };
 
 const removeReview = async (req, res) => {
@@ -89,7 +89,7 @@ const getReviewsByMovie = async (req, res) => {
          path: "reviews",
          populate: { path: "owner", select: "name" },
       })
-      .select("reviews");
+      .select("reviews title");
    if (!movie) return res.status(404).json({ error: "Movie Not found inside Database" });
 
    const reviews = movie.reviews.map((r) => {
@@ -104,7 +104,7 @@ const getReviewsByMovie = async (req, res) => {
       };
    });
 
-   res.status(201).json({ data: reviews });
+   res.status(201).json({ data: { reviews, title: movie.title } });
 };
 
 module.exports = { postReview, updateReview, removeReview, getReviewsByMovie };

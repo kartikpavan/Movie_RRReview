@@ -26,6 +26,7 @@ const SingleMovie = () => {
          return updateNotification("error", error);
       }
       setMovie(data);
+      console.log(data);
       setLoading(false);
    };
 

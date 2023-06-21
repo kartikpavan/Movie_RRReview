@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
 const Ratings = new Array(10).fill("");
-export const ReviewForm = ({ onsubmit, busy }) => {
+export const ReviewForm = ({ onsubmit, busy, initialState, btnText }) => {
    const [selectedRatings, setSelectedRatings] = useState([]);
    const [content, setContent] = useState("");
 
@@ -23,6 +23,14 @@ export const ReviewForm = ({ onsubmit, busy }) => {
       };
       onsubmit(data);
    };
+
+   // Edit Review
+   useEffect(() => {
+      if (initialState) {
+         setContent(initialState.content);
+         setSelectedRatings(new Array(initialState.rating).fill(""));
+      }
+   }, [initialState]);
 
    return (
       <section>
@@ -66,7 +74,7 @@ export const ReviewForm = ({ onsubmit, busy }) => {
             </button>
          ) : (
             <button className="w-full btn btn-primary my-2" onClick={handleReviewSubmit}>
-               Add Review
+               {btnText}
             </button>
          )}
       </section>

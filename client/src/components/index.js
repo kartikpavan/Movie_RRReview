@@ -29,6 +29,7 @@ import SearchMovieScreen from "./admin/SearchMovieScreen";
 import SearchActorsInput from "./admin/SearchActorsInput";
 import SearchMoviesInput from "./admin/SearchMoviesInput";
 import ActorProfileModal from "./admin/modals/ActorProfileModal";
+import EditRatingModal from "./admin/modals/EditRatingModal";
 export {
    Loader,
    NotVerifiedBanner,
@@ -61,4 +62,5 @@ export {
    SearchActorsInput,
    SearchMoviesInput,
    ActorProfileModal,
+   EditRatingModal,
 };
