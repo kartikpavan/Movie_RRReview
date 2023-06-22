@@ -7,11 +7,11 @@ import { BrowserRouter } from "react-router-dom";
 
 // Context API
 import { ThemeContextProvider } from "./context/themeContext.jsx";
-import { NotificationContextProvider } from "./context/NotificationContext.jsx";
 import { AuthContextProvider } from "./context/authContext.jsx";
 import { SearchContextProvider } from "./context/SearchContext.jsx";
 import { MovieContextProvider } from "./context/MovieContext.jsx";
 import { SkeletonContextProvider } from "./context/SkeletonContext.jsx";
+import { NotificationContextProvider } from "./context/NotificationContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
    <React.StrictMode>
