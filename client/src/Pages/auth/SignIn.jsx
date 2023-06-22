@@ -24,6 +24,10 @@ const SignIn = () => {
       await handleSignIn(userInfo.email, userInfo.password);
    };
 
+   const handleSkipSignIn = async () => {
+      await handleSignIn(import.meta.env.VITE_TEST_EMAIL, import.meta.env.VITE_TEST_PASSWORD);
+   };
+
    return (
       <>
          {authInfo.isLoading && <Loader />}
@@ -32,7 +36,7 @@ const SignIn = () => {
                <div className="card-body">
                   <h2 className="text-center text-lg font-semibold">Sign In</h2>
                   {/* Email Input */}
-                  <div className="form-contaol w-full max-w-xs">
+                  <div className="form-control w-full max-w-xs">
                      <label className="label">
                         <span className="label-text">Email</span>
                      </label>
@@ -63,9 +67,19 @@ const SignIn = () => {
                   </div>
                   {/* Sign In Button */}
                   <div className="card-actions justify-center my-2">
-                     <button type="submit" className="btn btn-primary btn-wide">
-                        Sign in
-                     </button>
+                     <div className="flex flex-col  border-opacity-50">
+                        <button type="submit" className="btn btn-primary btn-wide">
+                           Sign in
+                        </button>
+                        <div className="divider">OR</div>
+                        <button
+                           type="button"
+                           onClick={handleSkipSignIn}
+                           className="btn btn-accent "
+                        >
+                           Skip Sign In & Test App
+                        </button>
+                     </div>
                   </div>
                   <div className="flex items-center justify-between w-full">
                      {/* Forget Password */}

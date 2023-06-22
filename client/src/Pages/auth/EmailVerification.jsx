@@ -102,8 +102,7 @@ const EmailVerification = () => {
                      Enter the OTP to verify your Account
                   </h2>
                   <p className="text-gray-500 text-center">
-                     OTP has been sent to your registered Email{" "}
-                     <span className="text-gray-200">ab*****@gmail.com</span>
+                     OTP has been sent to your registered Email
                   </p>
                   {/* OTP Input */}
                   <div className="flex items-center justify-between ">

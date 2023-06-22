@@ -22,8 +22,6 @@ const App = () => {
    const { authInfo } = useAuthContext();
    const isAdmin = authInfo.profile?.role === "admin";
 
-   if (isAdmin) return <AdminNavigator />;
-
    return (
       <main className="w-full h-screen">
          <Navbar />
@@ -52,6 +50,7 @@ const App = () => {
             <Route path="/movie/:movieId" element={<SingleMovie />} />
             <Route path="/movie/reviews/:movieId" element={<Reviews />} />
             <Route path="/movie/search" element={<SearchMovieResults />} />
+            <Route path="/admin/*" element={isAdmin && <AdminNavigator />} />
             <Route path="*" element={<Notfound />} />
          </Routes>
       </main>
