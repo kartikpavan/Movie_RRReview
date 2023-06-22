@@ -13,6 +13,7 @@ import {
    SignIn,
    SignUp,
    SingleMovie,
+   SearchMovieResults,
 } from "./Pages";
 import AdminNavigator from "./navigator/AdminNavigator";
 import { ProtectedAuth } from "./components";
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/auth/reset-password" element={<ResetPassword />} />
             <Route path="/movie/:movieId" element={<SingleMovie />} />
             <Route path="/movie/reviews/:movieId" element={<Reviews />} />
+            <Route path="/movie/search" element={<SearchMovieResults />} />
             <Route path="*" element={<Notfound />} />
          </Routes>
       </main>

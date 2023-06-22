@@ -121,3 +121,13 @@ export async function getRelatedMovies(movieId) {
       return CatchError(error);
    }
 }
+
+// Search Movies (user) @GET
+export async function searchMoviesForPublic(title) {
+   try {
+      const { data } = await client.get(`/movies/search-public?title=${title}`);
+      return data;
+   } catch (error) {
+      return CatchError(error);
+   }
+}

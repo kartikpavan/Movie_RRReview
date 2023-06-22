@@ -2,18 +2,19 @@ import React, { useState } from "react";
 
 const SearchMoviesInput = ({ placeholder, onSubmit, showResetIcon, onReset }) => {
    const [searchTerm, setSearchTerm] = useState("");
+
    const handleSubmit = (e) => {
       e.preventDefault();
       onSubmit(searchTerm);
    };
    return (
-      <form onSubmit={handleSubmit} className="my-4">
+      <form onSubmit={handleSubmit}>
          <input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             type="text"
             placeholder={placeholder}
-            className="input input-bordered w-full max-w-lg"
+            className="input input-sm md:input-md input-primary w-full max-w-lg text-primary font-semibold"
          />
          {showResetIcon ? (
             <button

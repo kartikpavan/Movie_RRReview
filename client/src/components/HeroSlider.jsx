@@ -144,17 +144,17 @@ const HeroSlider = () => {
                   <div className="absolute top-1/2 -translate-y-1/2 w-full flex items-center justify-between  px-2">
                      <button
                         type="button"
-                        className="btn btn-primary btn-sm"
+                        className="btn btn-primary btn-xs"
                         onClick={handlePreviousClick}
                      >
-                        <MdKeyboardArrowLeft size={30} />
+                        <MdKeyboardArrowLeft className="text-xl" />
                      </button>
                      <button
                         type="button"
-                        className="btn btn-primary btn-sm"
+                        className="btn btn-primary btn-xs"
                         onClick={handleNextClick}
                      >
-                        <MdKeyboardArrowRight size={30} />
+                        <MdKeyboardArrowRight className="text-xl" />
                      </button>
                   </div>
                </section>

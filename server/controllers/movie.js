@@ -1,5 +1,6 @@
 const { isValidObjectId } = require("mongoose");
 const Movie = require("../models/movie");
+const { getAvgRatings } = require("../utils/helper");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -331,7 +332,7 @@ const methodToPrefillUpdateMovieForm = async (req, res) => {
    });
 };
 
-// SEARCH movie @GET
+// SEARCH movie (admin ) @GET
 const searchMovies = async (req, res) => {
    const { title } = req.query;
    if (!title) return res.json({ error: "Search Field cannot be empty" });

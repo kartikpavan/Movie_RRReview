@@ -15,6 +15,7 @@ const {
    getSingleMovieForUsers,
    getRelatedMoviesForUser,
    getTopRatedMovies,
+   getPublicMovieSearchResults,
 } = require("../controllers/movieUser");
 const { isAuth, isAdmin } = require("../middlewares/user");
 const { uploadVideo, uploadImage } = require("../middlewares/multer");
@@ -66,5 +67,7 @@ router.get("/latest-movies", getLatestMoviesForUsers);
 router.get("/single-movie/:movieId", getSingleMovieForUsers);
 router.get("/related-movies/:movieId", getRelatedMoviesForUser);
 router.get("/top-rated-movies", getTopRatedMovies);
+router.get("/top-rated-movies", getTopRatedMovies);
+router.get("/search-public", getPublicMovieSearchResults);
 
 module.exports = router;

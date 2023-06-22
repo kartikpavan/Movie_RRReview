@@ -7,6 +7,7 @@ import Home from "./Home";
 import Notfound from "./Notfound";
 import SingleMovie from "./SingleMovie";
 import Reviews from "./Reviews";
+import SearchMovieResults from "./SearchMovieResults";
 
 export {
    EmailVerification,
@@ -18,4 +19,5 @@ export {
    Notfound,
    SingleMovie,
    Reviews,
+   SearchMovieResults,
 };

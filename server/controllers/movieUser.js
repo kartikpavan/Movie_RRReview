@@ -155,9 +155,31 @@ const getTopRatedMovies = async (req, res) => {
    res.status(200).json({ data: topRatedMovies });
 };
 
+// SEARCH Movie () @ GET
+const getPublicMovieSearchResults = async (req, res) => {
+   const { title } = req.query;
+   if (!title) return res.json({ error: "Search Field cannot be empty" });
+   const movies = await Movie.find({ title: { $regex: title, $options: "i" } });
+
+   const results = await Promise.all(
+      movies.map(async (m) => {
+         const reviews = await getAvgRatings(m._id);
+         return {
+            _id: m._id,
+            title: m.title,
+            poster: m.poster?.url,
+            reviews: { ...reviews },
+         };
+      })
+   );
+
+   res.status(200).json({ data: results });
+};
+
 module.exports = {
    getLatestMoviesForUsers,
    getSingleMovieForUsers,
    getRelatedMoviesForUser,
    getTopRatedMovies,
+   getPublicMovieSearchResults,
 };
