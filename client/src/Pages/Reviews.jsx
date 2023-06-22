@@ -5,7 +5,7 @@ import { useNotificationContext } from "../context/NotificationContext";
 import { useAuthContext } from "../context/authContext";
 import { deleteReview, getReviewsByMovie } from "../api/review";
 import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
-import { ConfirmModal, EditRatingModal } from "../components";
+import { ConfirmModal, EditRatingModal, NotVerifiedBanner } from "../components";
 import ReviewsSkeleton from "../components/Skeletons/ReviewsSkeleton";
 
 const getIntitialName = (name = "") => {
@@ -89,49 +89,53 @@ const Reviews = () => {
          {isLoading ? (
             <ReviewsSkeleton />
          ) : (
-            <main className="max-w-screen-xl mx-auto">
-               {/* Header */}
-               <div className="px-2 py-4 flex items-center justify-between">
-                  <h1 className="md:text-xl">
-                     Showing Reviews for: <span className="text-primary"> {movieTitle} </span>
-                  </h1>
-                  <button
-                     className="link link-primary"
-                     type="button"
-                     onClick={findProfileOwnerReview}
-                  >
-                     {myReview ? "View All Reviews" : "  Show my Review"}
-                  </button>
-               </div>
-               {/* Review Contaner */}
-               {!reviews.length ? (
-                  <h1 className="text-xl text-primary px-2">No Reviews Found</h1>
-               ) : myReview ? (
-                  <div>
-                     <ReviewCard review={myReview} />
-                     <div className="flex justify-end">
-                        <button
-                           className="btn btn-sm btn-ghost text-red-500"
-                           type="button"
-                           onClick={showConfirmModal}
-                        >
-                           <FaTrash size={22} />
-                        </button>
-                        <button
-                           className="btn btn-sm btn-ghost"
-                           type="button"
-                           onClick={handleEditReview}
-                        >
-                           <FaRegEdit size={22} />
-                        </button>
-                     </div>
+            <>
+               <NotVerifiedBanner />
+
+               <main className="max-w-screen-xl mx-auto">
+                  {/* Header */}
+                  <div className="px-2 py-4 flex items-center justify-between">
+                     <h1 className="md:text-xl">
+                        Showing Reviews for: <span className="text-primary"> {movieTitle} </span>
+                     </h1>
+                     <button
+                        className="link link-primary"
+                        type="button"
+                        onClick={findProfileOwnerReview}
+                     >
+                        {myReview ? "View All Reviews" : "  Show my Review"}
+                     </button>
                   </div>
-               ) : (
-                  reviews?.map((r) => {
-                     return <ReviewCard key={r.reviewId} review={r} />;
-                  })
-               )}
-            </main>
+                  {/* Review Contaner */}
+                  {!reviews.length ? (
+                     <h1 className="text-xl text-primary px-2">No Reviews Found</h1>
+                  ) : myReview ? (
+                     <div>
+                        <ReviewCard review={myReview} />
+                        <div className="flex justify-end">
+                           <button
+                              className="btn btn-sm btn-ghost text-red-500"
+                              type="button"
+                              onClick={showConfirmModal}
+                           >
+                              <FaTrash size={22} />
+                           </button>
+                           <button
+                              className="btn btn-sm btn-ghost"
+                              type="button"
+                              onClick={handleEditReview}
+                           >
+                              <FaRegEdit size={22} />
+                           </button>
+                        </div>
+                     </div>
+                  ) : (
+                     reviews?.map((r) => {
+                        return <ReviewCard key={r.reviewId} review={r} />;
+                     })
+                  )}
+               </main>
+            </>
          )}
 
          <ConfirmModal

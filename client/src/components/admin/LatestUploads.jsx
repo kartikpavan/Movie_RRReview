@@ -23,7 +23,7 @@ const LatestUploads = () => {
 
    return (
       <>
-         <section className="bg-base-200 w-[70%] p-4 rounded-md">
+         <section className="bg-base-200 w-[60%] p-4 rounded-md">
             <h3 className="leading-6 font-medium text-base-content text-2xl my-4">Latest Movies</h3>
             <div className=" overflow-x-auto">
                <table className="table table-sm">

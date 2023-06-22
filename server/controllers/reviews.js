@@ -8,6 +8,9 @@ const postReview = async (req, res) => {
    const { movieId } = req.params;
    const userId = req.user._id;
 
+   // only verified users can add review
+   if (!req.user.isVerified) return res.json({ error: "Please Verify your Email first" });
+
    if (!isValidObjectId(movieId)) return res.json({ error: "Movie id not Found" });
 
    //check if the movie exists inside the DB
