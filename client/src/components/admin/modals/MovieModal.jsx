@@ -10,7 +10,7 @@ const videoFileTypes = ["mp4", "avi", "mov"];
 const MovieModal = () => {
    const { updateNotification } = useNotificationContext();
    const [file, setFile] = useState(null);
-   const [videoSelected, setVideoSelected] = useState(true);
+   const [videoSelected, setVideoSelected] = useState(false);
    const [isLoading, setIsloading] = useState(false);
    const [videoInfo, setVideoinfo] = useState({});
    const [isMovieUploading, setIsMovieUploading] = useState(false);
