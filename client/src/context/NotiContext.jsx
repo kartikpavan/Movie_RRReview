@@ -31,7 +31,7 @@ export const NotificationContextProvider = ({ children }) => {
    };
 
    return (
-      <NotificationContext.Provider value={{ updateNotification }}>
+      <NotiContext.Provider value={{ updateNotification }}>
          {children}
          {notification && (
             <div
@@ -40,7 +40,7 @@ export const NotificationContextProvider = ({ children }) => {
                <span className="text-lg font-semibold">{notification}</span>
             </div>
          )}
-      </NotificationContext.Provider>
+      </NotiContext.Provider>
    );
 };
 
