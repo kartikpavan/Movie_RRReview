@@ -2,7 +2,7 @@ import { useState, useContext, createContext } from "react";
 
 const NotiContext = createContext();
 
-export const NotificationContextProvider = ({ children }) => {
+export const NotiContextProvider = ({ children }) => {
    const [notification, setNotification] = useState("");
    const [alertType, setAlertType] = useState("");
 

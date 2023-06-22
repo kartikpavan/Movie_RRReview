@@ -11,11 +11,12 @@ import { AuthContextProvider } from "./context/authContext.jsx";
 import { SearchContextProvider } from "./context/SearchContext.jsx";
 import { MovieContextProvider } from "./context/MovieContext.jsx";
 import { SkeletonContextProvider } from "./context/SkeletonContext.jsx";
-import { NotiContext } from "./context/NotiContext.jsx";
+import { NotiContextProvider } from "./context/NotiContext.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
    <React.StrictMode>
       <BrowserRouter>
-         <NotiContext>
+         <NotiContextProvider>
             <MovieContextProvider>
                <SearchContextProvider>
                   <AuthContextProvider>
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                   </AuthContextProvider>
                </SearchContextProvider>
             </MovieContextProvider>
-         </NotiContext>
+         </NotiContextProvider>
       </BrowserRouter>
    </React.StrictMode>
 );
