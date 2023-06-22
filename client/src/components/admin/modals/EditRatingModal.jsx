@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ReviewForm } from "../../ReviewForm";
 import { editReview } from "../../../api/review";
-import { useNotificationContext } from "../../../context/NotificationContext";
+import { useNotificationContext } from "../../../context/NotiContext";
 
 const EditRatingModal = ({ movieId, onSuccess, initialState }) => {
    const { updateNotification } = useNotificationContext();

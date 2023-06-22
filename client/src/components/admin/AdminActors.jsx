@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
 import { deleteActor, getActors, searchActor } from "../../api/actor";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import { useSearchContext } from "../../context/SearchContext";
 import Pagination from "../Pagination";
 import UpdateActorModal from "./modals/UpdateActorModal";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PosterSelector from "./selectors/PosterSelector";
 import { validateActorInfo } from "../../utils/validator";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 
 const defaultActorValues = {
    name: "",

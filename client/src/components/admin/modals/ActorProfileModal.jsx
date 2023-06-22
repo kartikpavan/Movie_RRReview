@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNotificationContext } from "../../../context/NotificationContext";
+import { useNotificationContext } from "../../../context/NotiContext";
 import { getSingleActor } from "../../../api/actor";
 
 const ActorProfileModal = ({ actorId }) => {

@@ -4,7 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { FaLess, FaUpload } from "react-icons/fa";
 import { MdOutlineCloudDone } from "react-icons/md";
 import MovieForm from "../MovieForm";
-import { useNotificationContext } from "../../../context/NotificationContext";
+import { useNotificationContext } from "../../../context/NotiContext";
 const videoFileTypes = ["mp4", "avi", "mov"];
 
 const MovieModal = () => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { sendForgotPasswordLink } from "../../api/auth";
 import { validEmail } from "../../utils/validator";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import { Loader } from "../../components";
 
 const ForgotPassword = () => {

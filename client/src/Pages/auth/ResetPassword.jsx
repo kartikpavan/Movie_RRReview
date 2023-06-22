@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { changePassword, verifyPassResetToken } from "../../api/auth";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import { Loader } from "../../components";
 
 //http://localhost:5173/auth/reset-password?token=e72a10f8effc9e4c2dc7ba817f529fae5b50e711bf2082fb5df79c0b0619&id=647db2bd892e4522da3ed649

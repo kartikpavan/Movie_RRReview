@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { validOneTimePassword } from "../../utils/validator";
 import { resendVerifyEmailOTP, verifyUserEmail } from "../../api/auth";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 
 import { useAuthContext } from "../../context/authContext";
 import { Loader } from "../../components";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchMoviesForAdmin } from "../../api/movie";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import SingleMovieListItem from "./SingleMovieListItem";
 
 const SearchMovieScreen = () => {

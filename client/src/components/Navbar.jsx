@@ -4,7 +4,7 @@ import Logo from "../assets/logo.png";
 import { RiShutDownLine } from "react-icons/ri";
 
 import { useAuthContext } from "../context/authContext";
-import { useNotificationContext } from "../context/NotificationContext";
+import { useNotificationContext } from "../context/NotiContext";
 import { SearchMoviesInput, ThemeToggle } from "../components";
 
 const Navbar = () => {

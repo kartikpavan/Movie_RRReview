@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSingleMovie } from "../api/movie";
-import { useNotificationContext } from "../context/NotificationContext";
+import { useNotificationContext } from "../context/NotiContext";
 import Loader from "../components/misc/Loader";
 import RatingStar from "../components/RatingStar";
 import RelatedMovies from "../components/RelatedMovies";

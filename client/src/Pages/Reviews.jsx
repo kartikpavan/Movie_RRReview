@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { useNotificationContext } from "../context/NotificationContext";
+import { useNotificationContext } from "../context/NotiContext";
 import { useAuthContext } from "../context/authContext";
 import { deleteReview, getReviewsByMovie } from "../api/review";
 import { FaRegEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";

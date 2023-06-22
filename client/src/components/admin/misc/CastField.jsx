@@ -3,7 +3,7 @@ import LiveSearch from "./LiveSearch";
 import { results } from "../../../data/data";
 import { useSearchContext } from "../../../context/SearchContext";
 import { searchActor } from "../../../api/actor";
-import { useNotificationContext } from "../../../context/NotificationContext";
+import { useNotificationContext } from "../../../context/NotiContext";
 
 // cast = [{actor:id,roleAs:" ",leadActor:true}]
 const defaultCast = {

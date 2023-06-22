@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { getIsAuth, userSignIn } from "../api/auth";
-import { useNotificationContext } from "./NotificationContext";
+import { useNotificationContext } from "./NotiContext";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(undefined);

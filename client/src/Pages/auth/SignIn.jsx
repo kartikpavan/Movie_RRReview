@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import { validateSignInInfo } from "../../utils/validator";
 import { useAuthContext } from "../../context/authContext";
 import { Loader } from "../../components";

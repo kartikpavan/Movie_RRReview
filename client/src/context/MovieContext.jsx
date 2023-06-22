@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { useNotificationContext } from "./NotificationContext";
+import { useNotificationContext } from "./NotiContext";
 import { getMovies } from "../api/movie";
 
 const MovieContext = createContext();

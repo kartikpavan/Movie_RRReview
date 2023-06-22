@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTopRatedMovies } from "../api/movie";
-import { useNotificationContext } from "../context/NotificationContext";
+import { useNotificationContext } from "../context/NotiContext";
 import MovieList from "./MovieList";
 import TopRatedSkeleton from "./Skeletons/TopRatedSkeleton";
 

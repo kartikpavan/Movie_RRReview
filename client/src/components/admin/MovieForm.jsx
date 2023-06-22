@@ -14,7 +14,7 @@ import { languageOptions, results, statusOptions, typeOptions } from "../../data
 import { useSearchContext } from "../../context/SearchContext";
 import { searchActor } from "../../api/actor";
 import { validateMovieInfo } from "../../utils/validator";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 
 const defaultMovieInfo = {
    title: "",

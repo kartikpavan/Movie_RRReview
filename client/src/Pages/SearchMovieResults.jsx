@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNotificationContext } from "../context/NotificationContext";
+import { useNotificationContext } from "../context/NotiContext";
 import { useSearchParams } from "react-router-dom";
 import { searchMoviesForPublic } from "../api/movie";
 import MovieList from "../components/MovieList";

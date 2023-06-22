@@ -3,7 +3,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { validateSignUpUserInfo } from "../../utils/validator";
 import { createUser } from "../../api/auth";
-import { useNotificationContext } from "../../context/NotificationContext";
+import { useNotificationContext } from "../../context/NotiContext";
 import { Loader } from "../../components";
 
 const initialState = { name: "", email: "", password: "" };
