@@ -8,7 +8,6 @@ const AddRatingModal = ({ movieId, onSuccess }) => {
    const [isLoading, setIsLoading] = useState(false);
 
    const handleSubmit = async (data) => {
-      console.log(data);
       setIsLoading(true);
       const { error, msg, reviews } = await addReview(data, movieId);
       if (error) {

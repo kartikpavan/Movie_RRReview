@@ -64,7 +64,6 @@ const AdminActors = () => {
       setSelectedProfile(actor);
    };
    const confirmDeleteActor = async () => {
-      console.log(selectedProfile);
       setBusyIndicator(true);
       const { error, msg } = await deleteActor(selectedProfile._id);
       if (error) {

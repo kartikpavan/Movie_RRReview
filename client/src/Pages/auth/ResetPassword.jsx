@@ -34,7 +34,6 @@ const ResetPassword = () => {
       const data = { userId: userId, token: token, newPassword: newPassword };
       setIsLoading(true);
       const response = await changePassword(data);
-      console.log(response);
       if (response.error) {
          setIsLoading(false);
          return updateNotification("error", error);

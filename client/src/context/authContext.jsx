@@ -16,7 +16,6 @@ export const AuthContextProvider = ({ children }) => {
    const navigate = useNavigate();
    const [authInfo, setAuthInfo] = useState({ ...initialAuthState });
    const { updateNotification } = useNotificationContext();
-   console.log(authInfo);
    // Sign in
    async function handleSignIn(email, password) {
       setAuthInfo({ ...authInfo, isLoading: true });

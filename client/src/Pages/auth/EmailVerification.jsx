@@ -19,7 +19,6 @@ const EmailVerification = () => {
    const [isLoading, setIsLoading] = useState(false);
 
    const user = location?.state?.user; // getting this user from sign Up Page
-   console.log(user);
    const { isLoggedIn, profile } = authInfo;
    const isVerified = profile?.isVerified;
 
@@ -42,7 +41,6 @@ const EmailVerification = () => {
       const { value } = target;
       const newOtp = [...oneTimePassword];
       newOtp[index] = value.substring(value.length - 1, value.length); // avoid typing more than 1 digit as input
-      console.log(value);
       // change focus of input field
       if (!value) focusPreviousInputField(index);
       else focusNextInputField(index);
