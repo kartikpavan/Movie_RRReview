@@ -8,6 +8,7 @@ import RelatedMovies from "../components/RelatedMovies";
 import { useAuthContext } from "../context/authContext";
 import AddRatingModal from "../components/admin/modals/AddRatingModal";
 import { ActorProfileModal } from "../components";
+import SingleMoviePageSkeleton from "../components/Skeletons/SingleMoviePageSkeleton";
 
 const SingleMovie = () => {
    const { updateNotification } = useNotificationContext();
@@ -27,7 +28,7 @@ const SingleMovie = () => {
       }
       setMovie(data);
       console.log(data);
-      setLoading(false);
+      setLoading(false); //!
    };
 
    useEffect(() => {
@@ -69,7 +70,7 @@ const SingleMovie = () => {
    return (
       <>
          {loading ? (
-            <Loader />
+            <SingleMoviePageSkeleton />
          ) : (
             <main className="max-w-screen-xl mx-auto p-2 ">
                {/* Hero Section */}
