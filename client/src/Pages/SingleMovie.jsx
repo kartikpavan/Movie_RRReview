@@ -78,7 +78,12 @@ const SingleMovie = () => {
                   {/* Hero Section */}
                   <div>
                      {/* Movie Trailer */}
-                     <video poster={poster} controls src={trailer} className="w-full"></video>
+                     <video
+                        poster={poster}
+                        controls
+                        src={trailer}
+                        className="w-full md:h-[600px] aspect-video object-fill"
+                     ></video>
                   </div>
                   <div className="flex flex-col md:flex-row justify-between md:items-center">
                      {/* title */}
