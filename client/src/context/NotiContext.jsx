@@ -35,7 +35,7 @@ export const NotiContextProvider = ({ children }) => {
          {children}
          {notification && (
             <div
-               className={`fixed left-1/2 -translate-x-1/2 top-8 alert ${alertType} w-auto translate-y-5 transition-all duration-300 ease-in-out z-50`}
+               className={`fixed left-1/2 -translate-x-1/2 top-2 alert ${alertType} w-auto translate-y-5 transition-all duration-300 ease-in-out z-50`}
             >
                <span className="text-lg font-semibold">{notification}</span>
             </div>

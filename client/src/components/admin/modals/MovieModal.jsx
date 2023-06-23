@@ -68,7 +68,7 @@ const MovieModal = () => {
                {isLoading && (
                   <div className="w-full h-40 grid place-items-center">
                      <span className="loading loading-ring loading-lg"></span>
-                     <h1 className="text-neutral text-lg font-semibold">
+                     <h1 className="text-primary text-lg font-semibold">
                         Please Wait while we process your request
                      </h1>
                   </div>

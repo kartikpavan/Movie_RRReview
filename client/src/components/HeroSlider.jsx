@@ -126,7 +126,7 @@ const HeroSlider = () => {
          ) : (
             <main className="w-full flex flex-col md:flex-row mt-2">
                {/* Slide Show Section */}
-               <section className="md:w-4/5 aspect-video relative overflow-hidden rounded-l-lg">
+               <section className="md:w-4/5 aspect-video relative overflow-hidden ">
                   <Slide
                      movieId={slide._id}
                      src={slide.poster}

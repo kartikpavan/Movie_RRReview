@@ -4,6 +4,7 @@ import TopRatedMovies from "../components/TopRatedMovies";
 import HeroSlider from "../components/HeroSlider";
 import TopRatedTvSeries from "../components/TopRatedTvSeries";
 import TestUserBanner from "../components/misc/TestUserBanner";
+import TopRatedWebSeries from "../components/TopRatedWebSeries";
 
 const Home = () => {
    return (
@@ -16,6 +17,7 @@ const Home = () => {
             {/* Top Rated movies  */}
             <TopRatedMovies />
             <TopRatedTvSeries />
+            <TopRatedWebSeries />
          </main>
       </>
    );
