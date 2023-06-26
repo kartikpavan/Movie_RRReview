@@ -148,7 +148,7 @@ const SingleMovie = () => {
                         <p className="text-gray-500">Director:</p>
                         <p
                            className="text-primary hover:underline cursor-pointer"
-                           onClick={() => handleOpenActorProfile(_id)}
+                           onClick={() => handleOpenActorProfile(director._id)}
                         >
                            {director.name}
                         </p>
@@ -157,7 +157,7 @@ const SingleMovie = () => {
                      <div className="flex space-x-2">
                         <p className="text-gray-500">Writers:</p>
                         <div className="space-x-2">
-                           <div className="text-primary hover:underline">
+                           <div className="text-primary">
                               {writers.map((w) => {
                                  return (
                                     <p

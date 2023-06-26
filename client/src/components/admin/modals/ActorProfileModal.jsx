@@ -37,22 +37,24 @@ const ActorProfileModal = ({ actorId }) => {
                      <div className="loading loading-ring loading-lg block"></div>
                      <p className="text-gray-400"> Fetching profile...</p>
                   </>
-               ) : null}
+               ) : (
+                  actor && (
+                     <div className="flex items-center justify-center flex-col gap-y-2">
+                        <img
+                           src={actor?.avatar?.url}
+                           alt={actor?.name}
+                           className="w-28 h-28 object-cover aspect-auto rounded-full shadow-md"
+                        />
+                        <h1 className="text-lg md:text-2xl text-primary font-semibold">
+                           {actor?.name}
+                        </h1>
+                        <p className="text-sm md:text-lg text-gray-400 text-center">
+                           {actor?.description}
+                        </p>
+                     </div>
+                  )
+               )}
             </div>
-            {/* Actor Info */}
-            {actor && (
-               <div className="flex items-center justify-center flex-col gap-y-2">
-                  <img
-                     src={actor?.avatar?.url}
-                     alt={actor?.name}
-                     className="w-28 h-28 object-cover aspect-auto rounded-full shadow-md"
-                  />
-                  <h1 className="text-lg md:text-2xl text-primary font-semibold">{actor?.name}</h1>
-                  <p className="text-sm md:text-lg text-gray-400 text-center">
-                     {actor?.description}
-                  </p>
-               </div>
-            )}
          </div>
       </dialog>
    );
