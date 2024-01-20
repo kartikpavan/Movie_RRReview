@@ -1,6 +1,6 @@
 # Fullstack-Movie-Rating-Webapp
 
-## :moneybag: MovieRRReview  :moneybag:
+## 🎬 MovieRRReview 🎬
 
 The MERN stack movie rating web app is a user-friendly platform that enables movie enthusiasts to discover, rate, and review films. With advanced authentication, users can securely create accounts, log in, and manage their profiles. The app offers an extensive movie database, allowing users to search, explore genres, and access detailed information. Users can contribute by rating movies, writing reviews, and engaging in discussions through comments. The app's responsive design ensures a seamless experience on different devices, while real-time updates and fast loading times enhance user interaction. In summary, it's a robust movie rating web app that fosters a vibrant community of film lovers.
 
